@@ -1,3 +1,4 @@
+import 'package:aplication/src/ui/inicio.dart';
 import 'package:flutter/material.dart';
 import 'package:aplication/src/UI/initial_splash.dart';
 import 'package:aplication/src/UI/login.dart';
@@ -22,8 +23,9 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         // When navigating to the "/" route, build the FirstScreen widget.
-        '/': (context) => SplashScreen(),
+        '/': (context) => SplashScreen(), //SplashScreen
         '/login': (context) => Login(),
+        '/inicio': (context) => Diseno(),
       },
       /*
      home: Center(

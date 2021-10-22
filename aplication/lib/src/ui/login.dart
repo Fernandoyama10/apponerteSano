@@ -52,7 +52,7 @@ class _LoginState extends State<Login> {
                   tag: 'hero',
                   child: CircleAvatar(
                     backgroundColor: Colors.white38,
-                    radius: 120.0,
+                    radius: 110.0,
                     child: Image.asset('../images/applogo.png'),
                   ),
                 ),
@@ -151,8 +151,7 @@ class _LoginState extends State<Login> {
 
   void _iniciarsesion() {
     if (_formKey.currentState!.validate()) {
-      double numero1 = double.parse("DATOS ENVIADOS CORRECTAMENTE");
-      setState(() => txtpassword.text = ((numero1)).toString());
+      Navigator.pushNamed(context, '/inicio');
     }
   }
 }
