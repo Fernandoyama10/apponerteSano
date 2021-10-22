@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:aplication/src/UI/initial_splash.dart';
 import 'package:aplication/src/UI/login.dart';
+import 'package:flutter/services.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+  runApp(MyApp());
+}
 
+/**/
 class MyApp extends StatelessWidget {
   @override
 
@@ -18,11 +24,6 @@ class MyApp extends StatelessWidget {
         // When navigating to the "/" route, build the FirstScreen widget.
         '/': (context) => SplashScreen(),
         '/login': (context) => Login(),
-        //'/diseno': (context) => Diseno(),
-
-        //  '/consumo2':(context)=>Consumolista(listapost: fetchPost1(_clave.toString()),),
-        // '/consumo3':(context)=>Consumolista2(listapost: fetchPost2(),),
-        //hace la llamada el fetch para devolcver una listra de objetos de la clase lo almacena y lo manda al constructor de la clase consumo
       },
       /*
      home: Center(
