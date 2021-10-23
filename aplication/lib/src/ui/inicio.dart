@@ -118,11 +118,13 @@ setState(() {
                   height: 15,
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  
                   children: <Widget>[
                     Flexible(
+                  
                       child: Column(
                         children: <Widget>[
+                          
                           Container(
                             decoration: BoxDecoration(
                                 color: Color.fromRGBO(243, 245, 248, 1),
@@ -139,8 +141,11 @@ setState(() {
                             height: 4,
                           ),
                           Text(
+
                             "3000 cal. iniciales",
+                                textAlign: TextAlign.center,
                             style: TextStyle(
+                              
                                 fontWeight: FontWeight.w700,
                                 fontSize: 14,
                                 color: Colors.white,
@@ -169,6 +174,7 @@ setState(() {
                           ),
                           Text(
                             "1500 cal. restantes",
+                                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontWeight: FontWeight.w700,
                                 fontSize: 14,
@@ -198,7 +204,8 @@ setState(() {
                           ),
                           //llamar a la variable: args.usuario
                           Text(
-                            "vas muy bien!",
+                            "Excelente trabajo!",
+                                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontWeight: FontWeight.w700,
                                 fontSize: 14,
