@@ -232,25 +232,25 @@ setState(() {
                       ),
 
                       Container(
-                
                         child: Row(
-                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                          MaterialButton(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(28),
-                            ),
-                            minWidth: 200.0,
-                            height: 70.0,
-                            onPressed: () {
-                              //Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => Consumolista(listapost: fetchPost1(args.clave.toString()),p: args.puntos,usu: args.id_usu,id_sa: args.id_salon)));
-                            },
-                            color: Colors.green[400],
-                            child: Text('Registrar mi Comida',
-                                style: TextStyle(
-                                    color: Colors.yellow[200], fontSize: 16)),
-                          ),
-                        ]),
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              MaterialButton(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(28),
+                                ),
+                                minWidth: 200.0,
+                                height: 70.0,
+                                onPressed: () {
+                                  //Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => Consumolista(listapost: fetchPost1(args.clave.toString()),p: args.puntos,usu: args.id_usu,id_sa: args.id_salon)));
+                                },
+                                color: Colors.green[400],
+                                child: Text('Registrar mi Comida',
+                                    style: TextStyle(
+                                        color: Colors.yellow[200],
+                                        fontSize: 16)),
+                              ),
+                            ]),
                       ),
 
                       SizedBox(
