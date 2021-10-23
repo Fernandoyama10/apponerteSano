@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:html';
 import 'package:flutter/material.dart';
 //import 'package:prueba_login/src/paginas/login.dart';
 
@@ -18,17 +17,19 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
+    
       decoration: BoxDecoration(
         image: new DecorationImage(
-          image: new AssetImage("../images/fondo3.jpg"),
+          image: new AssetImage("images/fondo3.jpg"),
           fit: BoxFit.cover,
         ),
       ),
+  
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Image.asset(
-            '../images/applogo1.png',
+            'images/applogo1.png',
             width: 300.0,
             height: 230,
           ),

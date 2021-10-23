@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:aplication/src/resources/datos_login.dart';
 
 // Define un widget de formulario personalizado
 class Login extends StatefulWidget {
@@ -53,7 +52,7 @@ class _LoginState extends State<Login> {
                   child: CircleAvatar(
                     backgroundColor: Colors.white38,
                     radius: 110.0,
-                    child: Image.asset('../images/applogo.png'),
+                    child: Image.asset('images/applogo.png'),
                   ),
                 ),
 
