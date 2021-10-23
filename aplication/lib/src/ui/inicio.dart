@@ -47,7 +47,7 @@ setState(() {
         children: <Widget>[
           //Container for top data
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 20, vertical: 32),
+            margin: EdgeInsets.symmetric(horizontal: 20, vertical: 52),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -58,7 +58,7 @@ setState(() {
                       "1500 CAL",
                       style: TextStyle(
                           color: Colors.yellow[400],
-                          fontSize: 48,
+                          fontSize: 28,
                           fontWeight: FontWeight.w700,
                           decoration: TextDecoration.none),
                     ),
@@ -120,7 +120,7 @@ setState(() {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Container(
+                    Flexible(
                       child: Column(
                         children: <Widget>[
                           Container(
@@ -149,7 +149,7 @@ setState(() {
                         ],
                       ),
                     ),
-                    Container(
+                    Flexible(
                       child: Column(
                         children: <Widget>[
                           Container(
@@ -178,7 +178,7 @@ setState(() {
                         ],
                       ),
                     ),
-                    Container(
+                    Flexible(
                       child: Column(
                         children: <Widget>[
                           Container(
@@ -232,8 +232,10 @@ setState(() {
                       ),
 
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 72),
-                        child: Row(children: <Widget>[
+                
+                        child: Row(
+                           mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
                           MaterialButton(
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(28),
@@ -256,13 +258,13 @@ setState(() {
                       ),
                       Container(
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Text(
                               "¿Cómo voy en mi alimentación de hoy?",
                               style: TextStyle(
                                   fontWeight: FontWeight.w900,
-                                  fontSize: 24,
+                                  fontSize: 14,
                                   color: Colors.black,
                                   decoration: TextDecoration.none),
                             ),
