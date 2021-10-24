@@ -1,4 +1,7 @@
+import 'package:aplication/src/ui/comidainternacional.dart';
+import 'package:aplication/src/ui/comidaregional.dart';
 import 'package:aplication/src/ui/inicio.dart';
+import 'package:aplication/src/ui/tipocomida.dart';
 import 'package:flutter/material.dart';
 import 'package:aplication/src/UI/initial_splash.dart';
 import 'package:aplication/src/UI/login.dart';
@@ -26,6 +29,9 @@ class MyApp extends StatelessWidget {
         '/': (context) => SplashScreen(), //SplashScreen
         '/login': (context) => Login(),
         '/inicio': (context) => Diseno(),
+        '/tipocomida': (context) => Tipocomida(),
+        '/comidainter': (context) => ComidaInternacional(),
+        '/comidareg': (context) => ComidaRegional(),
       },
       /*
      home: Center(
