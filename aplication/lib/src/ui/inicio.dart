@@ -244,7 +244,7 @@ setState(() {
                                 minWidth: 200.0,
                                 height: 70.0,
                                 onPressed: () {
-                                   Navigator.pushNamed(context, '/comidainter');
+                                  Navigator.pushNamed(context, '/tipocomida');
                                   //Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => Consumolista(listapost: fetchPost1(args.clave.toString()),p: args.puntos,usu: args.id_usu,id_sa: args.id_salon)));
                                 },
                                 color: Colors.green[400],

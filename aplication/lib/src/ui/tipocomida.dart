@@ -63,15 +63,14 @@ setState(() {
                 return Container(
                   margin: EdgeInsets.symmetric(horizontal: 22),
                   padding: EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                      color: Colors.transparent),
+                  decoration: BoxDecoration(color: Colors.transparent),
                   child: Row(
                     children: <Widget>[
                       SizedBox(
                         width: 16,
                       ),
                       Expanded(
-                             child: Column(
+                        child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             Text(
@@ -82,10 +81,10 @@ setState(() {
                                   color: Colors.green[900],
                                   decoration: TextDecoration.none),
                             ),
-                             SizedBox(height: 10),
+                            SizedBox(height: 10),
                             Container(
                               decoration: BoxDecoration(
-                             borderRadius: BorderRadius.circular(100.0),
+                                borderRadius: BorderRadius.circular(100.0),
                                 boxShadow: [
                                   BoxShadow(
                                     color: Colors.grey.withOpacity(0.8),
@@ -96,26 +95,24 @@ setState(() {
                                   ),
                                 ],
                               ),
-                              child:  Material(
-                              // neededradius: 20,
-                              color: Colors.transparent,
+                              child: Material(
+                                // neededradius: 20,
+                                color: Colors.transparent,
 
-                              child: InkWell(
-                                onTap: () {
-                                  Navigator.pushNamed(context, '/comidareg');
-                                }, // needed
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(100.0),
-                                  child: Image.asset(
-                                    'images/comidayucateca.jpg',
-                                    fit: BoxFit.cover,
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.pushNamed(context, '/comidareg');
+                                  }, // needed
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(100.0),
+                                    child: Image.asset(
+                                      'images/comidayucateca.jpg',
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                            ),
-                            
-                           
                           ],
                         ),
                       ),
@@ -137,10 +134,9 @@ setState(() {
             ListView.builder(
               itemBuilder: (context, index) {
                 return Container(
-                margin: EdgeInsets.symmetric(horizontal: 22),
+                  margin: EdgeInsets.symmetric(horizontal: 22),
                   padding: EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                      color: Colors.transparent),
+                  decoration: BoxDecoration(color: Colors.transparent),
                   child: Row(
                     children: <Widget>[
                       SizedBox(
@@ -158,10 +154,10 @@ setState(() {
                                   color: Colors.green[900],
                                   decoration: TextDecoration.none),
                             ),
-                             SizedBox(height: 10),
+                            SizedBox(height: 10),
                             Container(
                               decoration: BoxDecoration(
-                             borderRadius: BorderRadius.circular(100.0),
+                                borderRadius: BorderRadius.circular(100.0),
                                 boxShadow: [
                                   BoxShadow(
                                     color: Colors.grey.withOpacity(0.8),
@@ -172,26 +168,25 @@ setState(() {
                                   ),
                                 ],
                               ),
-                              child:  Material(
-                              // neededradius: 20,
-                              color: Colors.transparent,
+                              child: Material(
+                                // neededradius: 20,
+                                color: Colors.transparent,
 
-                              child: InkWell(
-                                onTap: () {
-                                  Navigator.pushNamed(context, '/comidainter');
-                                }, // needed
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(100.0),
-                                  child: Image.asset(
-                                    'images/comidainternacional.jpg',
-                                    fit: BoxFit.cover,
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                        context, '/comidainter');
+                                  }, // needed
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(100.0),
+                                    child: Image.asset(
+                                      'images/comidainternacional.jpg',
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                            ),
-                            
-                           
                           ],
                         ),
                       ),

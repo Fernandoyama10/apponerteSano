@@ -36,7 +36,6 @@ setState(() {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-       
             //now expense
           ],
         ),

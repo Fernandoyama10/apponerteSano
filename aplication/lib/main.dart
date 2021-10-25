@@ -1,4 +1,6 @@
-import 'package:aplication/src/ui/comidainternacional.dart';
+import 'package:aplication/src/ui/agregarcomida.dart';
+import 'package:aplication/src/ui/comidainter.dart';
+
 import 'package:aplication/src/ui/comidaregional.dart';
 import 'package:aplication/src/ui/inicio.dart';
 import 'package:aplication/src/ui/tipocomida.dart';
@@ -32,6 +34,7 @@ class MyApp extends StatelessWidget {
         '/tipocomida': (context) => Tipocomida(),
         '/comidainter': (context) => ComidaInternacional(),
         '/comidareg': (context) => ComidaRegional(),
+        '/agregarcomida': (context) => AgregarPage(),
       },
       /*
      home: Center(

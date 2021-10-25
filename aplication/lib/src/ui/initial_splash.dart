@@ -17,14 +17,12 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-    
       decoration: BoxDecoration(
         image: new DecorationImage(
           image: new AssetImage("images/fondo3.jpg"),
           fit: BoxFit.cover,
         ),
       ),
-  
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
