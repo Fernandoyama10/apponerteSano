@@ -46,7 +46,7 @@ class _LoginState extends State<Login> {
                 child: Column(
               children: <Widget>[
                 //primer elemento del listview
-                SizedBox(height: 25),
+                SizedBox(height: 45),
                 Hero(
                   tag: 'hero',
                   child: CircleAvatar(
@@ -117,7 +117,7 @@ class _LoginState extends State<Login> {
                   child: Text('Iniciar Sesión',
                       style: TextStyle(color: Colors.white)),
                 ),
-                SizedBox(height: 7),
+                SizedBox(height: 20),
                 Text(
                   '¿No tienes cuenta?',
                   textAlign: TextAlign.center,
