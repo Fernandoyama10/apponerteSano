@@ -118,13 +118,10 @@ setState(() {
                   height: 15,
                 ),
                 Row(
-                  
                   children: <Widget>[
                     Flexible(
-                  
                       child: Column(
                         children: <Widget>[
-                          
                           Container(
                             decoration: BoxDecoration(
                                 color: Color.fromRGBO(243, 245, 248, 1),
@@ -141,11 +138,9 @@ setState(() {
                             height: 4,
                           ),
                           Text(
-
                             "3000 cal. iniciales",
-                                textAlign: TextAlign.center,
+                            textAlign: TextAlign.center,
                             style: TextStyle(
-                              
                                 fontWeight: FontWeight.w700,
                                 fontSize: 14,
                                 color: Colors.white,
@@ -174,7 +169,7 @@ setState(() {
                           ),
                           Text(
                             "1500 cal. restantes",
-                                             textAlign: TextAlign.center,
+                            textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontWeight: FontWeight.w700,
                                 fontSize: 14,
@@ -205,7 +200,7 @@ setState(() {
                           //llamar a la variable: args.usuario
                           Text(
                             "Excelente trabajo!",
-                                             textAlign: TextAlign.center,
+                            textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontWeight: FontWeight.w700,
                                 fontSize: 14,
@@ -249,6 +244,7 @@ setState(() {
                                 minWidth: 200.0,
                                 height: 70.0,
                                 onPressed: () {
+                                  Navigator.pushNamed(context, '/tipocomida');
                                   //Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => Consumolista(listapost: fetchPost1(args.clave.toString()),p: args.puntos,usu: args.id_usu,id_sa: args.id_salon)));
                                 },
                                 color: Colors.green[400],

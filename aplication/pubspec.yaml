@@ -38,6 +38,7 @@ dependencies:
   image_picker: ^0.8.4+3
   flutter_staggered_animations: ^0.1.2
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -65,6 +66,8 @@ flutter:
     - images/fondomoleculas.jpg
     - images/applogo.png
     - images/applogo1.png
+    - images/comidayucateca.jpg
+    - images/comidainternacional.jpg
     - images/fondo2.jpg
     - images/fondo3.jpg
 
