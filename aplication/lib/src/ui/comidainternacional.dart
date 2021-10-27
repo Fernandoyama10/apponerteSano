@@ -4,16 +4,16 @@ import 'package:aplication/src/blocs/search_api.dart';
 import 'package:aplication/src/ui/search_widget.dart';
 import 'dart:async';
 
-class ComidaInternacional extends StatefulWidget {
-  const ComidaInternacional({Key? key}) : super(key: key);
+class BuscarInternacional extends StatefulWidget {
+  const BuscarInternacional({Key? key}) : super(key: key);
 
   @override
   ComidaInternacionalListPageState createState() =>
       ComidaInternacionalListPageState();
 }
 
-class ComidaInternacionalListPageState extends State<ComidaInternacional> {
-  List<Hits> books = [];
+class ComidaInternacionalListPageState extends State<BuscarInternacional> {
+  List<Hits> recipes = [];
   String query = '';
   Timer? debouncer;
 
@@ -42,15 +42,15 @@ class ComidaInternacionalListPageState extends State<ComidaInternacional> {
   }
 
   Future init() async {
-    final books = await EdamamApi.getRecipes(query);
+    final recipes = await EdamamApi.getRecipes(query);
 
-    setState(() => this.books = books);
+    setState(() => this.recipes = recipes);
   }
 
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: Text('Busca tu platillo'),
+          title: Text('Busca tu alimento'),
           backgroundColor: Colors.lightGreen.shade600,
           centerTitle: true,
         ),
@@ -59,9 +59,9 @@ class ComidaInternacionalListPageState extends State<ComidaInternacional> {
             buildSearch(),
             Expanded(
               child: ListView.builder(
-                itemCount: books.length,
+                itemCount: recipes.length,
                 itemBuilder: (context, index) {
-                  final book = books[index];
+                  final book = recipes[index];
 
                   return buildBook(book);
                 },
@@ -78,32 +78,39 @@ class ComidaInternacionalListPageState extends State<ComidaInternacional> {
       );
 
   Future searchBook(String query) async => debounce(() async {
-        final books = await EdamamApi.getRecipes(query);
+        final recipes = await EdamamApi.getRecipes(query);
 
         if (!mounted) return;
 
         setState(() {
           this.query = query;
-          this.books = books;
+          this.recipes = recipes;
         });
       });
 
-  Widget buildBook(Hits book) => ListTile(
+  Widget buildBook(Hits hit) => ListTile(
         leading: Image.network(
-          book.recipe!.image!,
+          hit.recipe!.image!,
           fit: BoxFit.cover,
           width: 50,
           height: 50,
         ),
-        title: Text(book.recipe!.label!),
-        subtitle: Text(book.recipe!.label!),
-          trailing: Icon(Icons.keyboard_arrow_right),
-                    onTap: () {
-                      Navigator.pushNamed(context, '/agregarcomida',
-                          arguments: GetRecipe(
-                            book.recipe!.label!.toString(),
-                            book.recipe!.image!.toString(),
-                          ));
-                    },
+        title: Text(hit.recipe!.label!),
+        subtitle: Text(hit.recipe!.label!),
+        trailing: Icon(Icons.keyboard_arrow_right),
+        onTap: () {
+          Navigator.pushNamed(context, '/agrega_inter',
+              arguments: GetRecipe(
+                hit.recipe!.label!.toString(),
+                hit.recipe!.image!.toString(),
+                hit.recipe!.yield!.toDouble(),
+                hit.recipe!.calories!.toDouble(),
+                hit.recipe!.totalNutrients!.sugar!.quantity!.toDouble(),
+                hit.recipe!.totalNutrients!.na!.quantity!.toDouble(),
+                hit.recipe!.totalNutrients!.chocdf!.quantity!.toDouble(),
+                hit.recipe!.totalNutrients!.fat!.quantity!.toDouble(),
+                hit.recipe!.totalNutrients!.procnt!.quantity!.toDouble(),
+              ));
+        },
       );
 }

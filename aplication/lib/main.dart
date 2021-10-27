@@ -1,6 +1,12 @@
+<<<<<<< Updated upstream
 import 'package:aplication/src/ui/agregarcomida.dart';
 import 'package:aplication/src/ui/comidainternacional.dart';
 
+=======
+import 'package:aplication/src/ui/agregarcomida_r.dart';
+import 'package:aplication/src/ui/agregarcomida_i.dart';
+import 'package:aplication/src/ui/comidainternacional.dart';
+>>>>>>> Stashed changes
 import 'package:aplication/src/ui/comidaregional.dart';
 import 'package:aplication/src/ui/inicio.dart';
 import 'package:aplication/src/ui/tipocomida.dart';
@@ -15,7 +21,7 @@ void main() {
   runApp(MyApp());
 }
 
-/**/
+
 class MyApp extends StatelessWidget {
   @override
 
@@ -32,9 +38,10 @@ class MyApp extends StatelessWidget {
         '/login': (context) => Login(),
         '/inicio': (context) => Diseno(),
         '/tipocomida': (context) => Tipocomida(),
-        '/comidainter': (context) => ComidaInternacional(),
-        '/comidareg': (context) => ComidaRegional(),
-        '/agregarcomida': (context) => AgregarPage(),
+        '/comidainter': (context) => BuscarInternacional(),
+         '/comidareg': (context) => BuscarRegional(),
+        '/agrega_inter': (context) => AgregarInternacional(),
+        '/agregarcomida_regi': (context) => AgregarRegional(),
       },
       /*
      home: Center(
