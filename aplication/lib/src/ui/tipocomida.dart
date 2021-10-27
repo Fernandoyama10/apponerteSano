@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 // Define un widget de formulario personalizado
 class Tipocomida extends StatefulWidget {
+  const Tipocomida({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() => _DisenoState();
 }
@@ -31,7 +33,7 @@ setState(() {
         centerTitle: true,
       ),
 
-      body: Form(
+      body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,

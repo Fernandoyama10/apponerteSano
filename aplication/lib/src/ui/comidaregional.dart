@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 // Define un widget de formulario personalizado
-class ComidaRegional extends StatefulWidget {
+class BuscarRegional extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _DisenoState();
+  State<StatefulWidget> createState() => _RegionalState();
 }
 
-class _DisenoState extends State<ComidaRegional> {
+class _RegionalState extends State<BuscarRegional> {
   // static datosArguments args;
 // log aout
   //clase choice
@@ -26,17 +26,16 @@ setState(() {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Comida Regional'),
+        title: Text('Tipo de Comida'),
         backgroundColor: Colors.lightGreen.shade600,
         centerTitle: true,
       ),
 
-      body: Form(
+      body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            //now expense
           ],
         ),
       ),
