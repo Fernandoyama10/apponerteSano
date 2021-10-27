@@ -2,7 +2,11 @@ import 'package:aplication/src/ui/agregarcomida.dart';
 import 'package:aplication/src/ui/comidainternacional.dart';
 
 import 'package:aplication/src/ui/comidaregional.dart';
+import 'package:aplication/src/ui/info_user.dart';
+import 'package:aplication/src/ui/info_user_calories.dart';
 import 'package:aplication/src/ui/inicio.dart';
+import 'package:aplication/src/ui/registrar_user.dart';
+import 'package:aplication/src/ui/splash_loading.dart';
 import 'package:aplication/src/ui/tipocomida.dart';
 import 'package:flutter/material.dart';
 import 'package:aplication/src/UI/initial_splash.dart';
@@ -35,6 +39,10 @@ class MyApp extends StatelessWidget {
         '/comidainter': (context) => ComidaInternacional(),
         '/comidareg': (context) => ComidaRegional(),
         '/agregarcomida': (context) => AgregarPage(),
+        '/registeruser': (context) => RegisterUser(),
+        '/infouser': (context) => InfoUser(),
+        '/infousercalories': (context) => InfoUserCalories(),
+        '/splashloading': (context) => SplashLoading(),
       },
       /*
      home: Center(

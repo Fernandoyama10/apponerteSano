@@ -1,32 +1,28 @@
 import 'package:flutter/material.dart';
 
 // Define un widget de formulario personalizado
-class Login extends StatefulWidget {
+class RegisterUser extends StatefulWidget {
   //la llave validadora
-  const Login({Key? key}) : super(key: key);
+  const RegisterUser({Key? key}) : super(key: key);
   @override
-  State<StatefulWidget> createState() => _LoginState();
+  State<StatefulWidget> createState() => _RegisterUserState();
 }
 
-class _LoginState extends State<Login> {
-  final _formKey = GlobalKey<FormState>();
+class _RegisterUserState extends State<RegisterUser> {
+  final _formKey1 = GlobalKey<FormState>();
   final txtemail = TextEditingController();
   final txtpassword = TextEditingController();
 
   final formkey = new GlobalKey<FormState>();
-  //String _usuario;
-  // String _contra;
-
-  @override
-  void dispose() {
-    // Limpia el controlador cuando el Widget se descarte
-    txtemail.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Paso 1:'),
+        backgroundColor: Colors.lightGreen.shade600,
+        centerTitle: true,
+      ),
       body: Container(
           width: double.infinity,
           height: double.infinity,
@@ -41,21 +37,23 @@ class _LoginState extends State<Login> {
           ),
           padding: const EdgeInsets.all(16.0),
           child: Form(
-            key: _formKey,
+            key: _formKey1,
             child: SingleChildScrollView(
                 child: Column(
               children: <Widget>[
                 //primer elemento del listview
-                SizedBox(height: 45),
-                Hero(
-                  tag: 'hero',
-                  child: CircleAvatar(
-                    backgroundColor: Colors.white38,
-                    radius: 110.0,
-                    child: Image.asset('images/applogo.png'),
+                SizedBox(height: 100),
+                Container(
+                  child: Text(
+                    "¡Registra tu usuario!",
+                    style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.green.shade800,
+                        decoration: TextDecoration.none),
                   ),
+                  padding: EdgeInsets.symmetric(horizontal: 32),
                 ),
-
                 SizedBox(height: 50),
                 //textfiel 1
                 TextFormField(
@@ -104,53 +102,39 @@ class _LoginState extends State<Login> {
                 //espacio entre el textfield y el botón
                 SizedBox(height: 30),
                 //botón
-                MaterialButton(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(28),
-                  ),
-                  minWidth: 200.0,
-                  height: 45.0,
-                  onPressed: () {
-                    _iniciarsesion();
-                  },
-                  color: Colors.green[400],
-                  child: Text('Iniciar Sesión',
-                      style: TextStyle(color: Colors.white)),
-                ),
-                SizedBox(height: 20),
-                Text(
-                  '¿No tienes cuenta?',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.lightGreen[700],
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15,
-                  ),
-                ),
+                Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: <Widget>[
+                      Align(
+                        alignment: Alignment.centerRight,
+                      ),
+                      MaterialButton(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(28),
+                        ),
+                        minWidth: 200.0,
+                        height: 45.0,
+                        onPressed: () {
+                          _registrarUser();
+                          // Navigator.pushNamed(context, '/consumo',arguments: datosArguments(myController.text,myControllernum2.text));
+                        },
+                        color: Colors.red.shade400,
+                        child: Text('Siguiente',
+                            style: TextStyle(color: Colors.white)),
+                      ),
+                    ]),
 
-                MaterialButton(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(28),
-                  ),
-                  minWidth: 200.0,
-                  height: 45.0,
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/registeruser');
-                    // Navigator.pushNamed(context, '/consumo',arguments: datosArguments(myController.text,myControllernum2.text));
-                  },
-                  color: Colors.lightBlueAccent[400],
-                  child:
-                      Text('Registrate', style: TextStyle(color: Colors.white)),
-                ),
+                SizedBox(height: 20),
               ],
             )),
           )),
     );
   }
 
-  void _iniciarsesion() {
-    if (_formKey.currentState!.validate()) {
-      Navigator.pushNamed(context, '/inicio');
+  void _registrarUser() {
+    if (_formKey1.currentState!.validate()) {
+      Navigator.pushNamed(context, '/infouser');
     }
   }
 }
