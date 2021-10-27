@@ -1,12 +1,6 @@
-<<<<<<< Updated upstream
-import 'package:aplication/src/ui/agregarcomida.dart';
-import 'package:aplication/src/ui/comidainternacional.dart';
-
-=======
-import 'package:aplication/src/ui/agregarcomida_r.dart';
 import 'package:aplication/src/ui/agregarcomida_i.dart';
+import 'package:aplication/src/ui/agregarcomida_r.dart';
 import 'package:aplication/src/ui/comidainternacional.dart';
->>>>>>> Stashed changes
 import 'package:aplication/src/ui/comidaregional.dart';
 import 'package:aplication/src/ui/inicio.dart';
 import 'package:aplication/src/ui/tipocomida.dart';
