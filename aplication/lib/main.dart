@@ -2,8 +2,8 @@ import 'package:aplication/src/ui/agregarcomida_i.dart';
 import 'package:aplication/src/ui/agregarcomida_r.dart';
 import 'package:aplication/src/ui/comidainternacional.dart';
 import 'package:aplication/src/ui/comidaregional.dart';
-import 'package:aplication/src/ui/info_user.dart';
-import 'package:aplication/src/ui/info_user_calories.dart';
+import 'package:aplication/src/ui/info_user_reg.dart';
+import 'package:aplication/src/ui/info_user_calories_reg.dart';
 import 'package:aplication/src/ui/inicio.dart';
 import 'package:aplication/src/ui/registrar_user.dart';
 import 'package:aplication/src/ui/splash_loading.dart';
@@ -36,8 +36,8 @@ class MyApp extends StatelessWidget {
         '/inicio': (context) => Diseno(),
         '/tipocomida': (context) => Tipocomida(),
         '/registeruser': (context) => RegisterUser(),
-        '/infouser': (context) => InfoUser(),
-        '/infousercalories': (context) => InfoUserCalories(),
+        '/infouser': (context) => InfoUserReg(),
+        '/infousercalories': (context) => InfoUserCaloriesReg(),
         '/splashloading': (context) => SplashLoading(),
         '/comidainter': (context) => BuscarInternacional(),
         '/comidareg': (context) => BuscarRegional(),

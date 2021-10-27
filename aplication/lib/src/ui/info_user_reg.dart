@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 // Define un widget de formulario personalizado
-class InfoUser extends StatefulWidget {
+class InfoUserReg extends StatefulWidget {
   //la llave validadora
-  const InfoUser({Key? key}) : super(key: key);
+  const InfoUserReg({Key? key}) : super(key: key);
   @override
-  State<StatefulWidget> createState() => _InfoUserState();
+  State<StatefulWidget> createState() => _InfoUserRegState();
 }
 
-class _InfoUserState extends State<InfoUser> {
+class _InfoUserRegState extends State<InfoUserReg> {
   final _formKey1 = GlobalKey<FormState>();
   final txtname = TextEditingController();
   final txtsurname = TextEditingController();

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 // Define un widget de formulario personalizado
-class InfoUserCalories extends StatefulWidget {
+class InfoUserCaloriesReg extends StatefulWidget {
   //la llave validadora
-  const InfoUserCalories({Key? key}) : super(key: key);
+  const InfoUserCaloriesReg({Key? key}) : super(key: key);
   @override
-  State<StatefulWidget> createState() => _InfoUserCaloriesState();
+  State<StatefulWidget> createState() => _InfoUserCaloriesRegState();
 }
 
-class _InfoUserCaloriesState extends State<InfoUserCalories> {
+class _InfoUserCaloriesRegState extends State<InfoUserCaloriesReg> {
   final _formKey1 = GlobalKey<FormState>();
   final txtpeso = TextEditingController();
   final _txtfisico = GlobalKey<FormState>();

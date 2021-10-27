@@ -85,14 +85,10 @@ class _AgregarScreenState extends State<AgregarRegional> {
 
                           caloriesyield =
                               (calories_yield * double.parse(value));
-                          carbsyield =
-                              (carbs_yield * double.parse(value));
-                          proteyield =
-                              (prote_yield * double.parse(value));
-                          sugaryield =
-                              (sugar_yield * double.parse(value));
-                          sodiumyield =
-                              (sodium_yield * double.parse(value));
+                          carbsyield = (carbs_yield * double.parse(value));
+                          proteyield = (prote_yield * double.parse(value));
+                          sugaryield = (sugar_yield * double.parse(value));
+                          sodiumyield = (sodium_yield * double.parse(value));
                           fatyield = (fat_yield * double.parse(value));
                         });
                       },
