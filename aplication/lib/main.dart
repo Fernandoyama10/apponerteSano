@@ -1,17 +1,19 @@
-import 'package:aplication/src/ui/agregarcomida_i.dart';
-import 'package:aplication/src/ui/agregarcomida_r.dart';
-import 'package:aplication/src/ui/comidainternacional.dart';
-import 'package:aplication/src/ui/comidaregional.dart';
-import 'package:aplication/src/ui/info_user_reg.dart';
-import 'package:aplication/src/ui/info_user_calories_reg.dart';
-import 'package:aplication/src/ui/inicio.dart';
-import 'package:aplication/src/ui/registrar_user.dart';
-import 'package:aplication/src/ui/splash_loading.dart';
-import 'package:aplication/src/ui/tipocomida.dart';
+import 'package:apponertesano/src/resources/facebook_login_result.dart';
+import 'package:apponertesano/src/ui/agregarcomida_i.dart';
+import 'package:apponertesano/src/ui/agregarcomida_r.dart';
+import 'package:apponertesano/src/ui/comidainternacional.dart';
+import 'package:apponertesano/src/ui/comidaregional.dart';
+import 'package:apponertesano/src/ui/info_user_reg.dart';
+import 'package:apponertesano/src/ui/info_user_calories_reg.dart';
+import 'package:apponertesano/src/ui/inicio.dart';
+import 'package:apponertesano/src/ui/registrar_user.dart';
+import 'package:apponertesano/src/ui/splash_loading.dart';
+import 'package:apponertesano/src/ui/tipocomida.dart';
 import 'package:flutter/material.dart';
-import 'package:aplication/src/UI/initial_splash.dart';
-import 'package:aplication/src/UI/login.dart';
+import 'package:apponertesano/src/UI/initial_splash.dart';
+import 'package:apponertesano/src/UI/login.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
@@ -24,7 +26,14 @@ class MyApp extends StatelessWidget {
 
   //el context tiene información del árbol widget
   Widget build(context) {
-    return MaterialApp(
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => FacebookSignInController(),
+          child: Login(),
+        )
+      ],
+      child: MaterialApp(
       //deshabiltar el banner de debuguer
       debugShowCheckedModeBanner: false,
       //creamos el texto que tendrá la aplicación y lo centramos
@@ -48,6 +57,9 @@ class MyApp extends StatelessWidget {
      home: Center(
           child: Login(),
        ) , */
+    ),
     );
+
+    
   }
 }

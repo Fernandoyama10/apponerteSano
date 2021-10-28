@@ -1,4 +1,4 @@
-name: aplication
+name: apponertesano
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
@@ -37,9 +37,11 @@ dependencies:
   cupertino_icons: ^1.0.2
   image_picker: ^0.8.4+3
   flutter_staggered_animations: ^0.1.2
-
+  flutter_facebook_auth: ^3.5.3
+  provider: ^6.0.1
 
 dev_dependencies:
+  change_app_package_name: ^0.1.2
   flutter_test:
     sdk: flutter
 
@@ -70,7 +72,7 @@ flutter:
     - images/comidainternacional.jpg
     - images/fondo2.jpg
     - images/fondo3.jpg
-
+    - images/fb.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

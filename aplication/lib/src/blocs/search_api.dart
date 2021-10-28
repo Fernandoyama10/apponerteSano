@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:aplication/src/model/food.dart';
+import 'package:apponertesano/src/model/food.dart';
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 

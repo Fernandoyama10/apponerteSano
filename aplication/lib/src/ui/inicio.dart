@@ -1,4 +1,7 @@
+import 'package:apponertesano/src/model/user.dart';
+import 'package:apponertesano/src/resources/facebook_login_result.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 // Define un widget de formulario personalizado
 class Diseno extends StatefulWidget {
@@ -22,6 +25,7 @@ setState(() {
 
   @override
   Widget build(BuildContext context) {
+
     //  args = ModalRoute.of(context).settings.arguments;
 
     return Container(
@@ -38,7 +42,7 @@ setState(() {
             ],
             begin: const FractionalOffset(0.0, 0.0),
             end: const FractionalOffset(1.0, 0.0),
-            stops: [0.0, 1.0],
+            stops: const [0.0, 1.0],
             tileMode: TileMode.clamp),
       ),
 
@@ -89,6 +93,9 @@ setState(() {
                           ),
                           FloatingActionButton.extended(
                             onPressed: () {
+                              Provider.of<FacebookSignInController>(context,
+                                      listen: false)
+                                  .logOut();
                               Navigator.pushReplacementNamed(context, '/login');
                             },
                             backgroundColor: Colors.white,
@@ -232,7 +239,8 @@ setState(() {
                       SizedBox(
                         height: 24,
                       ),
-
+                   
+                
                       Container(
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -255,14 +263,31 @@ setState(() {
                               ),
                             ]),
                       ),
-
+                          SizedBox(
+                        height: 15,
+                      ),
+            Container(
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const <Widget>[
+                                Text(
+                        'Bienvenido: -',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 15,
+                            color: Colors.brown,
+                            decoration: TextDecoration.none),
+                      ),
+                            ]),
+                      ),
                       SizedBox(
-                        height: 24,
+                        height: 15,
                       ),
                       Container(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
+                          children: const <Widget>[
                             Text(
                               "¿Cómo voy en mi alimentación de hoy?",
                               style: TextStyle(
@@ -284,7 +309,7 @@ setState(() {
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 32),
                         child: Row(
-                          children: <Widget>[],
+                          children: const <Widget>[],
                         ),
                       ),
 

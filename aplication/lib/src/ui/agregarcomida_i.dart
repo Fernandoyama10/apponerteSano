@@ -1,4 +1,4 @@
-import 'package:aplication/src/model/food.dart';
+import 'package:apponertesano/src/model/food.dart';
 import 'package:flutter/material.dart';
 
 class AgregarInternacional extends StatefulWidget {
@@ -17,7 +17,7 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
   double sodiumyield = 0;
   double fatyield = 0;
   String dropdownvalue = '1';
-  var items = ['1', '2', '3', '4', '5'];
+  var items = ['1', '2', '3', '4', '5', '6', '7', '8'];
   @override
   Widget build(BuildContext context) {
     GetRecipe args = ModalRoute.of(context)!.settings.arguments as GetRecipe;

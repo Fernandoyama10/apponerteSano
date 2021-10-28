@@ -1,7 +1,7 @@
-import 'package:aplication/src/model/food.dart';
+import 'package:apponertesano/src/model/food.dart';
 import 'package:flutter/material.dart';
-import 'package:aplication/src/blocs/search_api.dart';
-import 'package:aplication/src/ui/search_widget.dart';
+import 'package:apponertesano/src/blocs/search_api.dart';
+import 'package:apponertesano/src/ui/search_widget.dart';
 import 'dart:async';
 
 class BuscarInternacional extends StatefulWidget {

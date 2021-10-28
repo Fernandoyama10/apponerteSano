@@ -1,4 +1,4 @@
-import 'package:aplication/src/model/food.dart';
+import 'package:apponertesano/src/model/food.dart';
 import 'package:flutter/material.dart';
 
 class AgregarRegional extends StatefulWidget {
