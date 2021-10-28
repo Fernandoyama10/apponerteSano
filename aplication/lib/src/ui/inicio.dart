@@ -25,7 +25,7 @@ setState(() {
 
   @override
   Widget build(BuildContext context) {
-
+        UserDat? args = ModalRoute.of(context)!.settings.arguments as UserDat?;
     //  args = ModalRoute.of(context).settings.arguments;
 
     return Container(
@@ -269,9 +269,8 @@ setState(() {
             Container(
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const <Widget>[
-                                Text(
-                        'Bienvenido: -',
+                            children:  <Widget>[
+                                Text('Bienvenido: ' + args!.name,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontWeight: FontWeight.w600,

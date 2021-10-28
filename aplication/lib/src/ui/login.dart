@@ -23,15 +23,11 @@ class _LoginState extends State<Login> {
   final formkey = new GlobalKey<FormState>();
   //String _usuario;
   // String _contra;
-  bool isLoggedIn = false;
   @override
   void initState() {
     super.initState();
     //Determine if the user is authenticated.
 
-    if (isLoggedIn == true) {
-      Navigator.of(context).pushReplacementNamed('/login');
-    } else {}
   }
 
   @override
