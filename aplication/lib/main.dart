@@ -34,32 +34,30 @@ class MyApp extends StatelessWidget {
         )
       ],
       child: MaterialApp(
-      //deshabiltar el banner de debuguer
-      debugShowCheckedModeBanner: false,
-      //creamos el texto que tendrá la aplicación y lo centramos
-      initialRoute: '/',
-      routes: {
-        // When navigating to the "/" route, build the FirstScreen widget.
-        '/': (context) => SplashScreen(), //SplashScreen
-        '/login': (context) => Login(),
-        '/inicio': (context) => Diseno(),
-        '/tipocomida': (context) => Tipocomida(),
-        '/registeruser': (context) => RegisterUser(),
-        '/infouser': (context) => InfoUserReg(),
-        '/infousercalories': (context) => InfoUserCaloriesReg(),
-        '/splashloading': (context) => SplashLoading(),
-        '/comidainter': (context) => BuscarInternacional(),
-        '/comidareg': (context) => BuscarRegional(),
-        '/agrega_inter': (context) => AgregarInternacional(),
-        '/agregarcomida_regi': (context) => AgregarRegional(),
-      },
-      /*
+        //deshabiltar el banner de debuguer
+        debugShowCheckedModeBanner: false,
+        //creamos el texto que tendrá la aplicación y lo centramos
+        initialRoute: '/',
+        routes: {
+          // When navigating to the "/" route, build the FirstScreen widget.
+          '/': (context) => SplashScreen(), //SplashScreen
+          '/login': (context) => Login(),
+          '/inicio': (context) => Diseno(),
+          '/tipocomida': (context) => Tipocomida(),
+          '/registeruser': (context) => RegisterUser(),
+          '/infouser': (context) => InfoUserReg(),
+          '/infousercalories': (context) => InfoUserCaloriesReg(),
+          '/splashloading': (context) => SplashLoading(),
+          '/comidainter': (context) => BuscarInternacional(),
+          '/comidareg': (context) => BuscarRegional(),
+          '/agrega_inter': (context) => AgregarInternacional(),
+          '/agregarcomida_regi': (context) => AgregarRegional(),
+        },
+        /*
      home: Center(
           child: Login(),
        ) , */
-    ),
+      ),
     );
-
-    
   }
 }

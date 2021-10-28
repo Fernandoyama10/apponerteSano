@@ -10,13 +10,24 @@ class SplashLoading extends StatefulWidget {
 class _SplashLoadingState extends State<SplashLoading> {
   @override
   void initState() {
-    Timer(Duration(seconds: 3),
+    Timer(Duration(seconds: 200),
         () => Navigator.of(context).pushReplacementNamed('/inicio'));
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.infinity,
+      height: double.infinity,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomRight,
+            colors: [
+              Colors.lightGreen.shade50,
+              Colors.lightGreen.shade100,
+            ]),
+      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -25,8 +36,10 @@ class _SplashLoadingState extends State<SplashLoading> {
             width: 320.0,
             height: 250,
           ),
-          SizedBox(height: 65),
+          SizedBox(height: 3),
           Container(
+            alignment: Alignment.centerRight,
+            width: 300,
             child: Text(
               "Estamos calculando tus calorias...",
               style: TextStyle(
