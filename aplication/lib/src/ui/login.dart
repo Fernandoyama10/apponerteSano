@@ -27,7 +27,6 @@ class _LoginState extends State<Login> {
   void initState() {
     super.initState();
     //Determine if the user is authenticated.
-
   }
 
   @override
