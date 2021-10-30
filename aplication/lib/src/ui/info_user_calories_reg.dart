@@ -87,6 +87,32 @@ class _InfoUserCaloriesRegState extends State<InfoUserCaloriesReg> {
 
                 //textfiel 1
                 //agregar un drop down
+
+         Container(
+                  child: DropdownButton<String>(
+                    key: _dropdowngener,
+                    value: dropdownvalue,
+                    icon: const Icon(Icons.arrow_downward),
+                    iconSize: 24,
+                    elevation: 16,
+                    style: const TextStyle(color: Colors.deepPurple),
+                    underline: Container(
+                      height: 2,
+                      color: Colors.deepPurple,
+                    ),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        rgender = newValue!;
+              
+                      });
+                    },
+                    items: items.map((String items) {
+                        return DropdownMenuItem(
+                            value: items, child: Text(items));
+                      }).toList(),
+                  ),
+                ),
+
                 Container(
                   child: DropdownButton<String>(
                     key: _dropdowngener,
@@ -285,12 +311,6 @@ class _InfoUserCaloriesRegState extends State<InfoUserCaloriesReg> {
     );
   }
 
-  void _registrarme() {
-    if (_formKey1.currentState!.validate()) {
-    
- 
-    }
-  }
 
   Widget RegistrarButton(BuildContext context) {
     return MaterialButton(
