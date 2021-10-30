@@ -16,12 +16,12 @@ class _InfoUserRegState extends State<InfoUserReg> {
   final txtage = TextEditingController();
 
   final formkey = new GlobalKey<FormState>();
-  String email="";
-    String password ="";
+  String email = "";
+  String password = "";
   @override
   Widget build(BuildContext context) {
-  
-        UserRegistroStep2 args = ModalRoute.of(context)!.settings.arguments as UserRegistroStep2;
+    UserRegistroStep2 args =
+        ModalRoute.of(context)!.settings.arguments as UserRegistroStep2;
     return Scaffold(
       appBar: AppBar(
         title: Text('Paso 2:'),
@@ -80,11 +80,10 @@ class _InfoUserRegState extends State<InfoUserReg> {
                     labelText: 'Nombre:',
                     prefixIcon: Icon(Icons.verified_user),
                   ),
-                    onChanged: (text) {
-          setState(() => email = args.email);
-        },
+                  onChanged: (text) {
+                    setState(() => email = args.email);
+                  },
                 ),
-                
 
                 SizedBox(height: 15),
                 //textfield 2
@@ -124,9 +123,9 @@ class _InfoUserRegState extends State<InfoUserReg> {
                     labelText: 'Edad',
                     prefixIcon: Icon(Icons.verified_user),
                   ),
-                        onChanged: (text) {
-          setState(() => password = args.password);
-        },
+                  onChanged: (text) {
+                    setState(() => password = args.password);
+                  },
                 ),
                 SizedBox(height: 30),
                 //botón
@@ -158,25 +157,13 @@ class _InfoUserRegState extends State<InfoUserReg> {
             )),
           )),
     );
-
-
-    
   }
 
   void _siguientepage() {
     if (_formKey1.currentState!.validate()) {
-          Navigator.pushNamed(context, '/infousercalories',
+      Navigator.pushNamed(context, '/infousercalories',
           arguments: UserRegistroStep3(
-            email,
-            password,
-            txtname.text,
-            txtsurname.text,
-            txtage.text
-
-          ));
-
-  
+              email, password, txtname.text, txtsurname.text, txtage.text));
     }
   }
-
 }

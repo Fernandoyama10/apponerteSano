@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:apponertesano/src/model/user.dart';
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
+
 // Define un widget de formulario personalizado
 class InfoUserCaloriesReg extends StatefulWidget {
   //la llave validadora
@@ -33,10 +33,10 @@ class _InfoUserCaloriesRegState extends State<InfoUserCaloriesReg> {
   String rname = "";
   String rsurname = "";
   int rage = 0;
-  double rweight=0;
+  double rweight = 0;
   String rgender = "";
-  double rheight=0;
-  int rid_activity=0;
+  double rheight = 0;
+  int rid_activity = 0;
   @override
   Widget build(BuildContext context) {
     UserRegistroStep3 args =
@@ -87,32 +87,6 @@ class _InfoUserCaloriesRegState extends State<InfoUserCaloriesReg> {
 
                 //textfiel 1
                 //agregar un drop down
-
-         Container(
-                  child: DropdownButton<String>(
-                    key: _dropdowngener,
-                    value: dropdownvalue,
-                    icon: const Icon(Icons.arrow_downward),
-                    iconSize: 24,
-                    elevation: 16,
-                    style: const TextStyle(color: Colors.deepPurple),
-                    underline: Container(
-                      height: 2,
-                      color: Colors.deepPurple,
-                    ),
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        rgender = newValue!;
-              
-                      });
-                    },
-                    items: items.map((String items) {
-                        return DropdownMenuItem(
-                            value: items, child: Text(items));
-                      }).toList(),
-                  ),
-                ),
-
                 Container(
                   child: DropdownButton<String>(
                     key: _dropdowngener,
@@ -127,14 +101,16 @@ class _InfoUserCaloriesRegState extends State<InfoUserCaloriesReg> {
                     ),
                     onChanged: (String? newValue) {
                       setState(() {
-                        rgender = newValue!;
-              
+                        dropdownvalue = newValue!;
+                        rgender = dropdownvalue;
                       });
                     },
-                    items: items.map((String items) {
-                        return DropdownMenuItem(
-                            value: items, child: Text(items));
-                      }).toList(),
+                    items: items.map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
                   ),
                 ),
 
@@ -149,8 +125,8 @@ class _InfoUserCaloriesRegState extends State<InfoUserCaloriesReg> {
                       return null;
                     },
                     controller: txtpeso,
-               
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
+                    keyboardType:
+                        TextInputType.numberWithOptions(decimal: true),
                     autofocus: true,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
@@ -158,10 +134,9 @@ class _InfoUserCaloriesRegState extends State<InfoUserCaloriesReg> {
                       labelText: 'Peso(Kg):',
                       prefixIcon: Icon(Icons.monitor_weight),
                     ),
-
-                      onChanged: (text) {
-          setState(() => rweight = double.parse(text));
-        },
+                    onChanged: (text) {
+                      setState(() => rweight = double.parse(text));
+                    },
                   ),
                 ),
 
@@ -179,8 +154,8 @@ class _InfoUserCaloriesRegState extends State<InfoUserCaloriesReg> {
                       return null;
                     },
                     controller: _txtaltura,
-                  
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
+                    keyboardType:
+                        TextInputType.numberWithOptions(decimal: true),
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.fromLTRB(5, 5, 5, 0),
                       border: OutlineInputBorder(
@@ -188,9 +163,9 @@ class _InfoUserCaloriesRegState extends State<InfoUserCaloriesReg> {
                       labelText: 'Estatura(Cm)',
                       prefixIcon: Icon(Icons.height_outlined),
                     ),
-                     onChanged: (text) {
-          setState(() => rheight = double.parse(text));
-        },
+                    onChanged: (text) {
+                      setState(() => rheight = double.parse(text));
+                    },
                   ),
                 ),
                 SizedBox(height: 20),
@@ -209,13 +184,12 @@ class _InfoUserCaloriesRegState extends State<InfoUserCaloriesReg> {
                           key: _txtfisico,
                           value: 1,
                           groupValue: _value,
-                              onChanged: (value) {
+                          onChanged: (value) {
                             setState(() {
                               _value = 1;
                               rid_activity = _value;
                             });
                           },
-                     
                         ),
                         SizedBox(width: 10.0),
                         Text("No hago nada de ejercicio"),
@@ -228,7 +202,7 @@ class _InfoUserCaloriesRegState extends State<InfoUserCaloriesReg> {
                           value: 2,
                           groupValue: _value,
                           onChanged: (value) {
-                         setState(() {
+                            setState(() {
                               _value = 2;
                               rid_activity = _value;
                             });
@@ -279,7 +253,7 @@ class _InfoUserCaloriesRegState extends State<InfoUserCaloriesReg> {
                           value: 5,
                           groupValue: _value,
                           onChanged: (value) {
-                           setState(() {
+                            setState(() {
                               _value = 5;
                               rid_activity = _value;
                             });
@@ -294,7 +268,7 @@ class _InfoUserCaloriesRegState extends State<InfoUserCaloriesReg> {
 
                 SizedBox(height: 30),
                 //botón
-                  RegistrarButton(context),
+                RegistrarButton(context),
                 Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -311,25 +285,24 @@ class _InfoUserCaloriesRegState extends State<InfoUserCaloriesReg> {
     );
   }
 
-
   Widget RegistrarButton(BuildContext context) {
     return MaterialButton(
       onPressed: () {
-         if (_formKey1.currentState!.validate()) {
-    registrarUsu(
-          context,
-          remail,
-          rpassword,
-          rid_role,
-          rname,
-          rsurname,
-          rage,
-          rweight,
-          rgender,
-          rheight,
-          rid_activity,
-        );
-    }
+        if (_formKey1.currentState!.validate()) {
+          registrarUsu(
+            context,
+            remail,
+            rpassword,
+            rid_role,
+            rname,
+            rsurname,
+            rage,
+            rweight,
+            rgender,
+            rheight,
+            rid_activity,
+          );
+        }
       },
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(28),
@@ -375,15 +348,14 @@ Future registrarUsu(
       headers: {"Content-Type": "application/json"},
       body: body);
 
-      final value = json.decode(response.body)["statusCode"];
+  final value = json.decode(response.body)["statusCode"];
 
   if (response.statusCode == 200) {
-    if(value == 400){
-             _showDialog(context, 'Email registrado');
-    }else{
-        Navigator.pushNamed(context, '/splashloading');
+    if (value == 400) {
+      _showDialog(context, 'Email registrado');
+    } else {
+      Navigator.pushNamed(context, '/splashloading');
     }
- 
   } else {
     throw Exception('No se Agrego');
   }
@@ -408,4 +380,3 @@ void _showDialog(BuildContext context, String texto1) {
     },
   );
 }
-
