@@ -21,9 +21,9 @@ class _InfoUserCaloriesRegState extends State<InfoUserCaloriesReg> {
 
   int _value = 0;
 
-  String dropdownvalue = 'Seleccione su sexo';
+  String dropdownvalue = 'Seleccione su sexo aquí';
   List<String> items = <String>[
-    'Seleccione su sexo',
+    'Seleccione su sexo aquí',
     'Masculino',
     'Femenino',
   ];
@@ -84,37 +84,6 @@ class _InfoUserCaloriesRegState extends State<InfoUserCaloriesReg> {
                   padding: EdgeInsets.symmetric(horizontal: 32),
                 ),
                 SizedBox(height: 35),
-
-                //textfiel 1
-                //agregar un drop down
-                Container(
-                  child: DropdownButton<String>(
-                    key: _dropdowngener,
-                    value: dropdownvalue,
-                    icon: const Icon(Icons.arrow_downward),
-                    iconSize: 24,
-                    elevation: 16,
-                    style: const TextStyle(color: Colors.deepPurple),
-                    underline: Container(
-                      height: 2,
-                      color: Colors.deepPurple,
-                    ),
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        dropdownvalue = newValue!;
-                        rgender = dropdownvalue;
-                      });
-                    },
-                    items: items.map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                  ),
-                ),
-
-                SizedBox(height: 20),
                 Container(
                   width: 250.0,
                   child: TextFormField(
@@ -131,7 +100,7 @@ class _InfoUserCaloriesRegState extends State<InfoUserCaloriesReg> {
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(32.0)),
-                      labelText: 'Peso(Kg):',
+                      labelText: 'Peso (Kg):',
                       prefixIcon: Icon(Icons.monitor_weight),
                     ),
                     onChanged: (text) {
@@ -166,6 +135,33 @@ class _InfoUserCaloriesRegState extends State<InfoUserCaloriesReg> {
                     onChanged: (text) {
                       setState(() => rheight = double.parse(text));
                     },
+                  ),
+                ),
+                SizedBox(height: 20),
+                Container(
+                  child: DropdownButton<String>(
+                    key: _dropdowngener,
+                    value: dropdownvalue,
+                    icon: const Icon(Icons.arrow_downward),
+                    iconSize: 24,
+                    elevation: 16,
+                    style: const TextStyle(color: Colors.deepPurple),
+                    underline: Container(
+                      height: 2,
+                      color: Colors.deepPurple,
+                    ),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        dropdownvalue = newValue!;
+                        rgender = dropdownvalue;
+                      });
+                    },
+                    items: items.map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
                   ),
                 ),
                 SizedBox(height: 20),
@@ -285,6 +281,9 @@ class _InfoUserCaloriesRegState extends State<InfoUserCaloriesReg> {
     );
   }
 
+  //Mujeres: [655 + (9,6 × peso en kg) ] + [ (1,8 × altura en cm) – (4,7 × edad)] × Factor actividad
+  //Hombres: [66 + (13,7 × peso en kg) ] + [ (5 × altura en cm) – (6,8 × edad)] × Factor actividad
+
   Widget RegistrarButton(BuildContext context) {
     return MaterialButton(
       onPressed: () {
@@ -344,7 +343,7 @@ Future registrarUsu(
   var body = json.encode(data);
 
   final response = await http.post(
-      Uri.parse("http://10.0.2.2:8000/api/register"),
+      Uri.parse("http://apiapponertesano.azurewebsites.net/api/register"),
       headers: {"Content-Type": "application/json"},
       body: body);
 
@@ -352,12 +351,12 @@ Future registrarUsu(
 
   if (response.statusCode == 200) {
     if (value == 400) {
-      _showDialog(context, 'Email registrado');
+      _showDialog(context, 'Usuario ya registrado anteriormente');
     } else {
       Navigator.pushNamed(context, '/splashloading');
     }
   } else {
-    throw Exception('No se Agrego');
+    throw Exception('No se Agrego, intenta nuevamente');
   }
 }
 
@@ -366,7 +365,7 @@ void _showDialog(BuildContext context, String texto1) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: new Text("Error"),
+        title: new Text("Mensaje"),
         content: new Text(texto1),
         actions: <Widget>[
           new FlatButton(

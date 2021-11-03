@@ -124,7 +124,7 @@ class _LoginState extends State<Login> {
                     minWidth: 200.0,
                     height: 45.0,
                     onPressed: () {
-                         _iniciarsesion();
+                      _iniciarsesion();
                     },
                     color: Colors.green[400],
                     child: Text('Iniciar Sesión',
@@ -208,63 +208,55 @@ class _LoginState extends State<Login> {
 
   void _iniciarsesion() {
     if (_formKey.currentState!.validate()) {
-            Future<List<Usuario>> listapost = verifyLogin(
-                          context, txtemail.text);
+      Future<List<Usuario>> listapost = verifyLogin(context, txtemail.text);
     }
   }
 
-
-Future<List<Usuario>> verifyLogin(
-    BuildContext context, String email) async {
-  final url = Uri.parse(
-        'http://10.0.2.2:8000/api/login/$email');
+  Future<List<Usuario>> verifyLogin(BuildContext context, String email) async {
+    final url =
+        Uri.parse('http://apiapponertesano.azurewebsites.net/api/login/$email');
     final response = await http.get(url);
-  if (response.statusCode == 200) {
-     List<Usuario> lista = parsePost(response.body);
+    if (response.statusCode == 200) {
+      List<Usuario> lista = parsePost(response.body);
       if (lista.length > 0) {
         print(lista[0].password);
-          if(txtpassword.text == lista[0].password){
-               Navigator.pushReplacementNamed(context, "/inicio",
-          arguments: UserLogin(
-              lista[0].id_user!,
-              lista[0].email!,
-              lista[0].password!,
-));
-          } 
-          else{
-           _showDialog(context, 'Contraseña incorrecta');
-          }
-       
-      } else{
-_showDialog(context, 'No existe conexión');
+        if (txtpassword.text == lista[0].password) {
+          Navigator.pushReplacementNamed(context, "/inicio",
+              arguments: UserLogin(
+                lista[0].id_user!,
+                lista[0].email!,
+                lista[0].password!,
+              ));
+        } else {
+          _showDialog(context, 'Contraseña incorrecta');
+        }
+      } else {
+        _showDialog(context, 'No existe el usuario en la aplicación');
       }
       return lista;
     } else {
       _showDialog(context, 'No existe conexión');
-    throw Exception('Unable to fetch products from the REST API');
-    
+      throw Exception('Unable to fetch products from the REST API');
+    }
   }
 
-
-}
-void _showDialog(BuildContext context, String texto1) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: new Text("Error"),
-        content: new Text(texto1),
-        actions: <Widget>[
-          new FlatButton(
-            child: new Text("OK"),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
-      );
-    },
-  );
-}
-
+  void _showDialog(BuildContext context, String texto1) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: new Text("Mensaje"),
+          content: new Text(texto1),
+          actions: <Widget>[
+            new FlatButton(
+              child: new Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }

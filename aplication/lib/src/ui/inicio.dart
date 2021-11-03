@@ -270,7 +270,7 @@ setState(() {
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children:  <Widget>[
-                                Text('Bienvenido: ',
+                                Text('Bienvenido: ' ,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontWeight: FontWeight.w600,

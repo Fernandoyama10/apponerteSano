@@ -26,7 +26,7 @@ setState(() {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Tipo de Comida'),
+        title: Text('Busca tu alimento'),
         backgroundColor: Colors.lightGreen.shade600,
         centerTitle: true,
       ),
@@ -36,6 +36,7 @@ setState(() {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
+            Text('insert search to yucatan food'),
           ],
         ),
       ),
@@ -43,6 +44,7 @@ setState(() {
     );
   }
 }
+
 /* 
 class Choice{
   final String title;
