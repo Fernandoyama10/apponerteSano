@@ -10,7 +10,7 @@ class SplashLoading extends StatefulWidget {
 class _SplashLoadingState extends State<SplashLoading> {
   @override
   void initState() {
-    Timer(Duration(seconds: 200),
+    Timer(Duration(seconds: 3),
         () => Navigator.of(context).pushReplacementNamed('/inicio'));
   }
 
