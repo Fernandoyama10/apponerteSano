@@ -1,5 +1,6 @@
 import 'dart:async';
-
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:apponertesano/src/resources/facebook_login_result.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
@@ -23,7 +24,6 @@ class _LoginState extends State<Login> {
   final formkey = new GlobalKey<FormState>();
   //String _usuario;
   // String _contra;
-
   @override
   void initState() {
     super.initState();
@@ -87,7 +87,7 @@ class _LoginState extends State<Login> {
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(32.0)),
-                      labelText: 'Email:',
+                      labelText: 'Email: ',
                       prefixIcon: Icon(Icons.supervised_user_circle),
                     ),
                   ),
@@ -124,7 +124,7 @@ class _LoginState extends State<Login> {
                     minWidth: 200.0,
                     height: 45.0,
                     onPressed: () {
-                      _iniciarsesion();
+                         _iniciarsesion();
                     },
                     color: Colors.green[400],
                     child: Text('Iniciar Sesión',
@@ -208,7 +208,63 @@ class _LoginState extends State<Login> {
 
   void _iniciarsesion() {
     if (_formKey.currentState!.validate()) {
-      Navigator.pushNamed(context, '/inicio');
+            Future<List<Usuario>> listapost = verifyLogin(
+                          context, txtemail.text);
     }
   }
+
+
+Future<List<Usuario>> verifyLogin(
+    BuildContext context, String email) async {
+  final url = Uri.parse(
+        'http://10.0.2.2:8000/api/login/$email');
+    final response = await http.get(url);
+  if (response.statusCode == 200) {
+     List<Usuario> lista = parsePost(response.body);
+      if (lista.length > 0) {
+        print(lista[0].password);
+          if(txtpassword.text == lista[0].password){
+               Navigator.pushReplacementNamed(context, "/inicio",
+          arguments: UserLogin(
+              lista[0].id_user!,
+              lista[0].email!,
+              lista[0].password!,
+));
+          } 
+          else{
+           _showDialog(context, 'Contraseña incorrecta');
+          }
+       
+      } else{
+_showDialog(context, 'No existe conexión');
+      }
+      return lista;
+    } else {
+      _showDialog(context, 'No existe conexión');
+    throw Exception('Unable to fetch products from the REST API');
+    
+  }
+
+
+}
+void _showDialog(BuildContext context, String texto1) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: new Text("Error"),
+        content: new Text(texto1),
+        actions: <Widget>[
+          new FlatButton(
+            child: new Text("OK"),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+
 }

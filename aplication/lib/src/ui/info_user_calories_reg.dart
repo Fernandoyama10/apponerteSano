@@ -1,3 +1,7 @@
+import 'dart:convert';
+import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
+import 'package:apponertesano/src/model/user.dart';
 import 'package:flutter/material.dart';
 
 // Define un widget de formulario personalizado
@@ -15,7 +19,7 @@ class _InfoUserCaloriesRegState extends State<InfoUserCaloriesReg> {
   final _dropdowngener = GlobalKey<FormState>();
   final _txtaltura = TextEditingController();
 
-  double _value = 1.2;
+  int _value = 0;
 
   String dropdownvalue = 'Seleccione su sexo';
   List<String> items = <String>[
@@ -23,9 +27,25 @@ class _InfoUserCaloriesRegState extends State<InfoUserCaloriesReg> {
     'Masculino',
     'Femenino',
   ];
-
+  String remail = "";
+  String rpassword = "";
+  int rid_role = 2;
+  String rname = "";
+  String rsurname = "";
+  int rage = 0;
+  double rweight = 0;
+  String rgender = "";
+  double rheight = 0;
+  int rid_activity = 0;
   @override
   Widget build(BuildContext context) {
+    UserRegistroStep3 args =
+        ModalRoute.of(context)!.settings.arguments as UserRegistroStep3;
+    remail = args.email;
+    rpassword = args.password;
+    rname = args.name;
+    rsurname = args.surname;
+    rage = int.parse(args.age);
     return Scaffold(
       appBar: AppBar(
         title: Text('Paso 3:'),
@@ -82,6 +102,7 @@ class _InfoUserCaloriesRegState extends State<InfoUserCaloriesReg> {
                     onChanged: (String? newValue) {
                       setState(() {
                         dropdownvalue = newValue!;
+                        rgender = dropdownvalue;
                       });
                     },
                     items: items.map<DropdownMenuItem<String>>((String value) {
@@ -104,7 +125,8 @@ class _InfoUserCaloriesRegState extends State<InfoUserCaloriesReg> {
                       return null;
                     },
                     controller: txtpeso,
-                    keyboardType: TextInputType.number,
+                    keyboardType:
+                        TextInputType.numberWithOptions(decimal: true),
                     autofocus: true,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
@@ -112,6 +134,9 @@ class _InfoUserCaloriesRegState extends State<InfoUserCaloriesReg> {
                       labelText: 'Peso(Kg):',
                       prefixIcon: Icon(Icons.monitor_weight),
                     ),
+                    onChanged: (text) {
+                      setState(() => rweight = double.parse(text));
+                    },
                   ),
                 ),
 
@@ -129,7 +154,8 @@ class _InfoUserCaloriesRegState extends State<InfoUserCaloriesReg> {
                       return null;
                     },
                     controller: _txtaltura,
-                    keyboardType: TextInputType.number,
+                    keyboardType:
+                        TextInputType.numberWithOptions(decimal: true),
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.fromLTRB(5, 5, 5, 0),
                       border: OutlineInputBorder(
@@ -137,6 +163,9 @@ class _InfoUserCaloriesRegState extends State<InfoUserCaloriesReg> {
                       labelText: 'Estatura(Cm)',
                       prefixIcon: Icon(Icons.height_outlined),
                     ),
+                    onChanged: (text) {
+                      setState(() => rheight = double.parse(text));
+                    },
                   ),
                 ),
                 SizedBox(height: 20),
@@ -153,11 +182,12 @@ class _InfoUserCaloriesRegState extends State<InfoUserCaloriesReg> {
                       children: [
                         Radio(
                           key: _txtfisico,
-                          value: 1.2,
+                          value: 1,
                           groupValue: _value,
                           onChanged: (value) {
                             setState(() {
-                              _value = 1.2;
+                              _value = 1;
+                              rid_activity = _value;
                             });
                           },
                         ),
@@ -169,11 +199,12 @@ class _InfoUserCaloriesRegState extends State<InfoUserCaloriesReg> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Radio(
-                          value: 1.375,
+                          value: 2,
                           groupValue: _value,
                           onChanged: (value) {
                             setState(() {
-                              _value = 1.375;
+                              _value = 2;
+                              rid_activity = _value;
                             });
                           },
                         ),
@@ -185,11 +216,12 @@ class _InfoUserCaloriesRegState extends State<InfoUserCaloriesReg> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Radio(
-                          value: 1.55,
+                          value: 3,
                           groupValue: _value,
                           onChanged: (value) {
                             setState(() {
-                              _value = 1.55;
+                              _value = 3;
+                              rid_activity = _value;
                             });
                           },
                         ),
@@ -201,11 +233,12 @@ class _InfoUserCaloriesRegState extends State<InfoUserCaloriesReg> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Radio(
-                          value: 1.725,
+                          value: 4,
                           groupValue: _value,
                           onChanged: (value) {
                             setState(() {
-                              _value = 1.725;
+                              _value = 4;
+                              rid_activity = _value;
                             });
                           },
                         ),
@@ -217,11 +250,12 @@ class _InfoUserCaloriesRegState extends State<InfoUserCaloriesReg> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Radio(
-                          value: 1.9,
+                          value: 5,
                           groupValue: _value,
                           onChanged: (value) {
                             setState(() {
-                              _value = 1.9;
+                              _value = 5;
+                              rid_activity = _value;
                             });
                           },
                         ),
@@ -234,26 +268,13 @@ class _InfoUserCaloriesRegState extends State<InfoUserCaloriesReg> {
 
                 SizedBox(height: 30),
                 //botón
+                RegistrarButton(context),
                 Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Align(
                         alignment: Alignment.centerRight,
-                      ),
-                      MaterialButton(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(28),
-                        ),
-                        minWidth: 200.0,
-                        height: 45.0,
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/splashloading');
-                          // Navigator.pushNamed(context, '/consumo',arguments: datosArguments(myController.text,myControllernum2.text));
-                        },
-                        color: Colors.green.shade600,
-                        child: Text('Registrarme',
-                            style: TextStyle(color: Colors.white)),
                       ),
                     ]),
 
@@ -264,9 +285,98 @@ class _InfoUserCaloriesRegState extends State<InfoUserCaloriesReg> {
     );
   }
 
-  void _iniciarsesion() {
-    if (_formKey1.currentState!.validate()) {
+  Widget RegistrarButton(BuildContext context) {
+    return MaterialButton(
+      onPressed: () {
+        if (_formKey1.currentState!.validate()) {
+          registrarUsu(
+            context,
+            remail,
+            rpassword,
+            rid_role,
+            rname,
+            rsurname,
+            rage,
+            rweight,
+            rgender,
+            rheight,
+            rid_activity,
+          );
+        }
+      },
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(28),
+      ),
+      minWidth: 200.0,
+      height: 45.0,
+      color: Colors.green.shade600,
+      child: Text('Registrarme', style: TextStyle(color: Colors.white)),
+    );
+  }
+}
+
+Future registrarUsu(
+  BuildContext context,
+  String email,
+  String password,
+  int id_role,
+  String name,
+  String surname,
+  int? age,
+  double? weight,
+  String gender,
+  double? height,
+  int? id_activity,
+) async {
+  Map data = {
+    'email': email,
+    'password': password,
+    'id_role': id_role,
+    'name': name,
+    'surname': surname,
+    'weight': weight,
+    //gogle
+    'age': age,
+    'gender': gender,
+    'height': height,
+    'id_activity': id_activity,
+  };
+  var body = json.encode(data);
+
+  final response = await http.post(
+      Uri.parse("http://10.0.2.2:8000/api/register"),
+      headers: {"Content-Type": "application/json"},
+      body: body);
+
+  final value = json.decode(response.body)["statusCode"];
+
+  if (response.statusCode == 200) {
+    if (value == 400) {
+      _showDialog(context, 'Email registrado');
+    } else {
       Navigator.pushNamed(context, '/splashloading');
     }
+  } else {
+    throw Exception('No se Agrego');
   }
+}
+
+void _showDialog(BuildContext context, String texto1) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: new Text("Error"),
+        content: new Text(texto1),
+        actions: <Widget>[
+          new FlatButton(
+            child: new Text("OK"),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
 }
