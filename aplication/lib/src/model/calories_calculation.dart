@@ -1,13 +1,7 @@
-import 'dart:html';
 
-import 'package:apponertesano/src/model/user.dart';
-import 'package:apponertesano/src/resources/userData.dart';
-import 'package:http/http.dart' as http;
-import 'package:flutter/material.dart';
-import 'dart:async';
 
 class Calories_calculation {
- /**  void _getuserdata() {
+ /*  void _getuserdata() {
      UserLogin data;
     Future<List<UsuarioData>> listapost =
         getdata(context, data.id_user.toString());

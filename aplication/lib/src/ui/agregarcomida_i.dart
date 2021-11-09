@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:apponertesano/src/model/user.dart';
 import 'package:http/http.dart' as http;
 import 'package:apponertesano/src/model/food.dart';
 import 'package:flutter/material.dart';
@@ -25,10 +26,13 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
   String label = "";
   String image = "";
   String datetoday = DateFormat("yyyy-MM-dd").format(DateTime.now());
-  String timetoday = DateFormat("HH:mm:ss").format(DateTime.now());
-  double id_user = 1;
+  String timetoday = DateFormat('hh:mm:ss').format(DateTime.now());
+  int id_user = 0;
   @override
   Widget build(BuildContext context) {
+        UsuariodataSet data =
+        ModalRoute.of(context)!.settings.arguments as UsuariodataSet;
+    id_user = data.id_user;
     GetRecipe args = ModalRoute.of(context)!.settings.arguments as GetRecipe;
     //porciones
     yields = args.yield;
@@ -366,7 +370,7 @@ Future registrarFood(
   double? carbs,
   double? sugar,
   double? sodium,
-  double? id_user,
+  int? id_user,
 ) async {
   Map data = {
     'date_r': date_r,

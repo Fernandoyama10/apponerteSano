@@ -1,7 +1,5 @@
-import 'package:apponertesano/src/model/calories_calculation.dart';
 import 'package:apponertesano/src/model/user.dart';
 import 'package:apponertesano/src/resources/facebook_login_result.dart';
-import 'package:apponertesano/src/resources/userData.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
