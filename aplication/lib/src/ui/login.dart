@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:apponertesano/src/resources/userData.dart';
 import 'package:http/http.dart' as http;
 import 'package:apponertesano/src/resources/facebook_login_result.dart';
 import 'package:flutter/material.dart';
@@ -213,8 +214,8 @@ class _LoginState extends State<Login> {
   }
 
   Future<List<Usuario>> verifyLogin(BuildContext context, String email) async {
-    final url =
-        Uri.parse('http://apiapponertesano.azurewebsites.net/api/login/$email');
+    final url = Uri.parse(
+        'http://apiapponertesano.azurewebsites.net/api/logindata/$email');
     final response = await http.get(url);
     if (response.statusCode == 200) {
       List<Usuario> lista = parsePost(response.body);
@@ -222,11 +223,19 @@ class _LoginState extends State<Login> {
         print(lista[0].password);
         if (txtpassword.text == lista[0].password) {
           Navigator.pushReplacementNamed(context, "/inicio",
-              arguments: UserLogin(
-                lista[0].id_user!,
-                lista[0].email!,
-                lista[0].password!,
-              ));
+              arguments: UsuariodataSet(
+                  lista[0].id_user!,
+                  lista[0].email!,
+                  lista[0].password!,
+                  lista[0].id_role!,
+                  lista[0].name!,
+                  lista[0].surname!,
+                  lista[0].age!,
+                  lista[0].weight!,
+                  lista[0].gender!,
+                  lista[0].height!,
+                  lista[0].name_level!,
+                  lista[0].value_level!));
         } else {
           _showDialog(context, 'Contraseña incorrecta');
         }

@@ -1,5 +1,7 @@
+import 'package:apponertesano/src/model/calories_calculation.dart';
 import 'package:apponertesano/src/model/user.dart';
 import 'package:apponertesano/src/resources/facebook_login_result.dart';
+import 'package:apponertesano/src/resources/userData.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,23 +12,39 @@ class Diseno extends StatefulWidget {
 }
 
 class _DisenoState extends State<Diseno> {
-  // static datosArguments args;
 // log aout
   //clase choice
-  /*  void _select(Choice choice){
-setState(() {
-  switch (choice.title) {
-    case 'LOG OUT':
-        Navigator.pushNamed(context, '/login');
-        break;
+
+  double _height = 0;
+  double _weight = 0;
+  int _age = 0;
+  double _activity = 0;
+  String _gender = "";
+  int _resultCalories = 0;
+  double _mtb = 0;
+
+  void calculateCalories(height, weight, age, activity, gender) {
+    if (gender == "Masculino") {
+      _mtb = ((66 + (13.7 * weight)) + ((5 * height) - (6.8 * age)));
+      _resultCalories = (_mtb * activity).round();
+      print(_resultCalories);
+    } else {
+      _mtb = ((655 + (9.6 * weight)) + ((1.8 * height) - (4.7 * age)));
+      _resultCalories = (_mtb * activity).round();
+    }
   }
-});
-}*/
 
   @override
   Widget build(BuildContext context) {
-      //  UserDat? args = ModalRoute.of(context)!.settings.arguments as UserDat?;
-    //  args = ModalRoute.of(context).settings.arguments;
+    UsuariodataSet data =
+        ModalRoute.of(context)!.settings.arguments as UsuariodataSet;
+    _height = data.height;
+    _weight = data.weight;
+    _age = data.age;
+    _activity = data.value_level;
+    _gender = data.gender;
+
+    calculateCalories(_height, _weight, _age, _activity, _gender);
 
     return Container(
       height: MediaQuery.of(context).size.height,
@@ -35,8 +53,6 @@ setState(() {
       decoration: new BoxDecoration(
         gradient: new LinearGradient(
             colors: [
-              //  const Color(0xFF2E7D32),
-              // const Color(0xFF66BB6A),
               Colors.lightGreen.shade600,
               Colors.lightGreen.shade400,
             ],
@@ -59,7 +75,7 @@ setState(() {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      "1500 CAL",
+                      _resultCalories.toString(),
                       style: TextStyle(
                           color: Colors.yellow[400],
                           fontSize: 28,
@@ -145,7 +161,7 @@ setState(() {
                             height: 4,
                           ),
                           Text(
-                            "3000 cal. iniciales",
+                            _resultCalories.toString() + "cal. iniciales",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontWeight: FontWeight.w700,
@@ -239,8 +255,7 @@ setState(() {
                       SizedBox(
                         height: 24,
                       ),
-                   
-                
+
                       Container(
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -263,21 +278,22 @@ setState(() {
                               ),
                             ]),
                       ),
-                          SizedBox(
+                      SizedBox(
                         height: 15,
                       ),
-            Container(
+                      Container(
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children:  <Widget>[
-                                Text('Bienvenido: ' ,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 15,
-                            color: Colors.brown,
-                            decoration: TextDecoration.none),
-                      ),
+                            children: <Widget>[
+                              Text(
+                                'Bienvenido: ' + data.name,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 15,
+                                    color: Colors.brown,
+                                    decoration: TextDecoration.none),
+                              ),
                             ]),
                       ),
                       SizedBox(
@@ -363,7 +379,7 @@ setState(() {
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
                                       Text(
-                                        "llevas consumido 1500 cal.",
+                                        "llevas consumido 1500 cal. hoy",
                                         style: TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.w700,
@@ -371,7 +387,7 @@ setState(() {
                                             decoration: TextDecoration.none),
                                       ),
                                       Text(
-                                        "Calorias registradas del día de hoy, te quedan 1500 cal. restantes según calculo calorico",
+                                        "te quedan 1500 cal. restantes según tu calculo calorico para mantener tu peso",
                                         style: TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.w700,
