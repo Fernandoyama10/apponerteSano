@@ -22,15 +22,18 @@ class _DisenoState extends State<Diseno> {
   String _gender = "";
   int _resultCalories = 0;
   double _mtb = 0;
+  double _lowcalories = 0;
 
   void calculateCalories(height, weight, age, activity, gender) {
     if (gender == "Masculino") {
       _mtb = ((66 + (13.7 * weight)) + ((5 * height) - (6.8 * age)));
       _resultCalories = (_mtb * activity).round();
+      _lowcalories = _resultCalories - 500;
       print(_resultCalories);
     } else {
       _mtb = ((655 + (9.6 * weight)) + ((1.8 * height) - (4.7 * age)));
       _resultCalories = (_mtb * activity).round();
+      _lowcalories = _resultCalories - 500;
     }
   }
 
@@ -161,7 +164,7 @@ class _DisenoState extends State<Diseno> {
                             height: 4,
                           ),
                           Text(
-                            _resultCalories.toString() + "cal. iniciales",
+                            _resultCalories.toString() + " cal. iniciales",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontWeight: FontWeight.w700,
@@ -388,6 +391,70 @@ class _DisenoState extends State<Diseno> {
                                       ),
                                       Text(
                                         "te quedan 1500 cal. restantes según tu calculo calorico para mantener tu peso",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w700,
+                                            color: Colors.grey[500],
+                                            decoration: TextDecoration.none),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                        shrinkWrap: true,
+                        itemCount: 1,
+                        padding: EdgeInsets.all(0),
+                        controller: ScrollController(keepScrollOffset: false),
+                      ),
+                      SizedBox(
+                        height: 16,
+                      ),
+
+                      ListView.builder(
+                        itemBuilder: (context, index) {
+                          return Container(
+                            margin: EdgeInsets.symmetric(horizontal: 32),
+                            padding: EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20))),
+                            child: Row(
+                              children: <Widget>[
+                                Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey[100],
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(18))),
+                                  child: Icon(
+                                    Icons.check_circle_outline,
+                                    color: Colors.green,
+                                  ),
+                                  padding: EdgeInsets.all(12),
+                                ),
+                                SizedBox(
+                                  width: 16,
+                                ),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        "Calorias para bajar de peso necesitas " +
+                                            _lowcalories.toString() +
+                                            " cal.",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w700,
+                                            color: Colors.green[900],
+                                            decoration: TextDecoration.none),
+                                      ),
+                                      Text(
+                                        "para bajar de peso lo recomendable por los expertos es bajar 500 cal. por día de tus calorias inciales",
                                         style: TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.w700,
