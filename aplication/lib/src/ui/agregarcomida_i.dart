@@ -1,11 +1,15 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:apponertesano/src/model/food.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class AgregarInternacional extends StatefulWidget {
   const AgregarInternacional({Key? key}) : super(key: key);
 
   @override
-  _ComidaInternacionalScreenState createState() => _ComidaInternacionalScreenState();
+  _ComidaInternacionalScreenState createState() =>
+      _ComidaInternacionalScreenState();
 }
 
 class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
@@ -18,11 +22,18 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
   double fatyield = 0;
   String dropdownvalue = '1';
   var items = ['1', '2', '3', '4', '5', '6', '7', '8'];
+  String label = "";
+  String image = "";
+  String datetoday = DateFormat("yyyy-MM-dd").format(DateTime.now());
+  String timetoday = DateFormat("HH:mm:ss").format(DateTime.now());
+  double id_user = 1;
   @override
   Widget build(BuildContext context) {
     GetRecipe args = ModalRoute.of(context)!.settings.arguments as GetRecipe;
     //porciones
     yields = args.yield;
+    label = args.label;
+    image = args.image;
     //operaciones
 
     return SafeArea(
@@ -85,14 +96,10 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
 
                           caloriesyield =
                               (calories_yield * double.parse(value));
-                          carbsyield =
-                              (carbs_yield * double.parse(value));
-                          proteyield =
-                              (prote_yield * double.parse(value));
-                          sugaryield =
-                              (sugar_yield * double.parse(value));
-                          sodiumyield =
-                              (sodium_yield * double.parse(value));
+                          carbsyield = (carbs_yield * double.parse(value));
+                          proteyield = (prote_yield * double.parse(value));
+                          sugaryield = (sugar_yield * double.parse(value));
+                          sodiumyield = (sodium_yield * double.parse(value));
                           fatyield = (fat_yield * double.parse(value));
                         });
                       },
@@ -132,23 +139,7 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
                                 text: args.label),
                           ),
                         ),
-                        ElevatedButton.icon(
-                          icon: Icon(
-                            Icons.add,
-                            color: Colors.white,
-                            size: 24.0,
-                          ),
-                          label: Text('Agregar a dieta de Hoy'),
-                          onPressed: () {
-                            print('Pressed');
-                          },
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.green,
-                            shape: new RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(10.0),
-                            ),
-                          ),
-                        ),
+                        AddButton(context),
                       ],
                     ),
                     SizedBox(
@@ -326,4 +317,109 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
       ),
     );
   }
+
+  Widget AddButton(BuildContext context) {
+    return ElevatedButton.icon(
+      icon: Icon(
+        Icons.add,
+        color: Colors.white,
+        size: 24.0,
+      ),
+      label: Text('Agregar a dieta de Hoy'),
+      onPressed: () {
+        registrarFood(
+          context,
+          datetoday,
+          timetoday,
+          label,
+          image,
+          yields,
+          caloriesyield,
+          proteyield,
+          fatyield,
+          carbsyield,
+          sugaryield,
+          sodiumyield,
+          id_user,
+        );
+      },
+      style: ElevatedButton.styleFrom(
+        primary: Colors.green,
+        shape: new RoundedRectangleBorder(
+          borderRadius: new BorderRadius.circular(10.0),
+        ),
+      ),
+    );
+  }
+}
+
+Future registrarFood(
+  BuildContext context,
+  String date_r,
+  String time,
+  String label,
+  String image,
+  double? yieldd,
+  double? calories,
+  double? protein,
+  double? fat,
+  double? carbs,
+  double? sugar,
+  double? sodium,
+  double? id_user,
+) async {
+  Map data = {
+    'date_r': date_r,
+    'time': time,
+    'label': label,
+    'image': image,
+    'yield': yieldd,
+    'calories': calories,
+    //gogle
+    'protein': protein,
+    'fat': fat,
+    'carbs': carbs,
+    'sugar': sugar,
+    'sodium': sodium,
+    'id_user': id_user,
+  };
+  var body = json.encode(data);
+
+  final response = await http.post(
+      Uri.parse(
+          "http://apiapponertesano.azurewebsites.net/apinterfood/register"),
+      headers: {"Content-Type": "application/json"},
+      body: body);
+
+  final value = json.decode(response.body)["statusCode"];
+
+  if (response.statusCode == 200) {
+    if (value == 400) {
+      _showDialog(context, 'Error en el registro');
+    } else {
+      Navigator.pushNamed(context, '/inicio');
+    }
+  } else {
+    throw Exception('No se Agrego, intenta nuevamente');
+  }
+}
+
+void _showDialog(BuildContext context, String texto1) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: new Text("Mensaje"),
+        content: new Text(texto1),
+        actions: <Widget>[
+          new FlatButton(
+            child: new Text("OK"),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
 }
