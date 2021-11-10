@@ -1,3 +1,4 @@
+import 'package:apponertesano/src/model/user.dart';
 import 'package:flutter/material.dart';
 
 // Define un widget de formulario personalizado
@@ -25,7 +26,8 @@ setState(() {
   @override
   Widget build(BuildContext context) {
     //  args = ModalRoute.of(context).settings.arguments;
-
+    UsuariodataSet data =
+        ModalRoute.of(context)!.settings.arguments as UsuariodataSet;
     return Scaffold(
       appBar: AppBar(
         title: Text('Tipo de Comida'),
@@ -176,8 +178,20 @@ setState(() {
 
                                 child: InkWell(
                                   onTap: () {
-                                    Navigator.pushNamed(
-                                        context, '/comidainter');
+                                    Navigator.pushNamed(context, "/comidainter",
+                                        arguments: UsuariodataSet(
+                                            data.id_user,
+                                            data.email,
+                                            data.password,
+                                            data.id_role,
+                                            data.name,
+                                            data.surname,
+                                            data.age,
+                                            data.weight,
+                                            data.gender,
+                                            data.height,
+                                            data.name_level,
+                                            data.value_level));
                                   }, // needed
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(100.0),

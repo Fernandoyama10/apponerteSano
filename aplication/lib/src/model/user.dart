@@ -18,9 +18,9 @@ class UsuariodataSet {
   final String name;
   final String surname;
   final int age;
-  final double weight;
+  final dynamic weight;
   final String gender;
-  final double height;
+  final dynamic height;
   final String name_level;
   final double value_level;
 
@@ -47,9 +47,9 @@ class Usuario {
   String? name;
   String? surname;
   int? age;
-  double? weight;
+  dynamic weight;
   String? gender;
-  double? height;
+  dynamic height;
   String? name_level;
   double? value_level;
 

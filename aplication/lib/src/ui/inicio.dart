@@ -13,8 +13,8 @@ class _DisenoState extends State<Diseno> {
 // log aout
   //clase choice
 
-  double _height = 0;
-  double _weight = 0;
+  dynamic _height = 0;
+  dynamic _weight = 0;
   int _age = 0;
   double _activity = 0;
   String _gender = "";
@@ -268,7 +268,20 @@ class _DisenoState extends State<Diseno> {
                                 minWidth: 200.0,
                                 height: 70.0,
                                 onPressed: () {
-                                  Navigator.pushNamed(context, '/tipocomida');
+                                  Navigator.pushNamed(context, "/tipocomida",
+                                      arguments: UsuariodataSet(
+                                          data.id_user,
+                                          data.email,
+                                          data.password,
+                                          data.id_role,
+                                          data.name,
+                                          data.surname,
+                                          data.age,
+                                          data.weight,
+                                          data.gender,
+                                          data.height,
+                                          data.name_level,
+                                          data.value_level));
                                   //Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => Consumolista(listapost: fetchPost1(args.clave.toString()),p: args.puntos,usu: args.id_usu,id_sa: args.id_salon)));
                                 },
                                 color: Colors.green[400],

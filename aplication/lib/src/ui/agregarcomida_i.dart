@@ -30,14 +30,14 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
   int id_user = 0;
   @override
   Widget build(BuildContext context) {
-        UsuariodataSet data =
-        ModalRoute.of(context)!.settings.arguments as UsuariodataSet;
-    id_user = data.id_user;
+      
+
     GetRecipe args = ModalRoute.of(context)!.settings.arguments as GetRecipe;
     //porciones
     yields = args.yield;
     label = args.label;
     image = args.image;
+    id_user = args.id_user;
     //operaciones
 
     return SafeArea(
@@ -377,7 +377,7 @@ Future registrarFood(
     'time': time,
     'label': label,
     'image': image,
-    'yield': yieldd,
+    'quantity': yieldd,
     'calories': calories,
     //gogle
     'protein': protein,

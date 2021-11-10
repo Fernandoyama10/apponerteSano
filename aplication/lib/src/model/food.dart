@@ -178,7 +178,8 @@ class GetRecipe {
   final double quantityna;
   final double quantitychocdf;
   final double quantityfat;
+  final int id_user;
   late final double quantityprocnt;
   GetRecipe(this.label, this.image, this.yield, this.calories,
-      this.quantitysugar, this.quantityna, this.quantitychocdf, this.quantityfat,this.quantityprocnt);
+      this.quantitysugar, this.quantityna, this.quantitychocdf, this.quantityfat,this.id_user,this.quantityprocnt);
 }

@@ -1,4 +1,5 @@
 import 'package:apponertesano/src/model/food.dart';
+import 'package:apponertesano/src/model/user.dart';
 import 'package:flutter/material.dart';
 import 'package:apponertesano/src/blocs/search_api.dart';
 import 'package:apponertesano/src/ui/search_widget.dart';
@@ -16,7 +17,7 @@ class ComidaInternacionalListPageState extends State<BuscarInternacional> {
   List<Hits> recipes = [];
   String query = '';
   Timer? debouncer;
-
+  int id_user= 0;
   @override
   void initState() {
     super.initState();
@@ -48,7 +49,12 @@ class ComidaInternacionalListPageState extends State<BuscarInternacional> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
+  Widget build(BuildContext context) {
+            UsuariodataSet data =
+        ModalRoute.of(context)!.settings.arguments as UsuariodataSet;
+        id_user = data.id_user;
+    return Scaffold(
+
         appBar: AppBar(
           title: Text('Busca tu alimento'),
           backgroundColor: Colors.lightGreen.shade600,
@@ -70,7 +76,7 @@ class ComidaInternacionalListPageState extends State<BuscarInternacional> {
           ],
         ),
       );
-
+  }
   Widget buildSearch() => SearchWidget(
         text: query,
         hintText: 'Nombre del platillo',
@@ -109,6 +115,7 @@ class ComidaInternacionalListPageState extends State<BuscarInternacional> {
                 hit.recipe!.totalNutrients!.na!.quantity!.toDouble(),
                 hit.recipe!.totalNutrients!.chocdf!.quantity!.toDouble(),
                 hit.recipe!.totalNutrients!.fat!.quantity!.toDouble(),
+                id_user,
                 hit.recipe!.totalNutrients!.procnt!.quantity!.toDouble(),
               ));
         },
