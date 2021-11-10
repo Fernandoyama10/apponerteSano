@@ -15,16 +15,16 @@ class _DisenoState extends State<Diseno> {
 // log aout
   //clase choice
 
-  double _height = 0;
-  double _weight = 0;
+  dynamic _height = 0;
+  dynamic _weight = 0;
   int _age = 0;
   double _activity = 0;
   String _gender = "";
   int _resultCalories = 0;
   double _mtb = 0;
-  double _lowcalories = 0;
+  int _lowcalories = 0;
 
-  void calculateCalories(height, weight, age, activity, gender) {
+  int calculateCalories(height, weight, age, activity, gender) {
     if (gender == "Masculino") {
       _mtb = ((66 + (13.7 * weight)) + ((5 * height) - (6.8 * age)));
       _resultCalories = (_mtb * activity).round();
@@ -35,20 +35,20 @@ class _DisenoState extends State<Diseno> {
       _resultCalories = (_mtb * activity).round();
       _lowcalories = _resultCalories - 500;
     }
+    return _resultCalories;
   }
 
   @override
   Widget build(BuildContext context) {
     UsuariodataSet data =
         ModalRoute.of(context)!.settings.arguments as UsuariodataSet;
+
     _height = data.height;
     _weight = data.weight;
     _age = data.age;
     _activity = data.value_level;
     _gender = data.gender;
-
     calculateCalories(_height, _weight, _age, _activity, _gender);
-
     return Container(
       height: MediaQuery.of(context).size.height,
       width: double.infinity,
@@ -454,7 +454,7 @@ class _DisenoState extends State<Diseno> {
                                             decoration: TextDecoration.none),
                                       ),
                                       Text(
-                                        "para bajar de peso lo recomendable por los expertos es bajar 500 cal. por día de tus calorias inciales",
+                                        "para bajar de peso lo recomendable por día en base a tus calorias inciales",
                                         style: TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.w700,
