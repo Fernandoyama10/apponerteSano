@@ -180,7 +180,7 @@ class _LoginState extends State<Login> {
   loggedInUI(FacebookSignInController model) {
     Timer(
         Duration(seconds: 0),
-        () => Navigator.of(context).pushReplacementNamed('/inicio',
+        () => Navigator.of(context).pushReplacementNamed('/iniciofb',
             arguments: UserDat(
               model.userData!["email"].toString(),
               model.userData!["name"].toString(),

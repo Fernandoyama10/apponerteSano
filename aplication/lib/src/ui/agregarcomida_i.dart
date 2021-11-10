@@ -14,6 +14,7 @@ class AgregarInternacional extends StatefulWidget {
 }
 
 class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
+  final _formKey1 = GlobalKey<FormState>();
   double yields = 1;
   double proteyield = 0;
   double carbsyield = 0;
@@ -21,8 +22,8 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
   double caloriesyield = 0;
   double sodiumyield = 0;
   double fatyield = 0;
-  String dropdownvalue = '1';
-  var items = ['1', '2', '3', '4', '5', '6', '7', '8'];
+  String dropdownvalue = '0';
+  var items = ['0', '1', '2', '3', '4', '5', '6', '7', '8'];
   String label = "";
   String image = "";
   String datetoday = DateFormat("yyyy-MM-dd").format(DateTime.now());
@@ -31,8 +32,6 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
   int id_estatus = 4;
   @override
   Widget build(BuildContext context) {
-      
-
     GetRecipe args = ModalRoute.of(context)!.settings.arguments as GetRecipe;
     //porciones
     yields = args.yield;
@@ -48,7 +47,9 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
           backgroundColor: Colors.lightGreen.shade600,
           centerTitle: true,
         ),
-        body: SingleChildScrollView(
+        body: Form(
+          key: _formKey1,
+          child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -81,7 +82,7 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
                     SizedBox(
                       width: 8,
                     ),
-                    DropdownButton(
+                    DropdownButtonFormField<String>(
                       value: dropdownvalue,
                       icon: Icon(Icons.keyboard_arrow_down),
                       items: items.map((String items) {
@@ -107,6 +108,11 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
                           sodiumyield = (sodium_yield * double.parse(value));
                           fatyield = (fat_yield * double.parse(value));
                         });
+                      },
+                      validator: (value) {
+                        if (value == '0') {
+                          return 'Seleccione primero su porción';
+                        }
                       },
                     ),
                   ],
@@ -318,6 +324,7 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
               ),
             ],
           ),
+          ),
         ),
       ),
     );
@@ -332,22 +339,24 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
       ),
       label: Text('Agregar a dieta de Hoy'),
       onPressed: () {
-        registrarFood(
-          context,
-          datetoday,
-          timetoday,
-          label,
-          image,
-          yields,
-          caloriesyield,
-          proteyield,
-          fatyield,
-          carbsyield,
-          sugaryield,
-          sodiumyield,
-          id_user,
-          id_estatus,
-        );
+        if (_formKey1.currentState!.validate()) {
+          registrarFood(
+            context,
+            datetoday,
+            timetoday,
+            label,
+            image,
+            dropdownvalue,
+            caloriesyield,
+            proteyield,
+            fatyield,
+            carbsyield,
+            sugaryield,
+            sodiumyield,
+            id_user,
+            id_estatus,
+          );
+        }
       },
       style: ElevatedButton.styleFrom(
         primary: Colors.green,
@@ -365,7 +374,7 @@ Future registrarFood(
   String time,
   String label,
   String image,
-  double? yieldd,
+  dynamic yieldd,
   double? calories,
   double? protein,
   double? fat,
@@ -373,7 +382,7 @@ Future registrarFood(
   double? sugar,
   double? sodium,
   int? id_user,
-    int? id_estatus,
+  int? id_estatus,
 ) async {
   Map data = {
     'date_r': date_r,
@@ -389,7 +398,7 @@ Future registrarFood(
     'sugar': sugar,
     'sodium': sodium,
     'id_user': id_user,
-        'id_status': id_estatus,
+    'id_status': id_estatus,
   };
   var body = json.encode(data);
 
@@ -405,7 +414,7 @@ Future registrarFood(
     if (value == 400) {
       _showDialog(context, 'Error en el registro');
     } else {
-     _showDialog(context, 'Registro exitoso');
+      _showDialog(context, 'Registro exitoso');
     }
   } else {
     throw Exception('No se Agrego, intenta nuevamente');
