@@ -389,7 +389,7 @@ Future registrarFood(
     'sugar': sugar,
     'sodium': sodium,
     'id_user': id_user,
-        'id_estatus': id_estatus,
+        'id_status': id_estatus,
   };
   var body = json.encode(data);
 
