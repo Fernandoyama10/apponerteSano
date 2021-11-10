@@ -1,14 +1,20 @@
+import 'dart:convert';
+import 'package:apponertesano/src/model/user.dart';
+import 'package:http/http.dart' as http;
 import 'package:apponertesano/src/model/food.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class AgregarInternacional extends StatefulWidget {
   const AgregarInternacional({Key? key}) : super(key: key);
 
   @override
-  _ComidaInternacionalScreenState createState() => _ComidaInternacionalScreenState();
+  _ComidaInternacionalScreenState createState() =>
+      _ComidaInternacionalScreenState();
 }
 
 class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
+  final _formKey1 = GlobalKey<FormState>();
   double yields = 1;
   double proteyield = 0;
   double carbsyield = 0;
@@ -16,13 +22,22 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
   double caloriesyield = 0;
   double sodiumyield = 0;
   double fatyield = 0;
-  String dropdownvalue = '1';
-  var items = ['1', '2', '3', '4', '5', '6', '7', '8'];
+  String dropdownvalue = '0';
+  var items = ['0', '1', '2', '3', '4', '5', '6', '7', '8'];
+  String label = "";
+  String image = "";
+  String datetoday = DateFormat("yyyy-MM-dd").format(DateTime.now());
+  String timetoday = DateFormat('hh:mm:ss').format(DateTime.now());
+  int id_user = 0;
+  int id_estatus = 4;
   @override
   Widget build(BuildContext context) {
     GetRecipe args = ModalRoute.of(context)!.settings.arguments as GetRecipe;
     //porciones
     yields = args.yield;
+    label = args.label;
+    image = args.image;
+    id_user = args.id_user;
     //operaciones
 
     return SafeArea(
@@ -32,7 +47,9 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
           backgroundColor: Colors.lightGreen.shade600,
           centerTitle: true,
         ),
-        body: SingleChildScrollView(
+        body: Form(
+          key: _formKey1,
+          child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -65,7 +82,7 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
                     SizedBox(
                       width: 8,
                     ),
-                    DropdownButton(
+                    DropdownButtonFormField<String>(
                       value: dropdownvalue,
                       icon: Icon(Icons.keyboard_arrow_down),
                       items: items.map((String items) {
@@ -85,16 +102,17 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
 
                           caloriesyield =
                               (calories_yield * double.parse(value));
-                          carbsyield =
-                              (carbs_yield * double.parse(value));
-                          proteyield =
-                              (prote_yield * double.parse(value));
-                          sugaryield =
-                              (sugar_yield * double.parse(value));
-                          sodiumyield =
-                              (sodium_yield * double.parse(value));
+                          carbsyield = (carbs_yield * double.parse(value));
+                          proteyield = (prote_yield * double.parse(value));
+                          sugaryield = (sugar_yield * double.parse(value));
+                          sodiumyield = (sodium_yield * double.parse(value));
                           fatyield = (fat_yield * double.parse(value));
                         });
+                      },
+                      validator: (value) {
+                        if (value == '0') {
+                          return 'Seleccione primero su porción';
+                        }
                       },
                     ),
                   ],
@@ -132,23 +150,7 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
                                 text: args.label),
                           ),
                         ),
-                        ElevatedButton.icon(
-                          icon: Icon(
-                            Icons.add,
-                            color: Colors.white,
-                            size: 24.0,
-                          ),
-                          label: Text('Agregar a dieta de Hoy'),
-                          onPressed: () {
-                            print('Pressed');
-                          },
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.green,
-                            shape: new RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(10.0),
-                            ),
-                          ),
-                        ),
+                        AddButton(context),
                       ],
                     ),
                     SizedBox(
@@ -322,8 +324,119 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
               ),
             ],
           ),
+          ),
         ),
       ),
     );
   }
+
+  Widget AddButton(BuildContext context) {
+    return ElevatedButton.icon(
+      icon: Icon(
+        Icons.add,
+        color: Colors.white,
+        size: 24.0,
+      ),
+      label: Text('Agregar a dieta de Hoy'),
+      onPressed: () {
+        if (_formKey1.currentState!.validate()) {
+          registrarFood(
+            context,
+            datetoday,
+            timetoday,
+            label,
+            image,
+            dropdownvalue,
+            caloriesyield,
+            proteyield,
+            fatyield,
+            carbsyield,
+            sugaryield,
+            sodiumyield,
+            id_user,
+            id_estatus,
+          );
+        }
+      },
+      style: ElevatedButton.styleFrom(
+        primary: Colors.green,
+        shape: new RoundedRectangleBorder(
+          borderRadius: new BorderRadius.circular(10.0),
+        ),
+      ),
+    );
+  }
+}
+
+Future registrarFood(
+  BuildContext context,
+  String date_r,
+  String time,
+  String label,
+  String image,
+  dynamic yieldd,
+  double? calories,
+  double? protein,
+  double? fat,
+  double? carbs,
+  double? sugar,
+  double? sodium,
+  int? id_user,
+  int? id_estatus,
+) async {
+  Map data = {
+    'date_r': date_r,
+    'time': time,
+    'label': label,
+    'image': image,
+    'quantity': yieldd,
+    'calories': calories,
+    //gogle
+    'protein': protein,
+    'fat': fat,
+    'carbs': carbs,
+    'sugar': sugar,
+    'sodium': sodium,
+    'id_user': id_user,
+    'id_status': id_estatus,
+  };
+  var body = json.encode(data);
+
+  final response = await http.post(
+      Uri.parse(
+          "http://apiapponertesano.azurewebsites.net/apinterfood/register"),
+      headers: {"Content-Type": "application/json"},
+      body: body);
+
+  final value = json.decode(response.body)["statusCode"];
+
+  if (response.statusCode == 200) {
+    if (value == 400) {
+      _showDialog(context, 'Error en el registro');
+    } else {
+      _showDialog(context, 'Registro exitoso');
+    }
+  } else {
+    throw Exception('No se Agrego, intenta nuevamente');
+  }
+}
+
+void _showDialog(BuildContext context, String texto1) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: new Text("Mensaje"),
+        content: new Text(texto1),
+        actions: <Widget>[
+          new FlatButton(
+            child: new Text("OK"),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
 }

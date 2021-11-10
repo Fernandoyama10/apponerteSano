@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Define un widget de formulario personalizado
-class Diseno extends StatefulWidget {
+class Diseno_fb extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _DisenoState();
 }
 
-class _DisenoState extends State<Diseno> {
+class _DisenoState extends State<Diseno_fb> {
 // log aout
   //clase choice
 
@@ -20,9 +20,9 @@ class _DisenoState extends State<Diseno> {
   String _gender = "";
   int _resultCalories = 0;
   double _mtb = 0;
-  int _lowcalories = 0;
+  double _lowcalories = 0;
 
-  int calculateCalories(height, weight, age, activity, gender) {
+  void calculateCalories(height, weight, age, activity, gender) {
     if (gender == "Masculino") {
       _mtb = ((66 + (13.7 * weight)) + ((5 * height) - (6.8 * age)));
       _resultCalories = (_mtb * activity).round();
@@ -33,20 +33,15 @@ class _DisenoState extends State<Diseno> {
       _resultCalories = (_mtb * activity).round();
       _lowcalories = _resultCalories - 500;
     }
-    return _resultCalories;
   }
 
   @override
   Widget build(BuildContext context) {
-    UsuariodataSet data =
-        ModalRoute.of(context)!.settings.arguments as UsuariodataSet;
+   late UserDat data =
+        ModalRoute.of(context)!.settings.arguments as UserDat;
 
-    _height = data.height;
-    _weight = data.weight;
-    _age = data.age;
-    _activity = data.value_level;
-    _gender = data.gender;
     calculateCalories(_height, _weight, _age, _activity, _gender);
+
     return Container(
       height: MediaQuery.of(context).size.height,
       width: double.infinity,
@@ -269,19 +264,10 @@ class _DisenoState extends State<Diseno> {
                                 height: 70.0,
                                 onPressed: () {
                                   Navigator.pushNamed(context, "/tipocomida",
-                                      arguments: UsuariodataSet(
-                                          data.id_user,
-                                          data.email,
-                                          data.password,
-                                          data.id_role,
+                                      arguments: UserDat(
                                           data.name,
-                                          data.surname,
-                                          data.age,
-                                          data.weight,
-                                          data.gender,
-                                          data.height,
-                                          data.name_level,
-                                          data.value_level));
+                                          data.email,
+                                     ));
                                   //Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => Consumolista(listapost: fetchPost1(args.clave.toString()),p: args.puntos,usu: args.id_usu,id_sa: args.id_salon)));
                                 },
                                 color: Colors.green[400],
@@ -465,7 +451,7 @@ class _DisenoState extends State<Diseno> {
                                             decoration: TextDecoration.none),
                                       ),
                                       Text(
-                                        "para bajar de peso lo recomendable por día en base a tus calorias inciales",
+                                        "para bajar de peso lo recomendable por los expertos es bajar 500 cal. por día de tus calorias inciales",
                                         style: TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.w700,
