@@ -1,7 +1,11 @@
+import 'package:apponertesano/src/model/caloriesData.dart';
 import 'package:apponertesano/src/model/user.dart';
 import 'package:apponertesano/src/resources/facebook_login_result.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 // Define un widget de formulario personalizado
 class Diseno extends StatefulWidget {
@@ -10,9 +14,10 @@ class Diseno extends StatefulWidget {
 }
 
 class _DisenoState extends State<Diseno> {
+  // UsuariodataSet? data3;
 // log aout
   //clase choice
-
+  int _id_user = 0;
   dynamic _height = 0;
   dynamic _weight = 0;
   int _age = 0;
@@ -21,6 +26,15 @@ class _DisenoState extends State<Diseno> {
   int _resultCalories = 0;
   double _mtb = 0;
   int _lowcalories = 0;
+  String _datetoday = DateFormat("yyyy-MM-dd").format(DateTime.now());
+  double _calories = 0;
+  double _calories1 = 0;
+  double _protein = 0;
+  double _protein1 = 0;
+  double _fat = 0;
+  double _fat1 = 0;
+  double _carbs = 0;
+  double _carbs1 = 0;
 
   int calculateCalories(height, weight, age, activity, gender) {
     if (gender == "Masculino") {
@@ -36,6 +50,66 @@ class _DisenoState extends State<Diseno> {
     return _resultCalories;
   }
 
+  Future caloriesdataget(
+    // BuildContext context,
+    String datetoday,
+    int id_user,
+  ) async {
+    Map data = {
+      'date_r': datetoday,
+      'id_user': id_user,
+    };
+    var body = json.encode(data);
+    print('===========BODY============');
+    print(body);
+    final response = await http.post(
+        Uri.parse(
+            "http://apiapponertesano.azurewebsites.net/apicalories/calories"),
+        headers: {"Content-Type": "application/json"},
+        body: body);
+    //double valuecalories = json.decode(response.body)["calories"];
+    print('===========STATUS CODE============');
+    print(response.statusCode.toString());
+
+    if (response.statusCode == 200) {
+      List<CaloriesData> lista = parsePost2(response.body);
+      print('===========LISTA============');
+      print(lista);
+      if (lista.length > 0) {
+        print(lista[0].calories);
+        print(lista[0].protein);
+        print(lista[0].fat);
+        print(lista[0].carbs);
+        print(lista[0].sugar);
+        final calories = lista[0].calories;
+        print(calories);
+        if (calories != null) {
+          print("ENTRO AL IF");
+          _calories1 = lista[0].calories!;
+          _protein1 = lista[0].protein!;
+          _fat1 = lista[0].fat!;
+          _carbs1 = lista[0].carbs!;
+
+          _cambiovalue();
+        } else {
+          CaloriesdataSet(0, 0, 0, 0, 0);
+        }
+      }
+      return lista;
+    } else {
+      throw Exception('fallo en el sistema conexión');
+    }
+  }
+
+  void _cambiovalue() {
+    setState(() {
+      _calories = _calories1;
+      _protein = _protein1;
+      _fat = _fat1;
+      _carbs = _carbs1;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     UsuariodataSet data =
@@ -46,7 +120,13 @@ class _DisenoState extends State<Diseno> {
     _age = data.age;
     _activity = data.value_level;
     _gender = data.gender;
+    _id_user = data.id_user;
     calculateCalories(_height, _weight, _age, _activity, _gender);
+    caloriesdataget(_datetoday, _id_user);
+
+    print("====prueba de pantalla de calories final=====");
+    print('$_calories');
+    print('$_fat');
     return Container(
       height: MediaQuery.of(context).size.height,
       width: double.infinity,
@@ -76,7 +156,7 @@ class _DisenoState extends State<Diseno> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      _resultCalories.toString(),
+                      '$_calories',
                       style: TextStyle(
                           color: Colors.yellow[400],
                           fontSize: 28,
@@ -393,7 +473,9 @@ class _DisenoState extends State<Diseno> {
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
                                       Text(
-                                        "llevas consumido 1500 cal. hoy",
+                                        "llevas consumido " +
+                                            '$_calories' +
+                                            "g cal. hoy",
                                         style: TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.w700,
@@ -537,7 +619,9 @@ class _DisenoState extends State<Diseno> {
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
                                       Text(
-                                        "llevas 400g de grasas totales",
+                                        "llevas " +
+                                            '$_fat' +
+                                            "g de grasas totales",
                                         style: TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.w700,
@@ -615,7 +699,9 @@ class _DisenoState extends State<Diseno> {
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
                                       Text(
-                                        "llevas 40g de proteina ",
+                                        "llevas " +
+                                            '$_protein' +
+                                            "g de proteina ",
                                         style: TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.w700,
@@ -693,7 +779,7 @@ class _DisenoState extends State<Diseno> {
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
                                       Text(
-                                        "Llevas 150g de carb.",
+                                        "Llevas" + '$_carbs' + "g de carb.",
                                         style: TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.w700,

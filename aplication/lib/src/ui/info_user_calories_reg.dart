@@ -139,25 +139,25 @@ class _InfoUserCaloriesRegState extends State<InfoUserCaloriesReg> {
                 ),
                 SizedBox(height: 20),
                 Container(
-                  child:  DropdownButtonFormField<String>(
+                  width: 250.0,
+                  child: DropdownButtonFormField<String>(
                     key: _dropdowngener,
                     value: dropdownvalue,
                     icon: const Icon(Icons.arrow_downward),
                     iconSize: 24,
                     elevation: 16,
                     style: const TextStyle(color: Colors.deepPurple),
-                   
                     onChanged: (String? newValue) {
                       setState(() {
                         dropdownvalue = newValue!;
                         rgender = dropdownvalue;
                       });
                     },
-                     validator: (value) {
-                        if (value == 'Seleccione su sexo aquí') {
-                          return 'Seleccione su genero';
-                        }
-                      },
+                    validator: (value) {
+                      if (value == 'Seleccione su sexo aquí') {
+                        return 'Seleccione su genero';
+                      }
+                    },
                     items: items.map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
@@ -283,8 +283,6 @@ class _InfoUserCaloriesRegState extends State<InfoUserCaloriesReg> {
     );
   }
 
-  //Mujeres: [655 + (9,6 × peso en kg) ] + [ (1,8 × altura en cm) – (4,7 × edad)] × Factor actividad
-  //Hombres: [66 + (13,7 × peso en kg) ] + [ (5 × altura en cm) – (6,8 × edad)] × Factor actividad
 
   Widget RegistrarButton(BuildContext context) {
     return MaterialButton(
