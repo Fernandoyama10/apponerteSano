@@ -28,6 +28,7 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
   String datetoday = DateFormat("yyyy-MM-dd").format(DateTime.now());
   String timetoday = DateFormat('hh:mm:ss').format(DateTime.now());
   int id_user = 0;
+  int id_estatus = 4;
   @override
   Widget build(BuildContext context) {
       
@@ -345,6 +346,7 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
           sugaryield,
           sodiumyield,
           id_user,
+          id_estatus,
         );
       },
       style: ElevatedButton.styleFrom(
@@ -371,6 +373,7 @@ Future registrarFood(
   double? sugar,
   double? sodium,
   int? id_user,
+    int? id_estatus,
 ) async {
   Map data = {
     'date_r': date_r,
@@ -386,6 +389,7 @@ Future registrarFood(
     'sugar': sugar,
     'sodium': sodium,
     'id_user': id_user,
+        'id_estatus': id_estatus,
   };
   var body = json.encode(data);
 
@@ -401,7 +405,7 @@ Future registrarFood(
     if (value == 400) {
       _showDialog(context, 'Error en el registro');
     } else {
-      Navigator.pushNamed(context, '/inicio');
+     _showDialog(context, 'Registro exitoso');
     }
   } else {
     throw Exception('No se Agrego, intenta nuevamente');
