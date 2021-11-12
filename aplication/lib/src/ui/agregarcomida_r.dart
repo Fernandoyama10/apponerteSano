@@ -30,6 +30,7 @@ class _AgregarScreenState extends State<AgregarRegional> {
   String timetoday = DateFormat('hh:mm:ss').format(DateTime.now());
   int id_user = 0;
   int id_estatus = 4;
+  String type = "";
   @override
   Widget build(BuildContext context) {
     GetRecipeYuc args = ModalRoute.of(context)!.settings.arguments as GetRecipeYuc;
@@ -38,6 +39,7 @@ class _AgregarScreenState extends State<AgregarRegional> {
     label = args.label;
     image = args.image;
     id_user = args.id_user;
+    type = args.tipo;
     //operaciones
 
     return SafeArea(
@@ -339,6 +341,7 @@ class _AgregarScreenState extends State<AgregarRegional> {
             timetoday,
             label,
             image,
+            type,
             dropdownvalue,
             caloriesyield,
             proteyield,
@@ -367,6 +370,7 @@ Future registrarFood(
   String time,
   String label,
   String image,
+  String type,
   dynamic yieldd,
   double? calories,
   double? protein,
@@ -382,6 +386,7 @@ Future registrarFood(
     'time': time,
     'label': label,
     'image': image,
+        'type': type,
     'quantity': yieldd,
     'calories': calories,
     //gogle

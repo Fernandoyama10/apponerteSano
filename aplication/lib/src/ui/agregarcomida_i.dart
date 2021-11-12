@@ -30,6 +30,7 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
   String timetoday = DateFormat('hh:mm:ss').format(DateTime.now());
   int id_user = 0;
   int id_estatus = 4;
+  String type = "-";
   @override
   Widget build(BuildContext context) {
     GetRecipe args = ModalRoute.of(context)!.settings.arguments as GetRecipe;
@@ -347,6 +348,7 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
             timetoday,
             label,
             image,
+            type,
             dropdownvalue,
             caloriesyield,
             proteyield,
@@ -375,6 +377,7 @@ Future registrarFood(
   String time,
   String label,
   String image,
+  String type,
   dynamic yieldd,
   double? calories,
   double? protein,
@@ -390,6 +393,7 @@ Future registrarFood(
     'time': time,
     'label': label,
     'image': image,
+        'type': type,
     'quantity': yieldd,
     'calories': calories,
     //gogle
