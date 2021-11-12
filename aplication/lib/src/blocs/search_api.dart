@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:apponertesano/src/model/food.dart';
 import 'package:http/http.dart' as http;
-import 'package:meta/meta.dart';
 
 class EdamamApi {
   static Future<List<Hits>> getRecipes(String query) async {
@@ -28,5 +27,33 @@ class EdamamApi {
     }
   }
 }
+
+
+class LocalApi {
+  static Future<List<RecipeYucatan>> getRecipes(String query) async {
+    final url = Uri.parse(
+        'https://apiapponertesano.azurewebsites.net/apiyucfood/get-yucfood/$query');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      String body = response.body;
+      final parse = jsonDecode(body);
+      print(parse);
+      final List recipeYucatan = parse;
+
+      return recipeYucatan.map((json) => RecipeYucatan.fromJson(json)).where((recipe) {
+        final labelLower = recipe.food_name!.toLowerCase();
+        final imageLower = recipe.food_name!.toLowerCase();
+        final searchLower = query.toLowerCase();
+
+        return labelLower.contains(searchLower) ||
+            imageLower.contains(searchLower);
+      }).toList();
+    } else {
+      throw Exception();
+    }
+  }
+}
+
 
 

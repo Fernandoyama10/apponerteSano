@@ -180,6 +180,101 @@ class GetRecipe {
   final double quantityfat;
   final int id_user;
   late final double quantityprocnt;
-  GetRecipe(this.label, this.image, this.yield, this.calories,
-      this.quantitysugar, this.quantityna, this.quantitychocdf, this.quantityfat,this.id_user,this.quantityprocnt);
+  GetRecipe(
+      this.label,
+      this.image,
+      this.yield,
+      this.calories,
+      this.quantitysugar,
+      this.quantityna,
+      this.quantitychocdf,
+      this.quantityfat,
+      this.id_user,
+      this.quantityprocnt);
+}
+
+class RecipeYucatan {
+  int? id_yucatan_food;
+  String? food_name;
+    String? image;
+  String? tipo;
+  int? quantity;
+  dynamic calories;
+  dynamic protein;
+  dynamic fat;
+  dynamic carbs;
+  dynamic sugar;
+  dynamic sodium;
+
+  RecipeYucatan(
+      {this.id_yucatan_food,
+      this.food_name,
+      this.image,
+      this.tipo,
+      this.quantity,
+      this.calories,
+      this.protein,
+      this.fat,
+      this.carbs,
+      this.sugar,
+      this.sodium});
+
+  RecipeYucatan.fromJson(Map<String, dynamic> json) {
+    id_yucatan_food = json['id_yucatan_food'];
+    food_name = json['food_name'];
+        image = json['image'];
+    tipo = json['tipo'];
+    quantity = json['quantity'];
+    calories = json['calories'];
+    protein = json['protein'];
+    fat = json['fat'];
+    carbs = json['carbs'];
+    sugar = json['sugar'];
+    sodium = json['sodium'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id_yucatan_food'] = this.id_yucatan_food;
+    
+    data['food_name'] = this.food_name;
+        data['image'] = this.image;
+    data['tipo'] = this.tipo;
+    data['quantity'] = this.quantity;
+    data['calories'] = this.calories;
+    data['protein'] = this.protein;
+    data['fat'] = this.fat;
+    data['carbs'] = this.carbs;
+    data['sugar'] = this.sugar;
+    data['sodium'] = this.sodium;
+    return data;
+  }
+}
+
+
+
+class GetRecipeYuc {
+  final String label;
+  final String image;
+  final double yield;
+  final String tipo;
+  final double calories;
+  final double quantitysugar;
+  final double quantityna;
+  final double quantitychocdf;
+  final double quantityfat;
+  final int id_user;
+  late final double quantityprocnt;
+  GetRecipeYuc(
+      this.label,
+      this.image,
+      this.yield,
+      this.tipo,
+      this.calories,
+      this.quantitysugar,
+      this.quantityna,
+      this.quantitychocdf,
+      this.quantityfat,
+      this.id_user,
+      this.quantityprocnt);
 }

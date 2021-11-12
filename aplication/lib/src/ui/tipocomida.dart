@@ -105,7 +105,20 @@ setState(() {
 
                                 child: InkWell(
                                   onTap: () {
-                                    Navigator.pushNamed(context, '/comidareg');
+                                      Navigator.pushNamed(context, "/comidareg",
+                                        arguments: UsuariodataSet(
+                                            data.id_user,
+                                            data.email,
+                                            data.password,
+                                            data.id_role,
+                                            data.name,
+                                            data.surname,
+                                            data.age,
+                                            data.weight,
+                                            data.gender,
+                                            data.height,
+                                            data.name_level,
+                                            data.value_level));
                                   }, // needed
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(100.0),

@@ -156,8 +156,9 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
                     SizedBox(
                       height: 10,
                     ),
+                 
                     Text(
-                      'Porciones: ' + (args.yield).toStringAsFixed(0),
+                      'Porciones: ' + (args.yield).toStringAsFixed(0) ,
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
