@@ -167,7 +167,20 @@ class _DisenoState extends State<Diseno> {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(75)),
                               onPressed: () {
-                                //Navigator.pushNamed(context, '/usuario',arguments: datosArguments(args.id_usu,args.id_salon, args.nombre,args.ape_1,args.ape_2,args.telefono,args.clave,args.escuela,args.usuario,args.contra,args.numero,args.letra,args.puntos));
+                                   Navigator.pushNamed(context, "/historialcomida",
+                                      arguments: UsuariodataSet(
+                                          data.id_user,
+                                          data.email,
+                                          data.password,
+                                          data.id_role,
+                                          data.name,
+                                          data.surname,
+                                          data.age,
+                                          data.weight,
+                                          data.gender,
+                                          data.height,
+                                          data.name_level,
+                                          data.value_level));
                               },
                               child: CircleAvatar(
                                 backgroundColor: Colors.green[200],

@@ -196,7 +196,7 @@ class GetRecipe {
 class RecipeYucatan {
   int? id_yucatan_food;
   String? food_name;
-    String? image;
+  String? image;
   String? tipo;
   int? quantity;
   dynamic calories;
@@ -222,7 +222,7 @@ class RecipeYucatan {
   RecipeYucatan.fromJson(Map<String, dynamic> json) {
     id_yucatan_food = json['id_yucatan_food'];
     food_name = json['food_name'];
-        image = json['image'];
+    image = json['image'];
     tipo = json['tipo'];
     quantity = json['quantity'];
     calories = json['calories'];
@@ -236,9 +236,9 @@ class RecipeYucatan {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id_yucatan_food'] = this.id_yucatan_food;
-    
+
     data['food_name'] = this.food_name;
-        data['image'] = this.image;
+    data['image'] = this.image;
     data['tipo'] = this.tipo;
     data['quantity'] = this.quantity;
     data['calories'] = this.calories;
@@ -250,8 +250,6 @@ class RecipeYucatan {
     return data;
   }
 }
-
-
 
 class GetRecipeYuc {
   final String label;
@@ -278,3 +276,48 @@ class GetRecipeYuc {
       this.id_user,
       this.quantityprocnt);
 }
+
+class FoodRecord {
+  String? label;
+  String? image;
+  String? type;
+  dynamic calories;
+  dynamic protein;
+  dynamic fat;
+  dynamic carbs;
+  dynamic sugar;
+  dynamic sodium;
+
+  FoodRecord({
+    this.label,
+    this.image,
+    this.type,
+    this.calories,
+    this.protein,
+    this.fat,
+    this.carbs,
+    this.sugar,
+    this.sodium,
+  });
+
+  factory FoodRecord.fromJson(Map<String, dynamic> json) {
+    return FoodRecord(
+        label: json['label'],
+        image: json['image'],
+        type: json['type'],
+        calories: json['calories'],
+        protein: json['protein'],
+        fat: json['fat'],
+        carbs: json['carbs'],
+        sugar: json['sugar'],
+        sodium: json['sodium']);
+  }
+}
+
+List<FoodRecord> parsePost2(String responseBody) {
+  final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
+
+  return parsed.map<FoodRecord>((json) => FoodRecord.fromJson(json)).toList();
+}
+
+

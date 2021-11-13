@@ -3,6 +3,7 @@ import 'package:apponertesano/src/ui/agregarcomida_i.dart';
 import 'package:apponertesano/src/ui/agregarcomida_r.dart';
 import 'package:apponertesano/src/ui/comidainternacional.dart';
 import 'package:apponertesano/src/ui/comidaregional.dart';
+import 'package:apponertesano/src/ui/comidas_dia.dart';
 import 'package:apponertesano/src/ui/info_user_reg.dart';
 import 'package:apponertesano/src/ui/info_user_calories_reg.dart';
 import 'package:apponertesano/src/ui/inicio.dart';
@@ -54,6 +55,7 @@ class MyApp extends StatelessWidget {
           '/comidareg': (context) => BuscarRegional(),
           '/agrega_inter': (context) => AgregarInternacional(),
           '/agregarcomida_regi': (context) => AgregarRegional(),
+                    '/historialcomida': (context) => ComidaDia(),
         },
         /*
      home: Center(

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:apponertesano/src/model/food.dart';
+import 'package:apponertesano/src/model/caloriesData.dart';
 import 'package:http/http.dart' as http;
 
 class EdamamApi {
@@ -55,5 +56,41 @@ class LocalApi {
   }
 }
 
+class RecordApi {
+  static Future<List<FoodRecord>> getRecipes(String date_r, int id_user) async {
+    final url = Uri.parse(
+        'https://apiapponertesano.azurewebsites.net/apiyucfood/get-records/$date_r/$id_user');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      String body = response.body;
+      final parse = jsonDecode(body);
+      print(parse);
+      final List recipeYucatan = parse;
+
+      return recipeYucatan.map((json) => FoodRecord.fromJson(json)).toList();
+    } else {
+      throw Exception();
+    }
+  }
+}
 
 
+class RecordCaloriess {
+  static Future<List<RecordCalories>> getRecipes(String date_r, int id_user) async {
+    final url = Uri.parse(
+        'https://apiapponertesano.azurewebsites.net/apiyucfood/get-recordcalories/$date_r/$id_user');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      String body = response.body;
+      final parse = jsonDecode(body);
+      print(parse);
+      final List recipeYucatan = parse;
+
+        return recipeYucatan.map((json) => RecordCalories.fromJson(json)).toList();
+    } else {
+      throw Exception();
+    }
+  }
+}

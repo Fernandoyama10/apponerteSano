@@ -48,3 +48,39 @@ List<CaloriesData> parsePost2(String responseBody) {
       .map<CaloriesData>((json) => CaloriesData.fromJson(json))
       .toList();
 }
+
+class RecordCalories {
+  dynamic calories;
+  dynamic protein;
+  dynamic fat;
+  dynamic carbs;
+  dynamic sugar;
+  dynamic sodium;
+
+  RecordCalories({
+    this.calories,
+    this.protein,
+    this.fat,
+    this.carbs,
+    this.sugar,
+    this.sodium,
+  });
+
+  factory RecordCalories.fromJson(Map<String, dynamic> json) {
+    return RecordCalories(
+        calories: json['calories'],
+        protein: json['protein'],
+        fat: json['fat'],
+        carbs: json['carbs'],
+        sugar: json['sugar'],
+        sodium: json['sodium']);
+  }
+}
+
+List<RecordCalories> parsePost3(String responseBody) {
+  final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
+
+  return parsed
+      .map<RecordCalories>((json) => RecordCalories.fromJson(json))
+      .toList();
+}
