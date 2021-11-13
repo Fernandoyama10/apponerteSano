@@ -281,7 +281,7 @@ class _DisenoState extends State<Diseno> {
                               elevation: 5,
                               child: ListTile(
                                   title: Text(
-                                    '$_operationcalories1' + "cal",
+                                    '$_operationcalories1' + " cal",
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,

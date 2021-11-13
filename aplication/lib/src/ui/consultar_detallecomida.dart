@@ -1,51 +1,47 @@
-import 'dart:convert';
-
 import 'package:apponertesano/src/model/food.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
-class AgregarRegional extends StatefulWidget {
-  const AgregarRegional({Key? key}) : super(key: key);
+
+class ConsultarComida extends StatefulWidget {
+  const ConsultarComida({Key? key}) : super(key: key);
 
   @override
-  _AgregarScreenState createState() => _AgregarScreenState();
+  _ConsultarComidaScreenState createState() =>
+      _ConsultarComidaScreenState();
 }
 
-class _AgregarScreenState extends State<AgregarRegional> {
+class _ConsultarComidaScreenState extends State<ConsultarComida> {
   final _formKey1 = GlobalKey<FormState>();
-  double yields = 1;
+  double yields = 0;
   double proteyield = 0;
   double carbsyield = 0;
   double sugaryield = 0;
   double caloriesyield = 0;
   double sodiumyield = 0;
   double fatyield = 0;
-  String dropdownvalue = '0';
-  var items = ['0', '1', '2', '3', '4', '5', '6', '7', '8'];
   String label = "";
   String image = "";
-  String datetoday = DateFormat("yyyy-MM-dd").format(DateTime.now());
-  String timetoday = DateFormat('hh:mm:ss').format(DateTime.now());
-  int id_user = 0;
+  
   int id_estatus = 4;
-  String type = "";
   @override
   Widget build(BuildContext context) {
-    GetRecipeYuc args =
-        ModalRoute.of(context)!.settings.arguments as GetRecipeYuc;
+    GetDetailFood args = ModalRoute.of(context)!.settings.arguments as GetDetailFood;
     //porciones
-    yields = args.yield;
+    yields = args.quantity;
     label = args.label;
     image = args.image;
-    id_user = args.id_user;
-    type = args.tipo;
+    fatyield = args.fat;
+    proteyield = args.protein;
+    carbsyield = args.carbs;
+    sugaryield = args.sugar;
+  caloriesyield = args.protein;
+  sodiumyield = args.sodium;
     //operaciones
 
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Registrar tu alimento'),
+          title: Text('Detalles comida'),
           backgroundColor: Colors.lightGreen.shade600,
           centerTitle: true,
         ),
@@ -74,7 +70,7 @@ class _AgregarScreenState extends State<AgregarRegional> {
                   child: Column(
                     children: [
                       const Text(
-                        "Selecciona tu porción:",
+                        "Registraste:",
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
@@ -85,10 +81,8 @@ class _AgregarScreenState extends State<AgregarRegional> {
                         width: 8,
                       ),
                       Text(
-                        'Tamaño de la Porciones: ' +
-                            (args.yield).toStringAsFixed(0) +
-                            ' (' +
-                            args.tipo +
+                        'Tamaño de la Porciones: (' +
+                            (args.quantity).toStringAsFixed(0) +
                             ')',
                         style: TextStyle(
                           fontSize: 13,
@@ -98,36 +92,7 @@ class _AgregarScreenState extends State<AgregarRegional> {
                       SizedBox(
                         width: 2,
                       ),
-                      DropdownButtonFormField<String>(
-                        value: dropdownvalue,
-                        icon: Icon(Icons.keyboard_arrow_down),
-                        items: items.map((String items) {
-                          return DropdownMenuItem(
-                              value: items, child: Text(items));
-                        }).toList(),
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            dropdownvalue = newValue!;
-                            dynamic value = dropdownvalue;
-                            caloriesyield =
-                                (args.calories * double.parse(value));
-                            carbsyield =
-                                (args.quantitychocdf * double.parse(value));
-                            proteyield =
-                                (args.quantityprocnt * double.parse(value));
-                            sugaryield =
-                                (args.quantitysugar * double.parse(value));
-                            sodiumyield =
-                                (args.quantityna * double.parse(value));
-                            fatyield = (args.quantityfat * double.parse(value));
-                          });
-                        },
-                        validator: (value) {
-                          if (value == '0') {
-                            return 'Seleccione primero su porción';
-                          }
-                        },
-                      ),
+                    
                     ],
                   ),
                 ),
@@ -163,38 +128,21 @@ class _AgregarScreenState extends State<AgregarRegional> {
                                   text: args.label),
                             ),
                           ),
-                          AddButton(context),
+                        
                         ],
                       ),
                       SizedBox(
                         height: 10,
                       ),
                       Text(
-                        'Porciones: ' +
-                            (args.yield).toStringAsFixed(0) +
-                            ' (' +
-                            args.tipo +
-                            ')',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      Text(
-                        'Calorias por porción: ' +
+                        'Calorias totales: ' +
                             (args.calories).toStringAsFixed(2),
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      Text(
-                        'Calorias totales: ' + caloriesyield.toStringAsFixed(2),
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
+                    
                     ],
                   ),
                 ),
@@ -227,7 +175,7 @@ class _AgregarScreenState extends State<AgregarRegional> {
                             ),
                             subtitle: Row(
                               children: [
-                                Text(dropdownvalue +
+                                Text(yields.toStringAsFixed(0) +
                                     ' porción(es): ' +
                                     proteyield.toStringAsFixed(2) +
                                     ' gr'),
@@ -251,7 +199,7 @@ class _AgregarScreenState extends State<AgregarRegional> {
                             ),
                             subtitle: Row(
                               children: [
-                                Text(dropdownvalue +
+                                Text(yields.toStringAsFixed(0) +
                                     ' porción(es): ' +
                                     fatyield.toStringAsFixed(2) +
                                     ' gr'),
@@ -275,7 +223,7 @@ class _AgregarScreenState extends State<AgregarRegional> {
                             ),
                             subtitle: Row(
                               children: [
-                                Text(dropdownvalue +
+                                Text(yields.toStringAsFixed(0) +
                                     ' porción(es): ' +
                                     carbsyield.toStringAsFixed(2) +
                                     ' gr'),
@@ -299,7 +247,7 @@ class _AgregarScreenState extends State<AgregarRegional> {
                             ),
                             subtitle: Row(
                               children: [
-                                Text(dropdownvalue +
+                                Text(yields.toStringAsFixed(0) +
                                     ' porción(es): ' +
                                     sugaryield.toStringAsFixed(2) +
                                     ' gr'),
@@ -323,7 +271,7 @@ class _AgregarScreenState extends State<AgregarRegional> {
                             ),
                             subtitle: Row(
                               children: [
-                                Text(dropdownvalue +
+                                Text(yields.toStringAsFixed(0) +
                                     ' porción(es): ' +
                                     sodiumyield.toStringAsFixed(2) +
                                     ' mg'),
@@ -347,116 +295,8 @@ class _AgregarScreenState extends State<AgregarRegional> {
     );
   }
 
-  Widget AddButton(BuildContext context) {
-    return ElevatedButton.icon(
-      icon: Icon(
-        Icons.add,
-        color: Colors.white,
-        size: 24.0,
-      ),
-      label: Text('Agregar a dieta de Hoy'),
-      onPressed: () {
-        if (_formKey1.currentState!.validate()) {
-          registrarFood(
-            context,
-            datetoday,
-            timetoday,
-            label,
-            image,
-            type,
-            dropdownvalue,
-            caloriesyield,
-            proteyield,
-            fatyield,
-            carbsyield,
-            sugaryield,
-            sodiumyield,
-            id_user,
-            id_estatus,
-          );
-        }
-      },
-      style: ElevatedButton.styleFrom(
-        primary: Colors.green,
-        shape: new RoundedRectangleBorder(
-          borderRadius: new BorderRadius.circular(10.0),
-        ),
-      ),
-    );
-  }
+ 
 }
 
-Future registrarFood(
-  BuildContext context,
-  String date_r,
-  String time,
-  String label,
-  String image,
-  String type,
-  dynamic yieldd,
-  double? calories,
-  double? protein,
-  double? fat,
-  double? carbs,
-  double? sugar,
-  double? sodium,
-  int? id_user,
-  int? id_estatus,
-) async {
-  Map data = {
-    'date_r': date_r,
-    'time': time,
-    'label': label,
-    'image': image,
-    'type': type,
-    'quantity': yieldd,
-    'calories': calories,
-    //gogle
-    'protein': protein,
-    'fat': fat,
-    'carbs': carbs,
-    'sugar': sugar,
-    'sodium': sodium,
-    'id_user': id_user,
-    'id_status': id_estatus,
-  };
-  var body = json.encode(data);
 
-  final response = await http.post(
-      Uri.parse(
-          "http://apiapponertesano.azurewebsites.net/apinterfood/register"),
-      headers: {"Content-Type": "application/json"},
-      body: body);
 
-  final value = json.decode(response.body)["statusCode"];
-
-  if (response.statusCode == 200) {
-    if (value == 400) {
-      _showDialog(context, 'Error en el registro');
-    } else {
-      _showDialog(context, 'Registro exitoso');
-    }
-  } else {
-    throw Exception('No se Agrego, intenta nuevamente');
-  }
-}
-
-void _showDialog(BuildContext context, String texto1) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: new Text("Mensaje"),
-        content: new Text(texto1),
-        actions: <Widget>[
-          new FlatButton(
-            child: new Text("OK"),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
-      );
-    },
-  );
-}

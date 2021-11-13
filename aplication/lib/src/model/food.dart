@@ -281,6 +281,7 @@ class FoodRecord {
   String? label;
   String? image;
   String? type;
+  dynamic quantity;
   dynamic calories;
   dynamic protein;
   dynamic fat;
@@ -292,6 +293,7 @@ class FoodRecord {
     this.label,
     this.image,
     this.type,
+    this.quantity,
     this.calories,
     this.protein,
     this.fat,
@@ -305,6 +307,7 @@ class FoodRecord {
         label: json['label'],
         image: json['image'],
         type: json['type'],
+        quantity: json['quantity'],
         calories: json['calories'],
         protein: json['protein'],
         fat: json['fat'],
@@ -320,4 +323,28 @@ List<FoodRecord> parsePost2(String responseBody) {
   return parsed.map<FoodRecord>((json) => FoodRecord.fromJson(json)).toList();
 }
 
+class GetDetailFood {
+  String label;
+  String image;
+  String type;
+  dynamic quantity;
+  dynamic calories;
+  dynamic protein;
+  dynamic fat;
+  dynamic carbs;
+  dynamic sugar;
+  dynamic sodium;
 
+  GetDetailFood(
+    this.label,
+    this.image,
+    this.type,
+    this.quantity,
+    this.calories,
+    this.protein,
+    this.fat,
+    this.carbs,
+    this.sugar,
+    this.sodium,
+  );
+}

@@ -108,7 +108,7 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
                             double calories_yield = (args.calories / yields);
                             double prote_yield = (args.quantityprocnt / yields);
                             double carbs_yield = (args.quantitychocdf / yields);
-                            double sugar_yield = (args.quantitychocdf / yields);
+                            double sugar_yield = (args.quantitysugar / yields);
                             double sodium_yield = (args.quantityna / yields);
                             double fat_yield = (args.quantityfat / yields);
 
