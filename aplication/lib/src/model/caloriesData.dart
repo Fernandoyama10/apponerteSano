@@ -1,11 +1,11 @@
 import 'dart:convert';
 
 class CaloriesdataSet {
-  final double calories;
-  final double protein;
-  final double fat;
-  final double carbs;
-  final double sugar;
+  final dynamic calories;
+  final dynamic protein;
+  final dynamic fat;
+  final dynamic carbs;
+  final dynamic sugar;
 
   CaloriesdataSet(
     this.calories,
@@ -17,11 +17,11 @@ class CaloriesdataSet {
 }
 
 class CaloriesData {
-  double? calories;
-  double? protein;
-  double? fat;
-  double? carbs;
-  double? sugar;
+  dynamic calories;
+  dynamic protein;
+  dynamic fat;
+  dynamic carbs;
+  dynamic sugar;
 
   CaloriesData({
     this.calories,

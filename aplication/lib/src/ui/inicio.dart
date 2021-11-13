@@ -27,20 +27,26 @@ class _DisenoState extends State<Diseno> {
   double _mtb = 0;
   int _lowcalories = 0;
   String _datetoday = DateFormat("yyyy-MM-dd").format(DateTime.now());
-  double _calories = 0;
-  double _calories1 = 0;
-  double _protein = 0;
-  double _protein1 = 0;
-  double _fat = 0;
-  double _fat1 = 0;
-  double _carbs = 0;
-  double _carbs1 = 0;
+  dynamic _calories = 0;
+  dynamic _calories1 = 0;
+  dynamic _protein = 0;
+  dynamic _protein1 = 0;
+  dynamic _fat = 0;
+  dynamic _fat1 = 0;
+  dynamic _carbs = 0;
+  dynamic _carbs1 = 0;
+  dynamic _sugar = 0;
+  dynamic _sugar1 = 0;
+  dynamic _operationcalories1 = 0;
 
   int calculateCalories(height, weight, age, activity, gender) {
     if (gender == "Masculino") {
       _mtb = ((66 + (13.7 * weight)) + ((5 * height) - (6.8 * age)));
       _resultCalories = (_mtb * activity).round();
       _lowcalories = _resultCalories - 500;
+      print('==========operación resta========');
+      _operationcalories1 = _resultCalories - _calories;
+      print(_operationcalories1);
       print(_resultCalories);
     } else {
       _mtb = ((655 + (9.6 * weight)) + ((1.8 * height) - (4.7 * age)));
@@ -60,35 +66,23 @@ class _DisenoState extends State<Diseno> {
       'id_user': id_user,
     };
     var body = json.encode(data);
-    print('===========BODY============');
     print(body);
     final response = await http.post(
         Uri.parse(
             "http://apiapponertesano.azurewebsites.net/apicalories/calories"),
         headers: {"Content-Type": "application/json"},
         body: body);
-    //double valuecalories = json.decode(response.body)["calories"];
-    print('===========STATUS CODE============');
-    print(response.statusCode.toString());
 
     if (response.statusCode == 200) {
       List<CaloriesData> lista = parsePost2(response.body);
-      print('===========LISTA============');
-      print(lista);
       if (lista.length > 0) {
-        print(lista[0].calories);
-        print(lista[0].protein);
-        print(lista[0].fat);
-        print(lista[0].carbs);
-        print(lista[0].sugar);
         final calories = lista[0].calories;
-        print(calories);
         if (calories != null) {
-          print("ENTRO AL IF");
           _calories1 = lista[0].calories!;
           _protein1 = lista[0].protein!;
           _fat1 = lista[0].fat!;
           _carbs1 = lista[0].carbs!;
+          _sugar1 = lista[0].sugar!;
 
           _cambiovalue();
         } else {
@@ -107,6 +101,7 @@ class _DisenoState extends State<Diseno> {
       _protein = _protein1;
       _fat = _fat1;
       _carbs = _carbs1;
+      _sugar = _sugar1;
     });
   }
 
@@ -121,12 +116,9 @@ class _DisenoState extends State<Diseno> {
     _activity = data.value_level;
     _gender = data.gender;
     _id_user = data.id_user;
-    calculateCalories(_height, _weight, _age, _activity, _gender);
     caloriesdataget(_datetoday, _id_user);
+    calculateCalories(_height, _weight, _age, _activity, _gender);
 
-    print("====prueba de pantalla de calories final=====");
-    print('$_calories');
-    print('$_fat');
     return Container(
       height: MediaQuery.of(context).size.height,
       width: double.infinity,
@@ -226,29 +218,40 @@ class _DisenoState extends State<Diseno> {
                     Flexible(
                       child: Column(
                         children: <Widget>[
-                          Container(
-                            decoration: BoxDecoration(
-                                color: Color.fromRGBO(243, 245, 248, 1),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(18))),
-                            child: Icon(
-                              Icons.calculate_rounded,
-                              color: Colors.red,
-                              size: 30,
+                          Padding(
+                            padding: const EdgeInsets.all(1.0),
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18),
+                              ),
+                              color: Colors.amber[50],
+                              elevation: 5,
+                              child: ListTile(
+                                  title: Text(
+                                    _resultCalories.toString() + " cal",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15,
+                                        color: Colors.deepOrange[400],
+                                        decoration: TextDecoration.none),
+                                  ),
+                                  subtitle: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        "tu calculo",
+                                        textAlign: TextAlign.end,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 13,
+                                            color: Colors.deepOrange[300],
+                                            decoration: TextDecoration.none),
+                                      ),
+                                      SizedBox(width: 10),
+                                    ],
+                                  )),
                             ),
-                            padding: EdgeInsets.all(12),
-                          ),
-                          SizedBox(
-                            height: 4,
-                          ),
-                          Text(
-                            _resultCalories.toString() + " cal. iniciales",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontWeight: FontWeight.w700,
-                                fontSize: 14,
-                                color: Colors.white,
-                                decoration: TextDecoration.none),
                           ),
                         ],
                       ),
@@ -256,29 +259,40 @@ class _DisenoState extends State<Diseno> {
                     Flexible(
                       child: Column(
                         children: <Widget>[
-                          Container(
-                            decoration: BoxDecoration(
-                                color: Color.fromRGBO(243, 245, 248, 1),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(18))),
-                            child: Icon(
-                              Icons.report_sharp,
-                              color: Colors.red,
-                              size: 30,
+                          Padding(
+                            padding: const EdgeInsets.all(0.2),
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18),
+                              ),
+                              color: Colors.amber[50],
+                              elevation: 5,
+                              child: ListTile(
+                                  title: Text(
+                                    '$_operationcalories1' + "cal",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14,
+                                        color: Colors.deepOrange[400],
+                                        decoration: TextDecoration.none),
+                                  ),
+                                  subtitle: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        "restantes",
+                                        textAlign: TextAlign.end,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 13,
+                                            color: Colors.deepOrange[300],
+                                            decoration: TextDecoration.none),
+                                      ),
+                                      SizedBox(width: 10),
+                                    ],
+                                  )),
                             ),
-                            padding: EdgeInsets.all(12),
-                          ),
-                          SizedBox(
-                            height: 4,
-                          ),
-                          Text(
-                            "1500 cal. restantes",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontWeight: FontWeight.w700,
-                                fontSize: 14,
-                                color: Colors.white,
-                                decoration: TextDecoration.none),
                           ),
                         ],
                       ),
@@ -286,30 +300,40 @@ class _DisenoState extends State<Diseno> {
                     Flexible(
                       child: Column(
                         children: <Widget>[
-                          Container(
-                            decoration: BoxDecoration(
-                                color: Color.fromRGBO(243, 245, 248, 1),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(18))),
-                            child: Icon(
-                              Icons.person_pin_circle,
-                              color: Colors.red,
-                              size: 30,
+                          Padding(
+                            padding: const EdgeInsets.all(0.2),
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18),
+                              ),
+                              color: Colors.amber[50],
+                              elevation: 5,
+                              child: ListTile(
+                                  title: Text(
+                                    "Excelente trabajo!",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 13.5,
+                                        color: Colors.green[400],
+                                        decoration: TextDecoration.none),
+                                  ),
+                                  subtitle: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        " estado",
+                                        textAlign: TextAlign.end,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 13,
+                                            color: Colors.deepOrange[300],
+                                            decoration: TextDecoration.none),
+                                      ),
+                                      SizedBox(width: 10),
+                                    ],
+                                  )),
                             ),
-                            padding: EdgeInsets.all(12),
-                          ),
-                          SizedBox(
-                            height: 4,
-                          ),
-                          //llamar a la variable: args.usuario
-                          Text(
-                            "Excelente trabajo!",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontWeight: FontWeight.w700,
-                                fontSize: 14,
-                                color: Colors.white,
-                                decoration: TextDecoration.none),
                           ),
                         ],
                       ),
@@ -458,8 +482,8 @@ class _DisenoState extends State<Diseno> {
                                       color: Colors.grey[100],
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(18))),
-                                  child: Icon(
-                                    Icons.check_circle_rounded,
+                                  child: ImageIcon(
+                                    AssetImage("images/applogo.png"),
                                     color: Colors.green,
                                   ),
                                   padding: EdgeInsets.all(12),
@@ -522,8 +546,8 @@ class _DisenoState extends State<Diseno> {
                                       color: Colors.grey[100],
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(18))),
-                                  child: Icon(
-                                    Icons.check_circle_outline,
+                                  child: ImageIcon(
+                                    AssetImage("images/applogo.png"),
                                     color: Colors.green,
                                   ),
                                   padding: EdgeInsets.all(12),
@@ -604,8 +628,8 @@ class _DisenoState extends State<Diseno> {
                                       color: Colors.grey[100],
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(18))),
-                                  child: Icon(
-                                    Icons.check_circle_rounded,
+                                  child: ImageIcon(
+                                    AssetImage("images/icon/applogo.png"),
                                     color: Colors.green,
                                   ),
                                   padding: EdgeInsets.all(12),
@@ -684,8 +708,8 @@ class _DisenoState extends State<Diseno> {
                                       color: Colors.grey[100],
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(18))),
-                                  child: Icon(
-                                    Icons.check_circle_rounded,
+                                  child: ImageIcon(
+                                    AssetImage("images/icon/applogo.png"),
                                     color: Colors.green,
                                   ),
                                   padding: EdgeInsets.all(12),
@@ -764,8 +788,8 @@ class _DisenoState extends State<Diseno> {
                                       color: Colors.grey[100],
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(18))),
-                                  child: Icon(
-                                    Icons.check_circle_rounded,
+                                  child: ImageIcon(
+                                    AssetImage("images/applogo.png"),
                                     color: Colors.green,
                                   ),
                                   padding: EdgeInsets.all(12),
@@ -807,9 +831,86 @@ class _DisenoState extends State<Diseno> {
                         controller: ScrollController(keepScrollOffset: false),
                       ),
                       SizedBox(
-                        height: 36,
+                        height: 16,
+                      ),
+                      Container(
+                        child: Text(
+                          "Azucares",
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.grey[800],
+                              decoration: TextDecoration.none),
+                        ),
+                        padding: EdgeInsets.symmetric(horizontal: 32),
+                      ),
+                      SizedBox(
+                        height: 16,
                       ),
 
+                      ListView.builder(
+                        itemBuilder: (context, index) {
+                          return Container(
+                            margin: EdgeInsets.symmetric(horizontal: 32),
+                            padding: EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20))),
+                            child: Row(
+                              children: <Widget>[
+                                Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey[100],
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(18))),
+                                  child: ImageIcon(
+                                    AssetImage("images/applogo.png"),
+                                    color: Colors.green,
+                                  ),
+                                  padding: EdgeInsets.all(12),
+                                ),
+                                SizedBox(
+                                  width: 16,
+                                ),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        "Llevas " +
+                                            '$_sugar' +
+                                            "g de azucares.",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w700,
+                                            color: Colors.green[900],
+                                            decoration: TextDecoration.none),
+                                      ),
+                                      Text(
+                                        "Azucares registrado del día de hoy",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w700,
+                                            color: Colors.grey[500],
+                                            decoration: TextDecoration.none),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                        shrinkWrap: true,
+                        itemCount: 1,
+                        padding: EdgeInsets.all(0),
+                        controller: ScrollController(keepScrollOffset: false),
+                      ),
+                      SizedBox(
+                        height: 16,
+                      ),
                       //now expense
                     ],
                   ),
