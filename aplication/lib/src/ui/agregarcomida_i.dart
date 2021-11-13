@@ -75,12 +75,24 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
                         "Selecciona tu porción:",
                         style: TextStyle(
                           fontSize: 14,
-                          fontWeight: FontWeight.w300,
+                          fontWeight: FontWeight.bold,
                           letterSpacing: 1.2,
                         ),
                       ),
                       SizedBox(
                         width: 8,
+                      ),
+                      Text(
+                        'Tamaño de la Porciones: (' +
+                            (args.yield).toStringAsFixed(0) +
+                            ')',
+                        style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 2,
                       ),
                       DropdownButtonFormField<String>(
                         value: dropdownvalue,
@@ -157,14 +169,7 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
                         height: 10,
                       ),
                       Text(
-                        'Porciones: ' + (args.yield).toStringAsFixed(0),
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      Text(
-                        'Calorias totales: ' +
+                        'Calorias por porción: ' +
                             (args.calories).toStringAsFixed(2),
                         style: TextStyle(
                           fontSize: 14,
@@ -172,8 +177,7 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
                         ),
                       ),
                       Text(
-                        'Calorias por porcion: ' +
-                            caloriesyield.toStringAsFixed(2),
+                        'Calorias totales: ' + caloriesyield.toStringAsFixed(2),
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,

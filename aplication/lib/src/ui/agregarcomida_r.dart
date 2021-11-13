@@ -5,7 +5,6 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-
 class AgregarRegional extends StatefulWidget {
   const AgregarRegional({Key? key}) : super(key: key);
 
@@ -33,7 +32,8 @@ class _AgregarScreenState extends State<AgregarRegional> {
   String type = "";
   @override
   Widget build(BuildContext context) {
-    GetRecipeYuc args = ModalRoute.of(context)!.settings.arguments as GetRecipeYuc;
+    GetRecipeYuc args =
+        ModalRoute.of(context)!.settings.arguments as GetRecipeYuc;
     //porciones
     yields = args.yield;
     label = args.label;
@@ -52,273 +52,295 @@ class _AgregarScreenState extends State<AgregarRegional> {
         body: Form(
           key: _formKey1,
           child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Stack(
-                children: [
-                  Hero(
-                    tag: args.label,
-                    child: Image.network(
-                      args.image,
-                      fit: BoxFit.cover,
-                      width: MediaQuery.of(context).size.width,
-                      height: 180,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Stack(
+                  children: [
+                    Hero(
+                      tag: args.label,
+                      child: Image.network(
+                        args.image,
+                        fit: BoxFit.cover,
+                        width: MediaQuery.of(context).size.width,
+                        height: 180,
+                      ),
                     ),
+                  ],
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(30, 20, 30, 0),
+                  child: Column(
+                    children: [
+                      const Text(
+                        "Selecciona tu porción:",
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 1.2,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Text(
+                        'Tamaño de la Porciones: ' +
+                            (args.yield).toStringAsFixed(0) +
+                            ' (' +
+                            args.tipo +
+                            ')',
+                        style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 2,
+                      ),
+                      DropdownButtonFormField<String>(
+                        value: dropdownvalue,
+                        icon: Icon(Icons.keyboard_arrow_down),
+                        items: items.map((String items) {
+                          return DropdownMenuItem(
+                              value: items, child: Text(items));
+                        }).toList(),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            dropdownvalue = newValue!;
+                            dynamic value = dropdownvalue;
+                            caloriesyield =
+                                (args.calories * double.parse(value));
+                            carbsyield =
+                                (args.quantitychocdf * double.parse(value));
+                            proteyield =
+                                (args.quantityprocnt * double.parse(value));
+                            sugaryield =
+                                (args.quantitychocdf * double.parse(value));
+                            sodiumyield =
+                                (args.quantityna * double.parse(value));
+                            fatyield = (args.quantityfat * double.parse(value));
+                          });
+                        },
+                        validator: (value) {
+                          if (value == '0') {
+                            return 'Seleccione primero su porción';
+                          }
+                        },
+                      ),
+                    ],
                   ),
-                ],
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(30, 20, 30, 0),
-                child: Column(
-                  children: [
-                    const Text(
-                      "Selecciona tu porción:",
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w300,
-                        letterSpacing: 1.2,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 8,
-                    ),
-                    DropdownButtonFormField<String>(
-                      value: dropdownvalue,
-                      icon: Icon(Icons.keyboard_arrow_down),
-                      items: items.map((String items) {
-                        return DropdownMenuItem(
-                            value: items, child: Text(items));
-                      }).toList(),
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          dropdownvalue = newValue!;
-                          dynamic value = dropdownvalue;
-                                        caloriesyield =
-                              (args.calories * double.parse(value));
-                          carbsyield = (args.quantitychocdf * double.parse(value));
-                          proteyield = (args.quantityprocnt * double.parse(value));
-                          sugaryield = (args.quantitychocdf * double.parse(value));
-                          sodiumyield = (args.quantityna * double.parse(value));
-                          fatyield = (args.quantityfat * double.parse(value));
-                        });
-                      },
-                      validator: (value) {
-                        if (value == '0') {
-                          return 'Seleccione primero su porción';
-                        }
-                      },
-                    ),
-                  ],
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 0, 20, 5),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [],
-                    ),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 5),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Flexible(
-                          child: RichText(
-                            overflow: TextOverflow.ellipsis,
-                            strutStyle: StrutStyle(fontSize: 28.0),
-                            text: TextSpan(
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                                text: args.label),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Flexible(
+                            child: RichText(
+                              overflow: TextOverflow.ellipsis,
+                              strutStyle: StrutStyle(fontSize: 28.0),
+                              text: TextSpan(
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                  text: args.label),
+                            ),
                           ),
+                          AddButton(context),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        'Porciones: ' +
+                            (args.yield).toStringAsFixed(0) +
+                            ' (' +
+                            args.tipo +
+                            ')',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
                         ),
-                        AddButton(context),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      'Porciones: ' + (args.yield).toStringAsFixed(0) + ' (' + args.tipo + ')',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
                       ),
-                    ),
-                    Text(
-                      'Calorias totales: ' + (args.calories).toStringAsFixed(2),
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
+                      Text(
+                        'Calorias por porción: ' +
+                            (args.calories).toStringAsFixed(2),
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
-                    ),
-                    Text(
-                      'Calorias por porcion: ' +
-                          caloriesyield.toStringAsFixed(2),
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
+                      Text(
+                        'Calorias totales: ' + caloriesyield.toStringAsFixed(2),
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(30),
-                child: Column(
-                  children: [
-                    const Text(
-                      "Información Nutrimental:",
-                      style: TextStyle(
-                        fontSize: 19,
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: 1.2,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18),
-                        ),
-                        color: Colors.amber[50],
-                        elevation: 5,
-                        child: ListTile(
-                          title: Text(
-                            "Proteinas:",
-                          ),
-                          subtitle: Row(
-                            children: [
-                              Text(dropdownvalue +
-                                  ' porción(es): ' +
-                                  proteyield.toStringAsFixed(2) +
-                                  ' gr'),
-                              SizedBox(width: 10),
-                            ],
-                          ),
+                Padding(
+                  padding: EdgeInsets.all(30),
+                  child: Column(
+                    children: [
+                      const Text(
+                        "Información Nutrimental:",
+                        style: TextStyle(
+                          fontSize: 19,
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: 1.2,
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18),
-                        ),
-                        color: Colors.amber[50],
-                        elevation: 5,
-                        child: ListTile(
-                          title: Text(
-                            "Grasa:",
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18),
                           ),
-                          subtitle: Row(
-                            children: [
-                              Text(dropdownvalue +
-                                  ' porción(es): ' +
-                                  fatyield.toStringAsFixed(2) +
-                                  ' gr'),
-                              const SizedBox(width: 10),
-                            ],
+                          color: Colors.amber[50],
+                          elevation: 5,
+                          child: ListTile(
+                            title: Text(
+                              "Proteinas:",
+                            ),
+                            subtitle: Row(
+                              children: [
+                                Text(dropdownvalue +
+                                    ' porción(es): ' +
+                                    proteyield.toStringAsFixed(2) +
+                                    ' gr'),
+                                SizedBox(width: 10),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18),
-                        ),
-                        color: Colors.amber[50],
-                        elevation: 5,
-                        child: ListTile(
-                          title: Text(
-                            "Carbohidratos:",
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18),
                           ),
-                          subtitle: Row(
-                            children: [
-                              Text(dropdownvalue +
-                                  ' porción(es): ' +
-                                  carbsyield.toStringAsFixed(2) +
-                                  ' gr'),
-                              SizedBox(width: 10),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18),
-                        ),
-                        color: Colors.amber[50],
-                        elevation: 5,
-                        child: ListTile(
-                          title: Text(
-                            "Azucar:",
-                          ),
-                          subtitle: Row(
-                            children: [
-                              Text(dropdownvalue +
-                                  ' porción(es): ' +
-                                  sugaryield.toStringAsFixed(2) +
-                                  ' gr'),
-                              SizedBox(width: 10),
-                            ],
+                          color: Colors.amber[50],
+                          elevation: 5,
+                          child: ListTile(
+                            title: Text(
+                              "Grasa:",
+                            ),
+                            subtitle: Row(
+                              children: [
+                                Text(dropdownvalue +
+                                    ' porción(es): ' +
+                                    fatyield.toStringAsFixed(2) +
+                                    ' gr'),
+                                const SizedBox(width: 10),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18),
-                        ),
-                        color: Colors.amber[50],
-                        elevation: 5,
-                        child: ListTile(
-                          title: Text(
-                            "Sodio:",
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18),
                           ),
-                          subtitle: Row(
-                            children: [
-                              Text(dropdownvalue +
-                                  ' porción(es): ' +
-                                  sodiumyield.toStringAsFixed(2) +
-                                  ' mg'),
-                              SizedBox(width: 10),
-                            ],
+                          color: Colors.amber[50],
+                          elevation: 5,
+                          child: ListTile(
+                            title: Text(
+                              "Carbohidratos:",
+                            ),
+                            subtitle: Row(
+                              children: [
+                                Text(dropdownvalue +
+                                    ' porción(es): ' +
+                                    carbsyield.toStringAsFixed(2) +
+                                    ' gr'),
+                                SizedBox(width: 10),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18),
+                          ),
+                          color: Colors.amber[50],
+                          elevation: 5,
+                          child: ListTile(
+                            title: Text(
+                              "Azucar:",
+                            ),
+                            subtitle: Row(
+                              children: [
+                                Text(dropdownvalue +
+                                    ' porción(es): ' +
+                                    sugaryield.toStringAsFixed(2) +
+                                    ' gr'),
+                                SizedBox(width: 10),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18),
+                          ),
+                          color: Colors.amber[50],
+                          elevation: 5,
+                          child: ListTile(
+                            title: Text(
+                              "Sodio:",
+                            ),
+                            subtitle: Row(
+                              children: [
+                                Text(dropdownvalue +
+                                    ' porción(es): ' +
+                                    sodiumyield.toStringAsFixed(2) +
+                                    ' mg'),
+                                SizedBox(width: 10),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-            ],
-          ),
+                SizedBox(
+                  height: 10,
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -386,7 +408,7 @@ Future registrarFood(
     'time': time,
     'label': label,
     'image': image,
-        'type': type,
+    'type': type,
     'quantity': yieldd,
     'calories': calories,
     //gogle

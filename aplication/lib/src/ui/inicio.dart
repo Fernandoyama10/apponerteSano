@@ -44,7 +44,6 @@ class _DisenoState extends State<Diseno> {
       _mtb = ((66 + (13.7 * weight)) + ((5 * height) - (6.8 * age)));
       _resultCalories = (_mtb * activity).round();
       _lowcalories = _resultCalories - 500;
-      print('==========operación resta========');
       _operationcalories1 = _resultCalories - _calories;
       print(_operationcalories1);
       print(_resultCalories);
@@ -404,7 +403,7 @@ class _DisenoState extends State<Diseno> {
                                 color: Colors.green[400],
                                 child: Text('Registrar mi Comida',
                                     style: TextStyle(
-                                        color: Colors.yellow[200],
+                                        color: Colors.yellow[100],
                                         fontSize: 16)),
                               ),
                             ]),
@@ -417,7 +416,7 @@ class _DisenoState extends State<Diseno> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               Text(
-                                'Bienvenido: ' + data.name,
+                                'Bienvenido ' + data.name,
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     fontWeight: FontWeight.w600,
@@ -435,7 +434,7 @@ class _DisenoState extends State<Diseno> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: const <Widget>[
                             Text(
-                              "¿Cómo voy en mi alimentación de hoy?",
+                              "¿Cómo vas con tu alimentación hoy?",
                               style: TextStyle(
                                   fontWeight: FontWeight.w900,
                                   fontSize: 14,
@@ -496,10 +495,10 @@ class _DisenoState extends State<Diseno> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(18))),
                                   child: ImageIcon(
-                                    AssetImage("images/applogo.png"),
+                                    AssetImage("images/icon/caloria.png"),
                                     color: Colors.green,
                                   ),
-                                  padding: EdgeInsets.all(12),
+                                  padding: EdgeInsets.all(11),
                                 ),
                                 SizedBox(
                                   width: 16,
@@ -512,7 +511,7 @@ class _DisenoState extends State<Diseno> {
                                       Text(
                                         "llevas consumido " +
                                             '$_calories' +
-                                            "g cal. hoy",
+                                            " cal. hoy",
                                         style: TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.w700,
@@ -520,7 +519,9 @@ class _DisenoState extends State<Diseno> {
                                             decoration: TextDecoration.none),
                                       ),
                                       Text(
-                                        "te quedan 1500 cal. restantes según tu calculo calorico para mantener tu peso",
+                                        "te quedan " +
+                                            '$_operationcalories1' +
+                                            " cal. restantes según tu calculo calorico para mantener tu peso",
                                         style: TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.w700,
@@ -642,10 +643,10 @@ class _DisenoState extends State<Diseno> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(18))),
                                   child: ImageIcon(
-                                    AssetImage("images/icon/applogo.png"),
+                                    AssetImage("images/icon/grasas-trans.png"),
                                     color: Colors.green,
                                   ),
-                                  padding: EdgeInsets.all(12),
+                                  padding: EdgeInsets.all(11),
                                 ),
                                 SizedBox(
                                   width: 16,
@@ -722,10 +723,10 @@ class _DisenoState extends State<Diseno> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(18))),
                                   child: ImageIcon(
-                                    AssetImage("images/icon/applogo.png"),
+                                    AssetImage("images/icon/proteina.png"),
                                     color: Colors.green,
                                   ),
-                                  padding: EdgeInsets.all(12),
+                                  padding: EdgeInsets.all(11),
                                 ),
                                 SizedBox(
                                   width: 16,
@@ -802,10 +803,10 @@ class _DisenoState extends State<Diseno> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(18))),
                                   child: ImageIcon(
-                                    AssetImage("images/applogo.png"),
+                                    AssetImage("images/icon/carbohidrato.png"),
                                     color: Colors.green,
                                   ),
-                                  padding: EdgeInsets.all(12),
+                                  padding: EdgeInsets.all(11),
                                 ),
                                 SizedBox(
                                   width: 16,
@@ -816,7 +817,7 @@ class _DisenoState extends State<Diseno> {
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
                                       Text(
-                                        "Llevas" + '$_carbs' + "g de carb.",
+                                        "Llevas " + '$_carbs' + "g de carb.",
                                         style: TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.w700,
@@ -878,10 +879,10 @@ class _DisenoState extends State<Diseno> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(18))),
                                   child: ImageIcon(
-                                    AssetImage("images/applogo.png"),
+                                    AssetImage("images/icon/azucar.png"),
                                     color: Colors.green,
                                   ),
-                                  padding: EdgeInsets.all(12),
+                                  padding: EdgeInsets.all(11),
                                 ),
                                 SizedBox(
                                   width: 16,
