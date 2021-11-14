@@ -65,7 +65,6 @@ class RecordApi {
       String body = response.body;
       final parse = jsonDecode(body);
       final List recipeYucatan = parse;
-      print(parse);
       return recipeYucatan.map((json) => FoodRecord.fromJson(json)).toList();
     } else {
       throw Exception();
@@ -84,6 +83,26 @@ class RecordCaloriess {
       String body = response.body;
       final parse = jsonDecode(body);
     
+      final List recipeYucatan = parse;
+
+        return recipeYucatan.map((json) => RecordCalories.fromJson(json)).toList();
+    } else {
+      throw Exception();
+    }
+  }
+}
+
+
+class RecordCaloriesInicio {
+  static Future<List<RecordCalories>> getRecipes(String date_r, int id_user) async {
+    final url = Uri.parse(
+        'http://apiapponertesano.azurewebsites.net/apicalories/calories/$date_r/$id_user');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      String body = response.body;
+      final parse = jsonDecode(body);
+      print(parse);
       final List recipeYucatan = parse;
 
         return recipeYucatan.map((json) => RecordCalories.fromJson(json)).toList();

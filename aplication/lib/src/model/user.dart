@@ -3,10 +3,11 @@ import 'dart:convert';
 class UserDat {
   final String email;
   final String name;
-
+  final String id;
   UserDat(
     this.email,
     this.name,
+    this.id
   );
 }
 

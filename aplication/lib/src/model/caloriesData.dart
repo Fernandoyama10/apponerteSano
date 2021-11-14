@@ -6,6 +6,7 @@ class CaloriesdataSet {
   final dynamic fat;
   final dynamic carbs;
   final dynamic sugar;
+  final dynamic sodium;
 
   CaloriesdataSet(
     this.calories,
@@ -13,6 +14,7 @@ class CaloriesdataSet {
     this.fat,
     this.carbs,
     this.sugar,
+    this.sodium,
   );
 }
 

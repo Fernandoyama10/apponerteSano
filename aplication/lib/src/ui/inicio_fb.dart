@@ -264,10 +264,7 @@ class _DisenoState extends State<Diseno_fb> {
                                 height: 70.0,
                                 onPressed: () {
                                   Navigator.pushNamed(context, "/tipocomida",
-                                      arguments: UserDat(
-                                          data.name,
-                                          data.email,
-                                     ));
+                                     );
                                   //Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => Consumolista(listapost: fetchPost1(args.clave.toString()),p: args.puntos,usu: args.id_usu,id_sa: args.id_salon)));
                                 },
                                 color: Colors.green[400],

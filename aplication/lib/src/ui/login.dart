@@ -84,7 +84,7 @@ class _LoginState extends State<Login> {
                     },
                     controller: txtemail,
                     keyboardType: TextInputType.text,
-                    autofocus: true,
+                    autofocus: false,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(32.0)),
@@ -179,11 +179,12 @@ class _LoginState extends State<Login> {
 
   loggedInUI(FacebookSignInController model) {
     Timer(
-        Duration(seconds: 0),
-        () => Navigator.of(context).pushReplacementNamed('/iniciofb',
+        Duration(seconds: -1),
+        () => Navigator.of(context).pushReplacementNamed('/registrarfb',
             arguments: UserDat(
               model.userData!["email"].toString(),
               model.userData!["name"].toString(),
+               model.userData!["id"].toString(),
             )));
   }
 

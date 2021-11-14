@@ -1,11 +1,10 @@
+import 'package:apponertesano/src/blocs/search_api.dart';
 import 'package:apponertesano/src/model/caloriesData.dart';
 import 'package:apponertesano/src/model/user.dart';
 import 'package:apponertesano/src/resources/facebook_login_result.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 // Define un widget de formulario personalizado
 class Diseno extends StatefulWidget {
@@ -37,15 +36,15 @@ class _DisenoState extends State<Diseno> {
   dynamic _carbs1 = 0;
   dynamic _sugar = 0;
   dynamic _sugar1 = 0;
+    dynamic _sodium = 0;
+  dynamic _sodium1 = 0;
   dynamic _operationcalories1 = 0;
-
-
+  List<RecordCalories> recipes2 = [];
   @override
   void initState() {
     super.initState();
  WidgetsBinding.instance!.addPostFrameCallback((_){
-      caloriesdataget(_datetoday, _id_user);
-    calculateCalories(_height, _weight, _age, _activity, _gender);
+   init2();
           });
   }
 
@@ -72,44 +71,29 @@ class _DisenoState extends State<Diseno> {
     return _resultCalories;
   }
 
-  Future caloriesdataget(
-    // BuildContext context,
-    String datetoday,
-    int id_user,
-  ) async {
-    Map data = {
-      'date_r': datetoday,
-      'id_user': id_user,
-    };
-    var body = json.encode(data);
-    print(body);
-    final response = await http.post(
-        Uri.parse(
-            "http://apiapponertesano.azurewebsites.net/apicalories/calories"),
-        headers: {"Content-Type": "application/json"},
-        body: body);
-
-    if (response.statusCode == 200) {
-      List<CaloriesData> lista = parsePost2(response.body);
-      if (lista.length > 0) {
-        final calories = lista[0].calories;
-        if (calories != null) {
-          _calories1 = lista[0].calories!;
-          _protein1 = lista[0].protein!;
-          _fat1 = lista[0].fat!;
-          _carbs1 = lista[0].carbs!;
-          _sugar1 = lista[0].sugar!;
-
-          _cambiovalue();
-        } else {
-          CaloriesdataSet(0, 0, 0, 0, 0);
-        }
+  Future init2() async {
+    final recipes2 = await RecordCaloriesInicio.getRecipes(_datetoday, _id_user);
+    if (recipes2.length > 0) {
+      final calories = recipes2[0].calories;
+      if (calories != null) {
+        _calories = recipes2[0].calories!;
+        _protein = recipes2[0].protein!;
+        _fat = recipes2[0].fat!;
+        _carbs = recipes2[0].carbs!;
+        _sugar = recipes2[0].sugar!;
+        _sodium = recipes2[0].sodium!;
+       
+      } else {
+          CaloriesdataSet(0, 0, 0, 0, 0, 0);
       }
-      return lista;
-    } else {
-      throw Exception('fallo en el sistema conexión');
     }
+    if (this.mounted) { // check whether the state object is in tree
+setState(() => this.recipes2 = recipes2);
   }
+    
+  }
+
+
 
   void _cambiovalue() {
     setState(() {
@@ -120,7 +104,10 @@ class _DisenoState extends State<Diseno> {
       _sugar = _sugar1;
     });
   }
-
+  Future<void> _refresh(){
+     init2();
+    return Future.delayed(Duration(seconds: 0));
+  }
   @override
   Widget build(BuildContext context) {
     UsuariodataSet data =
@@ -132,10 +119,15 @@ class _DisenoState extends State<Diseno> {
     _activity = data.value_level;
     _gender = data.gender;
     _id_user = data.id_user;
+   
+    calculateCalories(_height, _weight, _age, _activity, _gender);
 
+    return Scaffold(
 
-    return Container(
-      height: MediaQuery.of(context).size.height,
+      body: RefreshIndicator(
+        onRefresh: _refresh,
+        child: Container(
+  height: MediaQuery.of(context).size.height,
       width: double.infinity,
 
       decoration: new BoxDecoration(
@@ -182,7 +174,7 @@ class _DisenoState extends State<Diseno> {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(75)),
                               onPressed: () {
-                                   Navigator.pushNamed(context, "/comidadia",
+                                   Navigator.pushNamed(context, "/historialcomida",
                                       arguments: UsuariodataSet(
                                           data.id_user,
                                           data.email,
@@ -238,6 +230,8 @@ class _DisenoState extends State<Diseno> {
                       color: Colors.white,
                       decoration: TextDecoration.none),
                 ),
+          
+
                 SizedBox(
                   height: 15,
                 ),
@@ -297,7 +291,7 @@ class _DisenoState extends State<Diseno> {
                               elevation: 5,
                               child: ListTile(
                                   title: Text(
-                                    '$_operationcalories1' + "cal",
+                                    '$_operationcalories1' + " cal",
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
@@ -432,7 +426,7 @@ class _DisenoState extends State<Diseno> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               Text(
-                                'Bienvenido: ' + data.name,
+                                'Bienvenido: ' + data.name + " " + data.surname,
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     fontWeight: FontWeight.w600,
@@ -952,6 +946,10 @@ class _DisenoState extends State<Diseno> {
           )
         ],
       ),
+        ),
+      ),
+        
+    
     );
   }
 }

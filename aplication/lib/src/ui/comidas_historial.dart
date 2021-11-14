@@ -46,7 +46,7 @@ setState(() {
     super.initState();
 
     dateinput.text = "";
-    datetoday = "";
+  
   }
 
   @override
@@ -56,8 +56,10 @@ setState(() {
 
   Future init() async {
     final recipes = await RecordApi.getRecipes(datetoday, id_user);
-
-    setState(() => this.recipes = recipes);
+if (this.mounted) { // check whether the state object is in tree
+  setState(() => this.recipes = recipes);
+  }
+  
   }
 
   Future init2() async {
@@ -73,12 +75,13 @@ setState(() {
         _sodium = recipes2[0].sodium!;
       } else {}
     }
-    setState(() => this.recipes2 = recipes2);
+    if (this.mounted) { // check whether the state object is in tree
+setState(() => this.recipes2 = recipes2);
+  }
+    
   }
 
-  void _cambiosdevalores() {
-    setState(() {});
-  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -86,8 +89,6 @@ setState(() {
     UsuariodataSet data =
         ModalRoute.of(context)!.settings.arguments as UsuariodataSet;
     id_user = data.id_user;
-    init() ;
-    init2();
     return Scaffold(
       appBar: AppBar(
         title: Text('Historial de comida por fecha'),
@@ -102,7 +103,31 @@ setState(() {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
+                      Padding(
+                  padding: EdgeInsets.fromLTRB(30, 0, 30, 15),
+                  child: Column(
+                    children: [
+                      const Text(
+                        "Consulta tus resultados anteriores:",
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 1.0,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      
+                      SizedBox(
+                        width: 2,
+                      ),
+                    ],
+                  ),
+                ),
               TextFormField(
+                  cursorColor: Colors.black,
+                  style: TextStyle(color: Colors.black),
                 validator: (value) {
                   if (value == null || value == "" || value.isEmpty) {
                     return 'Selecciona un dia del calendario';
@@ -111,11 +136,17 @@ setState(() {
                 },
                 controller: dateinput, //editing controller of this TextField
                 decoration: InputDecoration(
+                  enabledBorder: UnderlineInputBorder(      
+                      borderSide: BorderSide(color: Colors.green),   
+                      ),  
+                 focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.green),
+                   ),  
                     icon: Icon(Icons.calendar_today),
                     //icon of text field
-                    labelText:
-                        "Selecciona una fecha para ver historial" //label text of field
+                    labelText:"Selecciona una fecha para ver resultados anteriores:", //label text of field
                     ),
+                    
                 readOnly:
                     true, //set it true, so that user will not able to edit text
                 onTap: () async {
@@ -140,7 +171,8 @@ setState(() {
                       datetoday = formattedDate;
                       init();
                       init2();
-                      _cambiosdevalores();
+                            isVisible = !isVisible;
+                    
                       //set output date to TextField value.
                     });
                   } else {

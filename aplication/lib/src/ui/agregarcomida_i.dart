@@ -416,7 +416,8 @@ void _mensajeSuccess(BuildContext context, String nombre) {
           title: nombre + ', registro exitoso',
           lottieBuilder: Lottie.asset(
           'images/62669-success-lottie-animation.json',
-          fit: BoxFit.contain,
+          height: 25,
+          width: 25,
         ),
           context: context,
           actions: [
