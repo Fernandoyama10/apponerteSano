@@ -18,6 +18,7 @@ class ComidaInternacionalListPageState extends State<BuscarInternacional> {
   String query = '';
   Timer? debouncer;
   int id_user= 0;
+  String name = "";
   @override
   void initState() {
     super.initState();
@@ -53,6 +54,7 @@ class ComidaInternacionalListPageState extends State<BuscarInternacional> {
             UsuariodataSet data =
         ModalRoute.of(context)!.settings.arguments as UsuariodataSet;
         id_user = data.id_user;
+        name = data.name;
     return Scaffold(
 
         appBar: AppBar(
@@ -116,6 +118,7 @@ class ComidaInternacionalListPageState extends State<BuscarInternacional> {
                 hit.recipe!.totalNutrients!.chocdf!.quantity!.toDouble(),
                 hit.recipe!.totalNutrients!.fat!.quantity!.toDouble(),
                 id_user,
+                name,
                 hit.recipe!.totalNutrients!.procnt!.quantity!.toDouble(),
               ));
         },

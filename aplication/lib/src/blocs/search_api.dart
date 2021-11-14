@@ -39,7 +39,6 @@ class LocalApi {
     if (response.statusCode == 200) {
       String body = response.body;
       final parse = jsonDecode(body);
-      print(parse);
       final List recipeYucatan = parse;
 
       return recipeYucatan.map((json) => RecipeYucatan.fromJson(json)).where((recipe) {
@@ -65,9 +64,8 @@ class RecordApi {
     if (response.statusCode == 200) {
       String body = response.body;
       final parse = jsonDecode(body);
-      print(parse);
       final List recipeYucatan = parse;
-
+      print(parse);
       return recipeYucatan.map((json) => FoodRecord.fromJson(json)).toList();
     } else {
       throw Exception();
@@ -85,7 +83,7 @@ class RecordCaloriess {
     if (response.statusCode == 200) {
       String body = response.body;
       final parse = jsonDecode(body);
-      print(parse);
+    
       final List recipeYucatan = parse;
 
         return recipeYucatan.map((json) => RecordCalories.fromJson(json)).toList();

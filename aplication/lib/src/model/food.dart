@@ -179,6 +179,7 @@ class GetRecipe {
   final double quantitychocdf;
   final double quantityfat;
   final int id_user;
+  final String name;
   late final double quantityprocnt;
   GetRecipe(
       this.label,
@@ -190,6 +191,7 @@ class GetRecipe {
       this.quantitychocdf,
       this.quantityfat,
       this.id_user,
+      this.name,
       this.quantityprocnt);
 }
 
@@ -262,6 +264,7 @@ class GetRecipeYuc {
   final double quantitychocdf;
   final double quantityfat;
   final int id_user;
+  final String name;
   late final double quantityprocnt;
   GetRecipeYuc(
       this.label,
@@ -274,10 +277,12 @@ class GetRecipeYuc {
       this.quantitychocdf,
       this.quantityfat,
       this.id_user,
+      this.name,
       this.quantityprocnt);
 }
 
 class FoodRecord {
+  int? id_meal;
   String? label;
   String? image;
   String? type;
@@ -290,6 +295,7 @@ class FoodRecord {
   dynamic sodium;
 
   FoodRecord({
+    this.id_meal,
     this.label,
     this.image,
     this.type,
@@ -304,6 +310,7 @@ class FoodRecord {
 
   factory FoodRecord.fromJson(Map<String, dynamic> json) {
     return FoodRecord(
+          id_meal: json['id_meal'],
         label: json['label'],
         image: json['image'],
         type: json['type'],

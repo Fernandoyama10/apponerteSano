@@ -1,9 +1,11 @@
 import 'dart:convert';
-import 'package:apponertesano/src/model/user.dart';
 import 'package:http/http.dart' as http;
 import 'package:apponertesano/src/model/food.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:material_dialogs/material_dialogs.dart';
+import 'package:material_dialogs/widgets/buttons/icon_button.dart';
+import 'package:material_dialogs/widgets/buttons/icon_outline_button.dart';
 
 class AgregarInternacional extends StatefulWidget {
   const AgregarInternacional({Key? key}) : super(key: key);
@@ -30,6 +32,7 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
   String timetoday = DateFormat('hh:mm:ss').format(DateTime.now());
   int id_user = 0;
   int id_estatus = 4;
+  String nameuser = "";
   @override
   Widget build(BuildContext context) {
     GetRecipe args = ModalRoute.of(context)!.settings.arguments as GetRecipe;
@@ -38,6 +41,7 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
     label = args.label;
     image = args.image;
     id_user = args.id_user;
+    nameuser = args.name;
     //operaciones
 
     return SafeArea(
@@ -345,7 +349,40 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
       label: Text('Agregar a dieta de Hoy'),
       onPressed: () {
         if (_formKey1.currentState!.validate()) {
-          registrarFood(
+            _mensajeRegistrar(context);
+         
+        }
+      },
+      style: ElevatedButton.styleFrom(
+        primary: Colors.green,
+        shape: new RoundedRectangleBorder(
+          borderRadius: new BorderRadius.circular(10.0),
+        ),
+      ),
+    );
+  }
+
+  
+  void _mensajeRegistrar(BuildContext context) {
+  Dialogs.bottomMaterialDialog(
+          msg: '¿Esta seguro que quiere guardar este registro?',
+          title: 'Registrar esta comida',
+          
+          context: context,
+          actions: [
+            IconsOutlineButton(
+                onPressed: () {
+                Navigator.pop(context);
+              },
+              text: 'Cancelar',
+              iconData: Icons.cancel_outlined,
+              textStyle: TextStyle(color: Colors.grey),
+              iconColor: Colors.grey,
+            ),
+            IconsButton(
+              onPressed: () {
+                   Navigator.pop(context);
+              registrarFood(
             context,
             datetoday,
             timetoday,
@@ -361,17 +398,41 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
             id_user,
             id_estatus,
           );
-        }
-      },
-      style: ElevatedButton.styleFrom(
-        primary: Colors.green,
-        shape: new RoundedRectangleBorder(
-          borderRadius: new BorderRadius.circular(10.0),
-        ),
-      ),
-    );
-  }
+              },
+              text: 'Registrar',
+              iconData: Icons.save,
+              color: Colors.green,
+              textStyle: TextStyle(color: Colors.white),
+              iconColor: Colors.white,
+            ),
+          ]);
 }
+
+
+void _mensajeSuccess(BuildContext context, String nombre) {
+ Dialogs.materialDialog(
+          color: Colors.white,
+          msg: 'Esta comida fue agregada a tu historial de hoy',
+          title: nombre + ', registro exitoso',
+          lottieBuilder: Lottie.asset(
+          'images/62669-success-lottie-animation.json',
+          fit: BoxFit.contain,
+        ),
+          context: context,
+          actions: [
+            IconsButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              text: 'Aceptar',
+              iconData: Icons.done,
+              color: Colors.blue,
+              textStyle: TextStyle(color: Colors.white),
+              iconColor: Colors.white,
+            ),
+          ]);
+}
+
 
 Future registrarFood(
   BuildContext context,
@@ -417,9 +478,9 @@ Future registrarFood(
 
   if (response.statusCode == 200) {
     if (value == 400) {
-      _showDialog(context, 'Error en el registro');
+       _showDialog(context, 'Error 404, contacta administrador');
     } else {
-      _showDialog(context, 'Registro exitoso');
+      _mensajeSuccess(context, nameuser);
     }
   } else {
     throw Exception('No se Agrego, intenta nuevamente');
@@ -445,3 +506,7 @@ void _showDialog(BuildContext context, String texto1) {
     },
   );
 }
+
+
+}
+

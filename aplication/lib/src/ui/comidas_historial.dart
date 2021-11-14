@@ -1,23 +1,20 @@
-
 import 'package:apponertesano/src/blocs/search_api.dart';
 import 'package:apponertesano/src/model/caloriesData.dart';
 import 'package:apponertesano/src/model/user.dart';
 import 'package:apponertesano/src/model/food.dart';
-import 'package:material_dialogs/material_dialogs.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:material_dialogs/widgets/buttons/icon_button.dart';
-import 'package:material_dialogs/widgets/buttons/icon_outline_button.dart';
+
 
 // Define un widget de formulario personalizado
-class ComidaDia extends StatefulWidget {
-  const ComidaDia({Key? key}) : super(key: key);
+class ComidaHistorial extends StatefulWidget {
+  const ComidaHistorial({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _DisenoState();
 }
 
-class _DisenoState extends State<ComidaDia> {
+class _DisenoState extends State<ComidaHistorial> {
   final _formKey1 = GlobalKey<FormState>();
   String datetoday = DateFormat("yyyy-MM-dd").format(DateTime.now());
   TextEditingController dateinput = TextEditingController();
@@ -47,10 +44,9 @@ setState(() {
   @override
   void initState() {
     super.initState();
- WidgetsBinding.instance!.addPostFrameCallback((_){
-            init();
-                  init2();
-          });
+
+    dateinput.text = "";
+    datetoday = "";
   }
 
   @override
@@ -58,18 +54,43 @@ setState(() {
     super.dispose();
   }
 
+  Future init() async {
+    final recipes = await RecordApi.getRecipes(datetoday, id_user);
 
- 
+    setState(() => this.recipes = recipes);
+  }
+
+  Future init2() async {
+    final recipes2 = await RecordCaloriess.getRecipes(datetoday, id_user);
+    if (recipes2.length > 0) {
+      final calories = recipes2[0].calories;
+      if (calories != null) {
+        _calories = recipes2[0].calories!;
+        _protein = recipes2[0].protein!;
+        _fat = recipes2[0].fat!;
+        _carbs = recipes2[0].carbs!;
+        _sugar = recipes2[0].sugar!;
+        _sodium = recipes2[0].sodium!;
+      } else {}
+    }
+    setState(() => this.recipes2 = recipes2);
+  }
+
+  void _cambiosdevalores() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     //  args = ModalRoute.of(context).settings.arguments;
     UsuariodataSet data =
         ModalRoute.of(context)!.settings.arguments as UsuariodataSet;
     id_user = data.id_user;
-  
+    init() ;
+    init2();
     return Scaffold(
       appBar: AppBar(
-        title: Text('Registro de comidas del día'),
+        title: Text('Historial de comida por fecha'),
         backgroundColor: Colors.lightGreen.shade600,
         centerTitle: true,
       ),
@@ -81,14 +102,72 @@ setState(() {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
+              TextFormField(
+                validator: (value) {
+                  if (value == null || value == "" || value.isEmpty) {
+                    return 'Selecciona un dia del calendario';
+                  }
+                  return null;
+                },
+                controller: dateinput, //editing controller of this TextField
+                decoration: InputDecoration(
+                    icon: Icon(Icons.calendar_today),
+                    //icon of text field
+                    labelText:
+                        "Selecciona una fecha para ver historial" //label text of field
+                    ),
+                readOnly:
+                    true, //set it true, so that user will not able to edit text
+                onTap: () async {
+                  DateTime? pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(
+                          2000), //DateTime.now() - not to allow to choose before today.
+                      lastDate: DateTime(2101));
+
+                  if (pickedDate != null) {
+                    print(
+                        pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                    String formattedDate =
+                        DateFormat('yyyy-MM-dd').format(pickedDate);
+                    print(
+                        formattedDate); //formatted date output using intl package =>  2021-03-16
+                    //you can implement different kind of Date Format here according to your requirement
+
+                    setState(() {
+                      dateinput.text = formattedDate;
+                      datetoday = formattedDate;
+                      init();
+                      init2();
+                      _cambiosdevalores();
+                      //set output date to TextField value.
+                    });
+                  } else {
+                    print("Fecha no seleccionada");
+                  }
+                },
+              ),
               Container(
                   margin: EdgeInsets.symmetric(horizontal: 20, vertical: 22),
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-            
-                        Container(
-
+                        RaisedButton(
+                          child: Text('Ver / Ocultar : Totales del dia'),
+                          onPressed: () {
+                            if (_formKey1.currentState!.validate()) {
+                              setState(() {
+                                isVisible = !isVisible;
+                              });
+                            }
+                          },
+                        ),
+                        Visibility(
+                          visible: isVisible,
+                          maintainSize: false,
+                          maintainAnimation: true,
+                          maintainState: true,
                           child: Container(
                               child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -443,73 +522,24 @@ setState(() {
           height: 50,
         ),
         title: Text(hit.label!),
-        subtitle: Text('Registro #' + (hit.id_meal!).toString()),
-        trailing: Icon(Icons.delete),
+        subtitle: Text(hit.label!),
+        trailing: Icon(Icons.keyboard_arrow_right),
         onTap: () {
-        
-              _showDialog(context, hit.id_meal!);
+          Navigator.pushNamed(context, "/comidadetail",
+              arguments: GetDetailFood(
+                hit.label!.toString(),
+                hit.image!.toString(),
+                hit.type!.toString(),
+                  hit.quantity!.toDouble(),
+                hit.calories!.toDouble(),
+                hit.protein!.toDouble(),
+                hit.fat!.toDouble(),
+                hit.carbs!.toDouble(),
+                hit.sugar!.toDouble(),
+                hit.sodium!.toDouble(),
+              ));
         },
       );
-
-      
-   Future init() async {
-    final recipes = await RecordApi.getRecipes(datetoday, id_user);
-if (this.mounted) { // check whether the state object is in tree
-         setState(() => this.recipes = recipes);
-  }
- 
-  }
-
-   Future init2() async {
-    final recipes2 = await RecordCaloriess.getRecipes(datetoday, id_user);
-    if (recipes2.length > 0) {
-      final calories = recipes2[0].calories;
-      if (calories != null) {
-        _calories = recipes2[0].calories!;
-        _protein = recipes2[0].protein!;
-        _fat = recipes2[0].fat!;
-        _carbs = recipes2[0].carbs!;
-        _sugar = recipes2[0].sugar!;
-        _sodium = recipes2[0].sodium!;
-      } else {}
-    }
-
-    if (this.mounted) { // check whether the state object is in tree
-      setState(() => this.recipes2 = recipes2);
-  }
-  
-  }
-
-  
-void _showDialog(BuildContext context, int id_meal) {
-  Dialogs.bottomMaterialDialog(
-          msg: '¿Esta seguro que quiere borrar este registro?',
-          title: 'Eliminar el registro ' + id_meal.toString(),
-          
-          context: context,
-          actions: [
-            IconsOutlineButton(
-                onPressed: () {
-                Navigator.pop(context);
-              },
-              text: 'Cancelar',
-              iconData: Icons.cancel_outlined,
-              textStyle: TextStyle(color: Colors.grey),
-              iconColor: Colors.grey,
-            ),
-            IconsButton(
-              onPressed: () {
-               
-              },
-              text: 'Borrar',
-              iconData: Icons.delete,
-              color: Colors.red,
-              textStyle: TextStyle(color: Colors.white),
-              iconColor: Colors.white,
-            ),
-          ]);
-}
-
 }
 
 /* 

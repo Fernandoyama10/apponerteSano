@@ -18,6 +18,7 @@ class ComidaInternacionalListPageState extends State<BuscarRegional> {
   String query = '';
   Timer? debouncer;
   int id_user= 0;
+  String name = "";
   @override
   void initState() {
     super.initState();
@@ -53,6 +54,7 @@ class ComidaInternacionalListPageState extends State<BuscarRegional> {
             UsuariodataSet data =
         ModalRoute.of(context)!.settings.arguments as UsuariodataSet;
         id_user = data.id_user;
+        name = data.name;
     return Scaffold(
 
         appBar: AppBar(
@@ -117,6 +119,7 @@ class ComidaInternacionalListPageState extends State<BuscarRegional> {
                 hit.carbs!.toDouble(),
                 hit.fat!.toDouble(),
                 id_user,
+                name,
                 hit.protein!.toDouble(),
               ));
         },
