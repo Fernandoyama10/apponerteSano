@@ -82,9 +82,9 @@ flutter:
     - images/fondo3.jpg
     - images/fb.png
     - images/icon/applogo.png
+    - images/62669-success-lottie-animation.json
     - images/icon/
     - images/
-    - images/62669-success-lottie-animation.json
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

@@ -10,8 +10,7 @@ class Diseno_fb extends StatefulWidget {
 }
 
 class _DisenoState extends State<Diseno_fb> {
-// log aout
-  //clase choice
+
 
   dynamic _height = 0;
   dynamic _weight = 0;

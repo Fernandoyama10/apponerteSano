@@ -51,8 +51,6 @@ class _InfoUserCaloriesRegState extends State<FBInfoUserCaloriesReg> {
             Future<List<Usuario>> listapost = verifyLogin(context, remail);
 
           });
-
-
   }
 
   @override
