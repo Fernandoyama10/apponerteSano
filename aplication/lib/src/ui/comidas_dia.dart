@@ -62,6 +62,12 @@ setState(() {
     super.dispose();
   }
 
+  Future<void> _refresh() {
+      init();
+      init2();
+    return Future.delayed(Duration(seconds: 0));
+  }
+
   @override
   Widget build(BuildContext context) {
     //  args = ModalRoute.of(context).settings.arguments;
@@ -77,13 +83,18 @@ setState(() {
         centerTitle: true,
       ),
 
-      body: Container(
-        margin: EdgeInsets.symmetric(horizontal: 15, vertical: 22),
+      body: RefreshIndicator(
+         onRefresh: _refresh,
+
         child: Form(
+          
           key: _formKey1,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
+                     SizedBox(
+                height: 30,
+              ),
               const Text(
                 "• Gestionar comidas de hoy •",
                 style: TextStyle(
@@ -167,7 +178,7 @@ setState(() {
                                                   ],
                                                 ),
                                                 subtitle: Text(
-                                                  _calories.toString() + " cal",
+                                                  _calories.toStringAsFixed(0) + " cal",
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
                                                       fontWeight:
@@ -217,7 +228,7 @@ setState(() {
                                                     children: [
                                                       Text(
                                                         _initialcalories
-                                                                .toString() +
+                                                                .toStringAsFixed(0) +
                                                             " cal",
                                                         textAlign:
                                                             TextAlign.end,
@@ -277,7 +288,7 @@ setState(() {
                                                   ],
                                                 ),
                                                 subtitle: Text(
-                                                  _diferencia.toString() +
+                                                  _diferencia.toStringAsFixed(0) +
                                                       " cal",
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
@@ -621,6 +632,9 @@ setState(() {
     }
   }
 
+  Future borrarcomida(int id_meal) async {
+    final recipes = await DeleteFoodApi.getRecipes(id_meal);
+  }
   Future init2() async {
     final recipes2 = await RecordCaloriess.getRecipes(datetoday, id_user);
     if (recipes2.length > 0) {
@@ -634,7 +648,17 @@ setState(() {
         _sodium = recipes2[0].sodium!;
         _initialcalories = recipes2[0].initial_calories!;
         _diferencia = _initialcalories - _calories;
-      } else {}
+      } else {
+ _calories = 0;
+        _protein = 0;
+        _fat = 0;
+        _carbs = 0;
+        _sugar = 0;
+        _sodium = 0;
+        _initialcalories = 0;
+        _diferencia = 0;
+
+      }
     }
 
     if (this.mounted) {
@@ -662,12 +686,17 @@ setState(() {
           IconsButton(
             onPressed: () {
                      Navigator.pop(context);
+   
+             borrarcomida(id_meal);
               deletecalories(
             context,
             calories,
             id_user,
             date,
           );
+            
+          
+        
             },
             text: 'Borrar',
             iconData: Icons.delete,
@@ -720,7 +749,7 @@ Future deletecalories(
 
   final response = await http.post(
       Uri.parse(
-          "http://localhost:8000/apinterfood/deletecalories"),
+          "https://apiapponertesano.azurewebsites.net/apiyucfood/deletecalories"),
       headers: {"Content-Type": "application/json"},
       body: body);
 
@@ -730,13 +759,14 @@ Future deletecalories(
     if (value == 400) {
        _showDialog2(context, 'Error 404, contacta administrador');
     } else {
+             init();
+          init2();
       _mensajeSuccess(context);
     }
   } else {
     throw Exception('No se Agrego, intenta nuevamente');
   }
 }
-
 
 void _showDialog2(BuildContext context, String texto1) {
   showDialog(

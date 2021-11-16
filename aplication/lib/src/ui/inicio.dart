@@ -84,6 +84,12 @@ class _DisenoState extends State<Diseno> {
         _sugar = recipes2[0].sugar!;
         _sodium = recipes2[0].sodium!;
       } else {
+          _calories = 0;
+              _protein = 0;
+        _fat = 0;
+        _carbs = 0;
+        _sugar = 0;
+        _sodium = 0;
         CaloriesdataSet(0, 0, 0, 0, 0, 0);
       }
     }

@@ -133,3 +133,21 @@ class InfoUser {
     }
   }
 }
+
+
+
+class DeleteFoodApi {
+  static Future getRecipes(int id_meal) async {
+    final url = Uri.parse(
+        'https://apiapponertesano.azurewebsites.net/apiyucfood/deletefood/$id_meal');
+    final response = await http.delete(url);
+
+    if (response.statusCode == 200) {
+      String body = response.body;
+      final parse = jsonDecode(body);
+      return parse;
+    } else {
+      throw Exception();
+    }
+  }
+}
