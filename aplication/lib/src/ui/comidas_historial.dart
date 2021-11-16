@@ -268,71 +268,6 @@ setState(() {
                                       child: Column(
                                         children: <Widget>[
                                           Padding(
-                                            padding: const EdgeInsets.all(1.0),
-                                            child: Card(
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(18),
-                                              ),
-                                              color: Colors.amber[50],
-                                              elevation: 5,
-                                              child: ListTile(
-                                                title: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Flexible(
-                                                      child: RichText(
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        strutStyle: StrutStyle(
-                                                            fontSize: 15.0),
-                                                        text: TextSpan(
-                                                            style:
-                                                                const TextStyle(
-                                                              color:
-                                                                  Colors.green,
-                                                              fontSize: 13.5,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                            ),
-                                                            text:
-                                                                "Calorias iniciales:"),
-                                                      ),
-                                                    ),
-                                                    SizedBox(width: 10),
-                                                  ],
-                                                ),
-                                                subtitle: Text(
-                                                  _initialcalories.toString() +
-                                                      " cal",
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 15,
-                                                       color: Colors
-                                                          .deepOrange[400],
-                                                      decoration:
-                                                          TextDecoration.none),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  children: <Widget>[
-                                    Flexible(
-                                      child: Column(
-                                        children: <Widget>[
-                                          Padding(
                                             padding: const EdgeInsets.all(0.2),
                                             child: Card(
                                               shape: RoundedRectangleBorder(
@@ -378,67 +313,6 @@ setState(() {
                                                       SizedBox(width: 10),
                                                     ],
                                                   )),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Flexible(
-                                      child: Column(
-                                        children: <Widget>[
-                                          Padding(
-                                            padding: const EdgeInsets.all(1.0),
-                                            child: Card(
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(18),
-                                              ),
-                                              color: Colors.amber[50],
-                                              elevation: 5,
-                                              child: ListTile(
-                                                title: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Flexible(
-                                                      child: RichText(
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        strutStyle: StrutStyle(
-                                                            fontSize: 15.0),
-                                                        text: TextSpan(
-                                                            style:
-                                                                const TextStyle(
-                                                              color:
-                                                                  Colors.green,
-                                                              fontSize: 13.5,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                            ),
-                                                            text:
-                                                                "Calorias restantes:"),
-                                                      ),
-                                                    ),
-                                                    SizedBox(width: 10),
-                                                  ],
-                                                ),
-                                                subtitle: Text(
-                                                  _diferencia.toString() +
-                                                      " cal",
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 15,
-                                                      color: Colors
-                                                          .deepOrange[400],
-                                                      decoration:
-                                                          TextDecoration.none),
-                                                ),
-                                              ),
                                             ),
                                           ),
                                         ],

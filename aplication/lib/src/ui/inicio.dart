@@ -403,7 +403,7 @@ class _DisenoState extends State<Diseno> {
                                     onPressed: () {
                                       Navigator.pushNamed(
                                           context, "/tipocomida",
-                                          arguments: UsuariodataSet(
+                                          arguments: SendUserDataInfo(
                                               data.id_user,
                                               data.email,
                                               data.password,
@@ -415,7 +415,8 @@ class _DisenoState extends State<Diseno> {
                                               data.gender,
                                               data.height,
                                               data.name_level,
-                                              data.value_level));
+                                              data.value_level,
+                                              _resultCalories));
                                       //Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => Consumolista(listapost: fetchPost1(args.clave.toString()),p: args.puntos,usu: args.id_usu,id_sa: args.id_salon)));
                                     },
                                     color: Colors.green[400],

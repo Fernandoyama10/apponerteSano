@@ -180,6 +180,7 @@ class GetRecipe {
   final double quantityfat;
   final int id_user;
   final String name;
+  final int initialcalories;
   late final double quantityprocnt;
   GetRecipe(
       this.label,
@@ -192,6 +193,7 @@ class GetRecipe {
       this.quantityfat,
       this.id_user,
       this.name,
+      this.initialcalories,
       this.quantityprocnt);
 }
 
@@ -265,6 +267,7 @@ class GetRecipeYuc {
   final double quantityfat;
   final int id_user;
   final String name;
+  final int initialcalories;
   late final double quantityprocnt;
   GetRecipeYuc(
       this.label,
@@ -278,6 +281,7 @@ class GetRecipeYuc {
       this.quantityfat,
       this.id_user,
       this.name,
+      this.initialcalories,
       this.quantityprocnt);
 }
 

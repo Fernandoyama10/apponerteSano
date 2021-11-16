@@ -26,8 +26,8 @@ setState(() {
   @override
   Widget build(BuildContext context) {
     //  args = ModalRoute.of(context).settings.arguments;
-    UsuariodataSet data =
-        ModalRoute.of(context)!.settings.arguments as UsuariodataSet;
+    SendUserDataInfo data =
+        ModalRoute.of(context)!.settings.arguments as SendUserDataInfo;
     return Scaffold(
       appBar: AppBar(
         title: Text('Tipo de Comida'),
@@ -106,7 +106,7 @@ setState(() {
                                 child: InkWell(
                                   onTap: () {
                                       Navigator.pushNamed(context, "/comidareg",
-                                        arguments: UsuariodataSet(
+                                        arguments: SendUserDataInfo(
                                             data.id_user,
                                             data.email,
                                             data.password,
@@ -118,7 +118,8 @@ setState(() {
                                             data.gender,
                                             data.height,
                                             data.name_level,
-                                            data.value_level));
+                                            data.value_level,
+                                            data.initialCalories));
                                   }, // needed
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(100.0),
@@ -192,7 +193,7 @@ setState(() {
                                 child: InkWell(
                                   onTap: () {
                                     Navigator.pushNamed(context, "/comidainter",
-                                        arguments: UsuariodataSet(
+                                        arguments: SendUserDataInfo(
                                             data.id_user,
                                             data.email,
                                             data.password,
@@ -204,7 +205,8 @@ setState(() {
                                             data.gender,
                                             data.height,
                                             data.name_level,
-                                            data.value_level));
+                                            data.value_level,
+                                            data.initialCalories));
                                   }, // needed
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(100.0),

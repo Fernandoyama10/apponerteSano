@@ -33,6 +33,7 @@ class _AgregarScreenState extends State<AgregarRegional> {
   String name = "";
   int id_estatus = 4;
   String type = "";
+  int initial_calories = 0;
   @override
   Widget build(BuildContext context) {
     GetRecipeYuc args =
@@ -44,6 +45,7 @@ class _AgregarScreenState extends State<AgregarRegional> {
     id_user = args.id_user;
     type = args.tipo;
     name = args.name;
+    initial_calories = args.initialcalories;
     //operaciones
 
     return SafeArea(
@@ -410,6 +412,7 @@ class _AgregarScreenState extends State<AgregarRegional> {
             sodiumyield,
             id_user,
             id_estatus,
+            initial_calories
           );
               },
               text: 'Registrar',
@@ -462,6 +465,7 @@ Future registrarFood(
   double? sodium,
   int? id_user,
   int? id_estatus,
+  int? initial_calories,
 ) async {
   Map data = {
     'date_r': date_r,
@@ -479,6 +483,7 @@ Future registrarFood(
     'sodium': sodium,
     'id_user': id_user,
     'id_status': id_estatus,
+    'initial_calories': initial_calories,
   };
   var body = json.encode(data);
 
