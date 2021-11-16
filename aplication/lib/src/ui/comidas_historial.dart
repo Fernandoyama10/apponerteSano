@@ -61,6 +61,7 @@ setState(() {
       setState(() => this.recipes = recipes);
     }
   }
+  
 
   Future init2() async {
     final recipes2 = await RecordCaloriess.getRecipes(datetoday, id_user);
@@ -73,6 +74,8 @@ setState(() {
         _carbs = recipes2[0].carbs!;
         _sugar = recipes2[0].sugar!;
         _sodium = recipes2[0].sodium!;
+               _initialcalories = recipes2[0].initial_calories!;
+        _diferencia = _initialcalories - _calories;
       } else {}
     }
     if (this.mounted) {
@@ -202,7 +205,7 @@ setState(() {
                               child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
-                                Row(
+                              Row(
                                   children: <Widget>[
                                     Flexible(
                                       child: Column(
@@ -247,7 +250,118 @@ setState(() {
                                                   ],
                                                 ),
                                                 subtitle: Text(
-                                                  _calories.toString() + " cal",
+                                                  _calories.toStringAsFixed(0) + " cal",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 15,
+                                                     color: Colors
+                                                          .deepOrange[400],
+                                                      decoration:
+                                                          TextDecoration.none),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Flexible(
+                                      child: Column(
+                                        children: <Widget>[
+                                          Padding(
+                                            padding: const EdgeInsets.all(0.2),
+                                            child: Card(
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(18),
+                                              ),
+                                              color: Colors.amber[50],
+                                              elevation: 5,
+                                              child: ListTile(
+                                                  title: Text(
+                                                    "Calorias Iniciales:",
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 13,
+                                                        color:
+                                                            Colors.green[700],
+                                                        decoration:
+                                                            TextDecoration
+                                                                .none),
+                                                  ),
+                                                  subtitle: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Text(
+                                                        _initialcalories
+                                                                .toStringAsFixed(0) +
+                                                            " cal",
+                                                        textAlign:
+                                                            TextAlign.end,
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 13,
+                                                        color: Colors
+                                                          .deepOrange[400],
+                                                            decoration:
+                                                                TextDecoration
+                                                                    .none),
+                                                      ),
+                                                      SizedBox(width: 10),
+                                                    ],
+                                                  )),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    Flexible(
+                                      child: Column(
+                                        children: <Widget>[
+                                          Padding(
+                                            padding: const EdgeInsets.all(1.0),
+                                            child: Card(
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(18),
+                                              ),
+                                              color: Colors.amber[50],
+                                              elevation: 5,
+                                              child: ListTile(
+                                                title: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      "Calorias Restantes:",
+                                                      textAlign: TextAlign.end,
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 13,
+                                                          color:
+                                                              Colors.green[700],
+                                                          decoration:
+                                                              TextDecoration
+                                                                  .none),
+                                                    ),
+                                                    SizedBox(width: 10),
+                                                  ],
+                                                ),
+                                                subtitle: Text(
+                                                  _diferencia.toStringAsFixed(0) +
+                                                      " cal",
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
                                                       fontWeight:
@@ -304,8 +418,9 @@ setState(() {
                                                             fontWeight:
                                                                 FontWeight.bold,
                                                             fontSize: 13,
-                                                        color: Colors
-                                                          .deepOrange[400],
+                                                            color: Colors
+                                                                    .deepOrange[
+                                                                300],
                                                             decoration:
                                                                 TextDecoration
                                                                     .none),
