@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:apponertesano/src/blocs/search_api.dart';
 import 'package:apponertesano/src/model/user.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -37,7 +38,7 @@ class _MiperfilactuState extends State<Miperfilactu> {
     'Masculino',
     'Femenino',
   ];
-
+  List<InfoDatauser> user = [];
   String rname = "";
   String rsurname = "";
   int rage = 0;
@@ -46,20 +47,56 @@ class _MiperfilactuState extends State<Miperfilactu> {
   double rheight = 0;
   int rid_activity = 0;
   int id_user = 0;
+  @override
+  void initState() {
+    super.initState();
+     WidgetsBinding.instance!.addPostFrameCallback((_){
+            init();
+               
+          });
+
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    
+  }
+
+   Future init() async {
+  final recipes2 = await InfoUser.getRecipes(id_user);
+    if (recipes2.length > 0) {
+    txtname.text = recipes2[0].name!;
+
+    }
+
+    if (this.mounted) { // check whether the state object is in tree
+      setState(() => this.user = user);
+  }
+  
+  }
+
+
+   
+
+  
+
 
   @override
   Widget build(BuildContext context) {
     //  args = ModalRoute.of(context).settings.arguments;
     UsuariodataSet data =
         ModalRoute.of(context)!.settings.arguments as UsuariodataSet;
-    txtname.text = data.name;
+    id_user = data.id_user;
+    rgender = data.gender;
+    
     txtsurname.text = data.surname;
     txtpeso.text = data.weight.toString();
     _txtaltura.text = data.height.toString();
     txtage.text = data.age.toString();
     //_value = data.value_level;
-    id_user = data.id_user;
 
+   
     return Scaffold(
       appBar: AppBar(
         title: Text('Actualizar perfil'),
@@ -109,6 +146,7 @@ class _MiperfilactuState extends State<Miperfilactu> {
                         },
                         controller: txtname,
                         keyboardType: TextInputType.text,
+                        
                         autofocus: true,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -282,13 +320,12 @@ class _MiperfilactuState extends State<Miperfilactu> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Radio(
-                              key: _txtfisico,
+                        
                               value: 1,
                               groupValue: _value,
                               onChanged: (value) {
                                 setState(() {
-                                  _value = 1;
-                                  rid_activity = _value;
+                                  _value = value;
                                 });
                               },
                             ),
@@ -304,8 +341,8 @@ class _MiperfilactuState extends State<Miperfilactu> {
                               groupValue: _value,
                               onChanged: (value) {
                                 setState(() {
-                                  _value = 2;
-                                  rid_activity = _value;
+                               
+                                  _value = value;
                                 });
                               },
                             ),
@@ -321,8 +358,7 @@ class _MiperfilactuState extends State<Miperfilactu> {
                               groupValue: _value,
                               onChanged: (value) {
                                 setState(() {
-                                  _value = 3;
-                                  rid_activity = _value;
+                                   _value = value;
                                 });
                               },
                             ),
@@ -338,8 +374,7 @@ class _MiperfilactuState extends State<Miperfilactu> {
                               groupValue: _value,
                               onChanged: (value) {
                                 setState(() {
-                                  _value = 4;
-                                  rid_activity = _value;
+                                       _value = value;
                                 });
                               },
                             ),
@@ -355,8 +390,7 @@ class _MiperfilactuState extends State<Miperfilactu> {
                               groupValue: _value,
                               onChanged: (value) {
                                 setState(() {
-                                  _value = 5;
-                                  rid_activity = _value;
+                                   _value = value;
                                 });
                               },
                             ),
@@ -392,7 +426,7 @@ class _MiperfilactuState extends State<Miperfilactu> {
               double.parse(txtpeso.text),
               rgender,
               double.parse(_txtaltura.text),
-              rid_activity,
+              _value,
               id_user);
         }
       },

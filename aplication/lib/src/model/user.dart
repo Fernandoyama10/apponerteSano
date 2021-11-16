@@ -41,6 +41,51 @@ class UsuariodataSet {
 }
 
 
+class InfoDatauser {
+   int? id_infouser;
+   String? name;
+   String? surname;
+   int? age;
+   dynamic weight;
+   String? gender;
+   dynamic height;
+   int? id_activity;
+
+
+  InfoDatauser({
+     this.id_infouser,
+      this.name,
+      this.surname,
+      this.age,
+      this.weight,
+      this.gender,
+      this.height,
+      this.id_activity,
+  });
+
+  factory InfoDatauser.fromJson(Map<String, dynamic> json) {
+    return InfoDatauser(
+        id_infouser: json['id_infouser'],
+        name: json['name'],
+        surname: json['surname'],
+        age: json['age'],
+        weight: json['weight'],
+        gender: json['gender'],
+                height: json['height'],
+           id_activity: json['id_activity']);
+
+  }
+}
+
+List<InfoDatauser> parsePost4(String responseBody) {
+  final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
+
+  return parsed
+      .map<InfoDatauser>((json) => InfoDatauser.fromJson(json))
+      .toList();
+}
+
+
 class SendUserDataInfo {
   final int id_user;
   final String email;

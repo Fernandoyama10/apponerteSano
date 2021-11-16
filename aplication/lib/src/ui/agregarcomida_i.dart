@@ -46,8 +46,8 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
     initial_calories = args.initialcalories;
     //operaciones
 
-    return SafeArea(
-      child: Scaffold(
+    return Scaffold(
+   
         appBar: AppBar(
           title: Text('Registrar tu alimento'),
           backgroundColor: Colors.lightGreen.shade600,
@@ -337,7 +337,7 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
             ),
           ),
         ),
-      ),
+      
     );
   }
 
