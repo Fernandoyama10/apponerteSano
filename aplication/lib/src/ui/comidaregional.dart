@@ -19,6 +19,7 @@ class ComidaInternacionalListPageState extends State<BuscarRegional> {
   Timer? debouncer;
   int id_user= 0;
   String name = "";
+  int initialcalories = 0;
   @override
   void initState() {
     super.initState();
@@ -51,10 +52,11 @@ class ComidaInternacionalListPageState extends State<BuscarRegional> {
 
   @override
   Widget build(BuildContext context) {
-            UsuariodataSet data =
-        ModalRoute.of(context)!.settings.arguments as UsuariodataSet;
+            SendUserDataInfo data =
+        ModalRoute.of(context)!.settings.arguments as SendUserDataInfo;
         id_user = data.id_user;
         name = data.name;
+        initialcalories = data.initialCalories;
     return Scaffold(
 
         appBar: AppBar(
@@ -120,6 +122,7 @@ class ComidaInternacionalListPageState extends State<BuscarRegional> {
                 hit.fat!.toDouble(),
                 id_user,
                 name,
+                initialcalories,
                 hit.protein!.toDouble(),
               ));
         },
