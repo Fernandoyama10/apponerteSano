@@ -154,7 +154,7 @@ class _DisenoState extends State<Diseno> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Text(
-                          '$_resultCalories',
+                          '$_calories',
                           style: TextStyle(
                               color: Colors.yellow[400],
                               fontSize: 28,
