@@ -5,7 +5,6 @@ import 'package:apponertesano/src/model/food.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-
 // Define un widget de formulario personalizado
 class ComidaHistorial extends StatefulWidget {
   const ComidaHistorial({Key? key}) : super(key: key);
@@ -25,6 +24,8 @@ class _DisenoState extends State<ComidaHistorial> {
   dynamic _carbs = 0;
   dynamic _sugar = 0;
   dynamic _sodium = 0;
+  dynamic _initialcalories = 0;
+  dynamic _diferencia = 0;
   List<FoodRecord> recipes = [];
   List<RecordCalories> recipes2 = [];
   // static datosArguments args;
@@ -46,7 +47,6 @@ setState(() {
     super.initState();
 
     dateinput.text = "";
-  
   }
 
   @override
@@ -56,10 +56,10 @@ setState(() {
 
   Future init() async {
     final recipes = await RecordApi.getRecipes(datetoday, id_user);
-if (this.mounted) { // check whether the state object is in tree
-  setState(() => this.recipes = recipes);
-  }
-  
+    if (this.mounted) {
+      // check whether the state object is in tree
+      setState(() => this.recipes = recipes);
+    }
   }
 
   Future init2() async {
@@ -75,13 +75,11 @@ if (this.mounted) { // check whether the state object is in tree
         _sodium = recipes2[0].sodium!;
       } else {}
     }
-    if (this.mounted) { // check whether the state object is in tree
-setState(() => this.recipes2 = recipes2);
+    if (this.mounted) {
+      // check whether the state object is in tree
+      setState(() => this.recipes2 = recipes2);
+    }
   }
-    
-  }
-
-  
 
   @override
   Widget build(BuildContext context) {
@@ -103,31 +101,30 @@ setState(() => this.recipes2 = recipes2);
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-                      Padding(
-                  padding: EdgeInsets.fromLTRB(30, 0, 30, 15),
-                  child: Column(
-                    children: [
-                      const Text(
-                        "Consulta tus resultados anteriores:",
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 1.0,
-                        ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(30, 0, 30, 15),
+                child: Column(
+                  children: [
+                    const Text(
+                      "• Consulta tus historial resultados •",
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1.0,
                       ),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      
-                      SizedBox(
-                        width: 2,
-                      ),
-                    ],
-                  ),
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    SizedBox(
+                      width: 2,
+                    ),
+                  ],
                 ),
+              ),
               TextFormField(
-                  cursorColor: Colors.black,
-                  style: TextStyle(color: Colors.black),
+                cursorColor: Colors.black,
+                style: TextStyle(color: Colors.black),
                 validator: (value) {
                   if (value == null || value == "" || value.isEmpty) {
                     return 'Selecciona un dia del calendario';
@@ -136,17 +133,18 @@ setState(() => this.recipes2 = recipes2);
                 },
                 controller: dateinput, //editing controller of this TextField
                 decoration: InputDecoration(
-                  enabledBorder: UnderlineInputBorder(      
-                      borderSide: BorderSide(color: Colors.green),   
-                      ),  
-                 focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.green),
-                   ),  
-                    icon: Icon(Icons.calendar_today),
-                    //icon of text field
-                    labelText:"Selecciona una fecha para ver resultados anteriores:", //label text of field
-                    ),
-                    
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.green),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.green),
+                  ),
+                  icon: Icon(Icons.calendar_today),
+                  //icon of text field
+                  labelText:
+                      "Selecciona una fecha para ver resultados anteriores:", //label text of field
+                ),
+
                 readOnly:
                     true, //set it true, so that user will not able to edit text
                 onTap: () async {
@@ -171,8 +169,8 @@ setState(() => this.recipes2 = recipes2);
                       datetoday = formattedDate;
                       init();
                       init2();
-                            isVisible = !isVisible;
-                    
+                      isVisible = !isVisible;
+
                       //set output date to TextField value.
                     });
                   } else {
@@ -223,18 +221,27 @@ setState(() => this.recipes2 = recipes2);
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
                                                   children: [
-                                                    Text(
-                                                      "Tot Cal:",
-                                                      textAlign: TextAlign.end,
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 13,
-                                                          color: Colors
-                                                              .deepOrange[300],
-                                                          decoration:
-                                                              TextDecoration
-                                                                  .none),
+                                                    Flexible(
+                                                      child: RichText(
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        strutStyle: StrutStyle(
+                                                            fontSize: 15.0),
+                                                        text: TextSpan(
+                                                            style:
+                                                                const TextStyle(
+                                                              color:
+                                                                  Colors.green,
+                                                              fontSize: 13.5,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
+                                                            text:
+                                                                "Calorias sumadas:"),
+                                                      ),
                                                     ),
                                                     SizedBox(width: 10),
                                                   ],
@@ -246,7 +253,7 @@ setState(() => this.recipes2 = recipes2);
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       fontSize: 15,
-                                                      color: Colors
+                                                     color: Colors
                                                           .deepOrange[400],
                                                       decoration:
                                                           TextDecoration.none),
@@ -257,6 +264,71 @@ setState(() => this.recipes2 = recipes2);
                                         ],
                                       ),
                                     ),
+                                    Flexible(
+                                      child: Column(
+                                        children: <Widget>[
+                                          Padding(
+                                            padding: const EdgeInsets.all(1.0),
+                                            child: Card(
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(18),
+                                              ),
+                                              color: Colors.amber[50],
+                                              elevation: 5,
+                                              child: ListTile(
+                                                title: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Flexible(
+                                                      child: RichText(
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        strutStyle: StrutStyle(
+                                                            fontSize: 15.0),
+                                                        text: TextSpan(
+                                                            style:
+                                                                const TextStyle(
+                                                              color:
+                                                                  Colors.green,
+                                                              fontSize: 13.5,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
+                                                            text:
+                                                                "Calorias iniciales:"),
+                                                      ),
+                                                    ),
+                                                    SizedBox(width: 10),
+                                                  ],
+                                                ),
+                                                subtitle: Text(
+                                                  _initialcalories.toString() +
+                                                      " cal",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 15,
+                                                       color: Colors
+                                                          .deepOrange[400],
+                                                      decoration:
+                                                          TextDecoration.none),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: <Widget>[
                                     Flexible(
                                       child: Column(
                                         children: <Widget>[
@@ -297,9 +369,8 @@ setState(() => this.recipes2 = recipes2);
                                                             fontWeight:
                                                                 FontWeight.bold,
                                                             fontSize: 13,
-                                                            color: Colors
-                                                                    .deepOrange[
-                                                                300],
+                                                        color: Colors
+                                                          .deepOrange[400],
                                                             decoration:
                                                                 TextDecoration
                                                                     .none),
@@ -307,6 +378,67 @@ setState(() => this.recipes2 = recipes2);
                                                       SizedBox(width: 10),
                                                     ],
                                                   )),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Flexible(
+                                      child: Column(
+                                        children: <Widget>[
+                                          Padding(
+                                            padding: const EdgeInsets.all(1.0),
+                                            child: Card(
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(18),
+                                              ),
+                                              color: Colors.amber[50],
+                                              elevation: 5,
+                                              child: ListTile(
+                                                title: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Flexible(
+                                                      child: RichText(
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        strutStyle: StrutStyle(
+                                                            fontSize: 15.0),
+                                                        text: TextSpan(
+                                                            style:
+                                                                const TextStyle(
+                                                              color:
+                                                                  Colors.green,
+                                                              fontSize: 13.5,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
+                                                            text:
+                                                                "Calorias restantes:"),
+                                                      ),
+                                                    ),
+                                                    SizedBox(width: 10),
+                                                  ],
+                                                ),
+                                                subtitle: Text(
+                                                  _diferencia.toString() +
+                                                      " cal",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 15,
+                                                      color: Colors
+                                                          .deepOrange[400],
+                                                      decoration:
+                                                          TextDecoration.none),
+                                                ),
+                                              ),
                                             ),
                                           ),
                                         ],
@@ -529,6 +661,20 @@ setState(() => this.recipes2 = recipes2);
                               ])),
                         ),
                       ])),
+                       SizedBox(
+                height: 8,
+              ),
+              const Text(
+                "Lista de Comidas:",
+                style: TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 1.0,
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
               Expanded(
                   child: ListView.builder(
                 itemCount: recipes.length,
@@ -562,7 +708,7 @@ setState(() => this.recipes2 = recipes2);
                 hit.label!.toString(),
                 hit.image!.toString(),
                 hit.type!.toString(),
-                  hit.quantity!.toDouble(),
+                hit.quantity!.toDouble(),
                 hit.calories!.toDouble(),
                 hit.protein!.toDouble(),
                 hit.fat!.toDouble(),

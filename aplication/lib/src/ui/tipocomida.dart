@@ -43,12 +43,12 @@ setState(() {
             //Container for buttons
 
             SizedBox(
-              height: 5,
+              height: 45,
             ),
             //Container Listview for expenses and incomes
             Container(
               child: Text(
-                "Selecciona tipo de comida:",
+                "• Selecciona tipo de comida •",
                 style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.w700,

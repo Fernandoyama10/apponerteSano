@@ -1,3 +1,4 @@
+import 'dart:convert';
 
 import 'package:apponertesano/src/blocs/search_api.dart';
 import 'package:apponertesano/src/model/caloriesData.dart';
@@ -8,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:material_dialogs/widgets/buttons/icon_outline_button.dart';
+import 'package:http/http.dart' as http;
 
 // Define un widget de formulario personalizado
 class ComidaDia extends StatefulWidget {
@@ -28,6 +30,8 @@ class _DisenoState extends State<ComidaDia> {
   dynamic _carbs = 0;
   dynamic _sugar = 0;
   dynamic _sodium = 0;
+  dynamic _initialcalories = 0;
+  dynamic _diferencia = 0;
   List<FoodRecord> recipes = [];
   List<RecordCalories> recipes2 = [];
   // static datosArguments args;
@@ -47,10 +51,10 @@ setState(() {
   @override
   void initState() {
     super.initState();
- WidgetsBinding.instance!.addPostFrameCallback((_){
-            init();
-                  init2();
-          });
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      init();
+      init2();
+    });
   }
 
   @override
@@ -58,16 +62,15 @@ setState(() {
     super.dispose();
   }
 
-
- 
   @override
   Widget build(BuildContext context) {
     //  args = ModalRoute.of(context).settings.arguments;
     UsuariodataSet data =
         ModalRoute.of(context)!.settings.arguments as UsuariodataSet;
     id_user = data.id_user;
-  
+
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text('Registro de comidas del día'),
         backgroundColor: Colors.lightGreen.shade600,
@@ -81,14 +84,40 @@ setState(() {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
+              const Text(
+                "• Gestionar comidas de hoy •",
+                style: TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 1.0,
+                ),
+              ),
+              SizedBox(
+                height: 8,
+              ),
               Container(
                   margin: EdgeInsets.symmetric(horizontal: 20, vertical: 22),
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-            
-                        Container(
-
+                        RaisedButton(
+                          child: Text('Ver / Ocultar : Totales del dia'),
+                          onPressed: () {
+                            if (_formKey1.currentState!.validate()) {
+                              setState(() {
+                                isVisible = !isVisible;
+                              });
+                            }
+                          },
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Visibility(
+                          visible: isVisible,
+                          maintainSize: false,
+                          maintainAnimation: true,
+                          maintainState: true,
                           child: Container(
                               child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -112,18 +141,27 @@ setState(() {
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
                                                   children: [
-                                                    Text(
-                                                      "Tot Cal:",
-                                                      textAlign: TextAlign.end,
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 13,
-                                                          color: Colors
-                                                              .deepOrange[300],
-                                                          decoration:
-                                                              TextDecoration
-                                                                  .none),
+                                                    Flexible(
+                                                      child: RichText(
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        strutStyle: StrutStyle(
+                                                            fontSize: 15.0),
+                                                        text: TextSpan(
+                                                            style:
+                                                                const TextStyle(
+                                                              color:
+                                                                  Colors.green,
+                                                              fontSize: 13.5,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
+                                                            text:
+                                                                "Calorias sumadas:"),
+                                                      ),
                                                     ),
                                                     SizedBox(width: 10),
                                                   ],
@@ -135,7 +173,118 @@ setState(() {
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       fontSize: 15,
-                                                      color: Colors
+                                                     color: Colors
+                                                          .deepOrange[400],
+                                                      decoration:
+                                                          TextDecoration.none),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Flexible(
+                                      child: Column(
+                                        children: <Widget>[
+                                          Padding(
+                                            padding: const EdgeInsets.all(0.2),
+                                            child: Card(
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(18),
+                                              ),
+                                              color: Colors.amber[50],
+                                              elevation: 5,
+                                              child: ListTile(
+                                                  title: Text(
+                                                    "Calorias Iniciales:",
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 13,
+                                                        color:
+                                                            Colors.green[700],
+                                                        decoration:
+                                                            TextDecoration
+                                                                .none),
+                                                  ),
+                                                  subtitle: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Text(
+                                                        _initialcalories
+                                                                .toString() +
+                                                            " cal",
+                                                        textAlign:
+                                                            TextAlign.end,
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 13,
+                                                        color: Colors
+                                                          .deepOrange[400],
+                                                            decoration:
+                                                                TextDecoration
+                                                                    .none),
+                                                      ),
+                                                      SizedBox(width: 10),
+                                                    ],
+                                                  )),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    Flexible(
+                                      child: Column(
+                                        children: <Widget>[
+                                          Padding(
+                                            padding: const EdgeInsets.all(1.0),
+                                            child: Card(
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(18),
+                                              ),
+                                              color: Colors.amber[50],
+                                              elevation: 5,
+                                              child: ListTile(
+                                                title: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      "Calorias Restantes:",
+                                                      textAlign: TextAlign.end,
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 13,
+                                                          color:
+                                                              Colors.green[700],
+                                                          decoration:
+                                                              TextDecoration
+                                                                  .none),
+                                                    ),
+                                                    SizedBox(width: 10),
+                                                  ],
+                                                ),
+                                                subtitle: Text(
+                                                  _diferencia.toString() +
+                                                      " cal",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 15,
+                                                     color: Colors
                                                           .deepOrange[400],
                                                       decoration:
                                                           TextDecoration.none),
@@ -418,6 +567,20 @@ setState(() {
                               ])),
                         ),
                       ])),
+              SizedBox(
+                height: 8,
+              ),
+              const Text(
+                "Lista de Comidas:",
+                style: TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 1.0,
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
               Expanded(
                   child: ListView.builder(
                 itemCount: recipes.length,
@@ -446,21 +609,19 @@ setState(() {
         subtitle: Text('Registro #' + (hit.id_meal!).toString()),
         trailing: Icon(Icons.delete),
         onTap: () {
-        
-              _showDialog(context, hit.id_meal!);
+          _showDialog(context, hit.id_meal!, hit.calories!, hit.id_user!, hit.date_r!);
         },
       );
 
-      
-   Future init() async {
+  Future init() async {
     final recipes = await RecordApi.getRecipes(datetoday, id_user);
-if (this.mounted) { // check whether the state object is in tree
-         setState(() => this.recipes = recipes);
-  }
- 
+    if (this.mounted) {
+      // check whether the state object is in tree
+      setState(() => this.recipes = recipes);
+    }
   }
 
-   Future init2() async {
+  Future init2() async {
     final recipes2 = await RecordCaloriess.getRecipes(datetoday, id_user);
     if (recipes2.length > 0) {
       final calories = recipes2[0].calories;
@@ -471,44 +632,133 @@ if (this.mounted) { // check whether the state object is in tree
         _carbs = recipes2[0].carbs!;
         _sugar = recipes2[0].sugar!;
         _sodium = recipes2[0].sodium!;
+        _initialcalories = recipes2[0].initialcalories!;
+        _diferencia = _initialcalories - _calories;
       } else {}
     }
 
-    if (this.mounted) { // check whether the state object is in tree
+    if (this.mounted) {
+      // check whether the state object is in tree
       setState(() => this.recipes2 = recipes2);
-  }
-  
+    }
   }
 
-  
-void _showDialog(BuildContext context, int id_meal) {
-  Dialogs.bottomMaterialDialog(
-          msg: '¿Esta seguro que quiere borrar este registro?',
-          title: 'Eliminar el registro ' + id_meal.toString(),
-          
+
+  void _showDialog(BuildContext context, int id_meal, dynamic calories, int id_user, String date) {
+    Dialogs.bottomMaterialDialog(
+        msg: '¿Esta seguro que quiere borrar este registro?',
+        title: 'Eliminar el registro ' + id_meal.toString(),
+        context: context,
+        actions: [
+          IconsOutlineButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            text: 'Cancelar',
+            iconData: Icons.cancel_outlined,
+            textStyle: TextStyle(color: Colors.grey),
+            iconColor: Colors.grey,
+          ),
+          IconsButton(
+            onPressed: () {
+                     Navigator.pop(context);
+              deletecalories(
+            context,
+            calories,
+            id_user,
+            date,
+          );
+            },
+            text: 'Borrar',
+            iconData: Icons.delete,
+            color: Colors.red,
+            textStyle: TextStyle(color: Colors.white),
+            iconColor: Colors.white,
+          ),
+        ]);
+  }
+
+
+void _mensajeSuccess(BuildContext context) {
+ Dialogs.materialDialog(
+          color: Colors.white,
+          msg: 'Esta comida fue eliminada de tu historial de hoy',
+          title: 'Perfecto!',
+          lottieBuilder: Lottie.asset(
+          'images/62669-success-lottie-animation.json',
+          height: 25,
+          width: 25,
+        ),
           context: context,
           actions: [
-            IconsOutlineButton(
-                onPressed: () {
-                Navigator.pop(context);
-              },
-              text: 'Cancelar',
-              iconData: Icons.cancel_outlined,
-              textStyle: TextStyle(color: Colors.grey),
-              iconColor: Colors.grey,
-            ),
             IconsButton(
               onPressed: () {
-               
+                Navigator.pop(context);
               },
-              text: 'Borrar',
-              iconData: Icons.delete,
-              color: Colors.red,
+              text: 'Aceptar',
+              iconData: Icons.done,
+              color: Colors.blue,
               textStyle: TextStyle(color: Colors.white),
               iconColor: Colors.white,
             ),
           ]);
 }
+
+
+Future deletecalories(
+  BuildContext context,
+  dynamic calories,
+  int id_user,
+  String date,
+) async {
+  Map data = {
+    'calories': calories,
+    'id_user': id_user,
+    'date': date,
+  };
+  var body = json.encode(data);
+
+  final response = await http.post(
+      Uri.parse(
+          "http://localhost:8000/apinterfood/deletecalories"),
+      headers: {"Content-Type": "application/json"},
+      body: body);
+
+  final value = json.decode(response.body)["statusCode"];
+
+  if (response.statusCode == 200) {
+    if (value == 400) {
+       _showDialog2(context, 'Error 404, contacta administrador');
+    } else {
+      _mensajeSuccess(context);
+    }
+  } else {
+    throw Exception('No se Agrego, intenta nuevamente');
+  }
+}
+
+
+void _showDialog2(BuildContext context, String texto1) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: new Text("Mensaje"),
+        content: new Text(texto1),
+        actions: <Widget>[
+          new FlatButton(
+            child: new Text("OK"),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+
+
 
 }
 

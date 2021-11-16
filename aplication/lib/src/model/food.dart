@@ -284,6 +284,7 @@ class GetRecipeYuc {
 class FoodRecord {
   int? id_meal;
   String? label;
+    String? date_r;
   String? image;
   String? type;
   dynamic quantity;
@@ -293,10 +294,12 @@ class FoodRecord {
   dynamic carbs;
   dynamic sugar;
   dynamic sodium;
+  int? id_user;
 
   FoodRecord({
     this.id_meal,
     this.label,
+    this.date_r,
     this.image,
     this.type,
     this.quantity,
@@ -306,12 +309,14 @@ class FoodRecord {
     this.carbs,
     this.sugar,
     this.sodium,
+    this.id_user,
   });
 
   factory FoodRecord.fromJson(Map<String, dynamic> json) {
     return FoodRecord(
           id_meal: json['id_meal'],
         label: json['label'],
+           date_r: json['date_r'],
         image: json['image'],
         type: json['type'],
         quantity: json['quantity'],
@@ -320,7 +325,8 @@ class FoodRecord {
         fat: json['fat'],
         carbs: json['carbs'],
         sugar: json['sugar'],
-        sodium: json['sodium']);
+        sodium: json['sodium'],
+              id_user: json['id_user']);
   }
 }
 

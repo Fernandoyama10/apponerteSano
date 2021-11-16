@@ -61,7 +61,7 @@ class MyApp extends StatelessWidget {
           '/agregarcomida_regi': (context) => AgregarRegional(),
           '/historialcomida': (context) => ComidaHistorial(),
           '/comidadetail': (context) => ConsultarComida(),
-          '/comidadia': (context) => ComidaDia(),
+          '/historialdia': (context) => ComidaDia(),
           '/miperfil': (context) => Miperfil(),
           '/miperfilactu': (context) => Miperfilactu(),
         },

@@ -58,7 +58,7 @@ class RecordCalories {
   dynamic carbs;
   dynamic sugar;
   dynamic sodium;
-
+  dynamic initialcalories;
   RecordCalories({
     this.calories,
     this.protein,
@@ -66,6 +66,7 @@ class RecordCalories {
     this.carbs,
     this.sugar,
     this.sodium,
+    this.initialcalories,
   });
 
   factory RecordCalories.fromJson(Map<String, dynamic> json) {
@@ -75,7 +76,8 @@ class RecordCalories {
         fat: json['fat'],
         carbs: json['carbs'],
         sugar: json['sugar'],
-        sodium: json['sodium']);
+        sodium: json['sodium'],
+             initialcalories: json['initialcalories']);
   }
 }
 
