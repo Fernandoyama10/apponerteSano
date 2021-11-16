@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:apponertesano/src/blocs/search_api.dart';
 import 'package:apponertesano/src/model/user.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -29,7 +30,8 @@ class _MiperfilactuState extends State<Miperfilactu> {
 
   bool isVisible = false;
 
-  dynamic _value = 0;
+  dynamic _value = 1;
+  String valueactivity = "";
 
   String dropdownvalue = 'Seleccione su sexo aquí';
 
@@ -38,7 +40,7 @@ class _MiperfilactuState extends State<Miperfilactu> {
     'Masculino',
     'Femenino',
   ];
-
+  List<InfoDatauser> user = [];
   String rname = "";
   String rsurname = "";
   int rage = 0;
@@ -47,21 +49,59 @@ class _MiperfilactuState extends State<Miperfilactu> {
   double rheight = 0;
   int rid_activity = 0;
   int id_user = 0;
-  
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      init();
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  Future init() async {
+    final recipes2 = await InfoUser.getRecipes(id_user);
+    if (recipes2.length > 0) {
+      txtname.text = recipes2[0].name!;
+      txtsurname.text = recipes2[0].surname!;
+      txtage.text = recipes2[0].age!.toString();
+      txtpeso.text = recipes2[0].weight!.toString();
+      _txtaltura.text = recipes2[0].height!.toString();
+      // _value = recipes2[0].id_activity!.toString();
+      // print(_value + " API");
+    }
+
+    if (this.mounted) {
+      // check whether the state object is in tree
+      setState(() => this.user = user);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    //  args = ModalRoute.of(context).settings.arguments;
-     UsuariodataSet data =
+    UsuariodataSet data =
         ModalRoute.of(context)!.settings.arguments as UsuariodataSet;
-    rname = data.name;
-    rgender = data.gender;
-    txtname.text = data.name;
-    txtsurname.text = data.surname;
-    txtpeso.text = data.weight.toString();
-    _txtaltura.text = data.height.toString();
-    txtage.text = data.age.toString();
-    //_value = data.value_level;
     id_user = data.id_user;
+    rgender = data.gender;
+    print(_value);
+    // _value = data.value_level;
+    // valueactivity = data.value_level.toString();
+    //  print(valueactivity);
+    /*  switch (valueactivity) {
+      case '1.2':
+        _value = 1;
+        break;
+      case '1.375':
+        _value = 2;
+        break; 
+      case '1.550':
+        _value = 3;
+        break;
+    }
+    ;*/
 
     return Scaffold(
       appBar: AppBar(
@@ -247,7 +287,7 @@ class _MiperfilactuState extends State<Miperfilactu> {
                       width: 250.0,
                       child: DropdownButtonFormField<String>(
                         key: _dropdowngener,
-                        value: data.gender,
+                        value: rgender,
                         icon: const Icon(Icons.arrow_downward),
                         iconSize: 24,
                         elevation: 16,
@@ -285,13 +325,11 @@ class _MiperfilactuState extends State<Miperfilactu> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Radio(
-                              key: _txtfisico,
                               value: 1,
                               groupValue: _value,
                               onChanged: (value) {
                                 setState(() {
-                                  _value = 1;
-                                  rid_activity = _value;
+                                  _value = value;
                                 });
                               },
                             ),
@@ -307,8 +345,7 @@ class _MiperfilactuState extends State<Miperfilactu> {
                               groupValue: _value,
                               onChanged: (value) {
                                 setState(() {
-                                  _value = 2;
-                                  rid_activity = _value;
+                                  _value = value;
                                 });
                               },
                             ),
@@ -324,8 +361,7 @@ class _MiperfilactuState extends State<Miperfilactu> {
                               groupValue: _value,
                               onChanged: (value) {
                                 setState(() {
-                                  _value = 3;
-                                  rid_activity = _value;
+                                  _value = value;
                                 });
                               },
                             ),
@@ -341,8 +377,7 @@ class _MiperfilactuState extends State<Miperfilactu> {
                               groupValue: _value,
                               onChanged: (value) {
                                 setState(() {
-                                  _value = 4;
-                                  rid_activity = _value;
+                                  _value = value;
                                 });
                               },
                             ),
@@ -358,8 +393,7 @@ class _MiperfilactuState extends State<Miperfilactu> {
                               groupValue: _value,
                               onChanged: (value) {
                                 setState(() {
-                                  _value = 5;
-                                  rid_activity = _value;
+                                  _value = value;
                                 });
                               },
                             ),
@@ -377,9 +411,7 @@ class _MiperfilactuState extends State<Miperfilactu> {
                 ),
               ),
             ],
-
           ),
-          
         ),
       ),
     );
@@ -397,7 +429,7 @@ class _MiperfilactuState extends State<Miperfilactu> {
               double.parse(txtpeso.text),
               rgender,
               double.parse(_txtaltura.text),
-              rid_activity,
+              _value,
               id_user);
         }
       },

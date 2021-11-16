@@ -25,6 +25,8 @@ class _DisenoState extends State<ComidaHistorial> {
   dynamic _carbs = 0;
   dynamic _sugar = 0;
   dynamic _sodium = 0;
+    dynamic _initialcalories = 0;
+      dynamic _diferencia = 0;
   List<FoodRecord> recipes = [];
   List<RecordCalories> recipes2 = [];
   // static datosArguments args;
@@ -73,6 +75,8 @@ if (this.mounted) { // check whether the state object is in tree
         _carbs = recipes2[0].carbs!;
         _sugar = recipes2[0].sugar!;
         _sodium = recipes2[0].sodium!;
+        _initialcalories = recipes2[0].initial_calories!;
+        _diferencia = _initialcalories - _calories;
       } else {}
     }
     if (this.mounted) { // check whether the state object is in tree
@@ -257,7 +261,63 @@ setState(() => this.recipes2 = recipes2);
                                         ],
                                       ),
                                     ),
-                                    Flexible(
+                                           Flexible(
+                                      child: Column(
+                                        children: <Widget>[
+                                          Padding(
+                                            padding: const EdgeInsets.all(1.0),
+                                            child: Card(
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(18),
+                                              ),
+                                              color: Colors.amber[50],
+                                              elevation: 5,
+                                              child: ListTile(
+                                                title: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      "Cal Iniciales:",
+                                                      textAlign: TextAlign.end,
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 13,
+                                                          color: Colors
+                                                              .deepOrange[300],
+                                                          decoration:
+                                                              TextDecoration
+                                                                  .none),
+                                                    ),
+                                                    SizedBox(width: 10),
+                                                  ],
+                                                ),
+                                                subtitle: Text(
+                                                  _initialcalories.toString() + " cal",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 15,
+                                                      color: Colors
+                                                          .deepOrange[400],
+                                                      decoration:
+                                                          TextDecoration.none),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                            
+                                  ],
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                           Flexible(
                                       child: Column(
                                         children: <Widget>[
                                           Padding(
@@ -307,6 +367,57 @@ setState(() => this.recipes2 = recipes2);
                                                       SizedBox(width: 10),
                                                     ],
                                                   )),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Flexible(
+                                      child: Column(
+                                        children: <Widget>[
+                                          Padding(
+                                            padding: const EdgeInsets.all(1.0),
+                                            child: Card(
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(18),
+                                              ),
+                                              color: Colors.amber[50],
+                                              elevation: 5,
+                                              child: ListTile(
+                                                title: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      "Diferencia de Cal:",
+                                                      textAlign: TextAlign.end,
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 13,
+                                                          color: Colors
+                                                              .deepOrange[300],
+                                                          decoration:
+                                                              TextDecoration
+                                                                  .none),
+                                                    ),
+                                                    SizedBox(width: 10),
+                                                  ],
+                                                ),
+                                                subtitle: Text(
+                                                  _diferencia.toString() + " cal",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 15,
+                                                      color: Colors
+                                                          .deepOrange[400],
+                                                      decoration:
+                                                          TextDecoration.none),
+                                                ),
+                                              ),
                                             ),
                                           ),
                                         ],

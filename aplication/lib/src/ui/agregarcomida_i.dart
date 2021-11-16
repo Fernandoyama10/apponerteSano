@@ -33,6 +33,7 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
   int id_user = 0;
   int id_estatus = 4;
   String nameuser = "";
+  int initial_calories = 0;
   @override
   Widget build(BuildContext context) {
     GetRecipe args = ModalRoute.of(context)!.settings.arguments as GetRecipe;
@@ -42,10 +43,11 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
     image = args.image;
     id_user = args.id_user;
     nameuser = args.name;
+    initial_calories = args.initialcalories;
     //operaciones
 
-    return SafeArea(
-      child: Scaffold(
+    return Scaffold(
+   
         appBar: AppBar(
           title: Text('Registrar tu alimento'),
           backgroundColor: Colors.lightGreen.shade600,
@@ -335,7 +337,7 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
             ),
           ),
         ),
-      ),
+      
     );
   }
 
@@ -397,6 +399,7 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
             sodiumyield,
             id_user,
             id_estatus,
+            initial_calories
           );
               },
               text: 'Registrar',
@@ -450,6 +453,7 @@ Future registrarFood(
   double? sodium,
   int? id_user,
   int? id_estatus,
+  int? initial_calories,
 ) async {
   Map data = {
     'date_r': date_r,
@@ -466,6 +470,7 @@ Future registrarFood(
     'sodium': sodium,
     'id_user': id_user,
     'id_status': id_estatus,
+    'initial_calories': initial_calories,
   };
   var body = json.encode(data);
 
