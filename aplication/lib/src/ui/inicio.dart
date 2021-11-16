@@ -59,12 +59,11 @@ class _DisenoState extends State<Diseno> {
       _resultCalories = (_mtb * activity).round();
       _lowcalories = _resultCalories - 500;
       _operationcalories1 = _resultCalories - _calories;
-      print(_operationcalories1);
-      print(_resultCalories);
     } else {
       _mtb = ((655 + (9.6 * weight)) + ((1.8 * height) - (4.7 * age)));
       _resultCalories = (_mtb * activity).round();
       _lowcalories = _resultCalories - 500;
+      _operationcalories1 = _resultCalories - _calories;
     }
     return _resultCalories;
   }
@@ -90,6 +89,8 @@ class _DisenoState extends State<Diseno> {
       setState(() => this.recipes2 = recipes2);
     }
   }
+
+
 
   void _cambiovalue() {
     setState(() {
@@ -172,9 +173,10 @@ class _DisenoState extends State<Diseno> {
                                       borderRadius: BorderRadius.circular(75)),
                                   onPressed: () {
                                     Navigator.pushNamed(
-                                      //context, "/miperfil", arguments: 
-                                      //  context, "/historialcomida",
-                                        context, "/miperfil",
+                                        //context, "/miperfil", arguments:
+                                        //  context, "/historialcomida",
+                                        context,
+                                        "/miperfil",
                                         arguments: UsuariodataSet(
                                             data.id_user,
                                             data.email,
@@ -187,8 +189,7 @@ class _DisenoState extends State<Diseno> {
                                             data.gender,
                                             data.height,
                                             data.name_level,
-                                            data.value_level)
-                                        );
+                                            data.value_level));
                                   },
                                   child: CircleAvatar(
                                     backgroundColor: Colors.green[200],

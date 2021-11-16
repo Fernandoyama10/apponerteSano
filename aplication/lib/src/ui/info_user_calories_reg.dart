@@ -283,7 +283,6 @@ class _InfoUserCaloriesRegState extends State<InfoUserCaloriesReg> {
     );
   }
 
-
   Widget RegistrarButton(BuildContext context) {
     return MaterialButton(
       onPressed: () {
