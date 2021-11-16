@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:apponertesano/src/model/user.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:apponertesano/src/resources/userData.dart' as globals;
 
 // Define un widget de formulario personalizado
 class Miperfilactu extends StatefulWidget {
@@ -46,12 +47,14 @@ class _MiperfilactuState extends State<Miperfilactu> {
   double rheight = 0;
   int rid_activity = 0;
   int id_user = 0;
-
+  
   @override
   Widget build(BuildContext context) {
     //  args = ModalRoute.of(context).settings.arguments;
-    UsuariodataSet data =
+     UsuariodataSet data =
         ModalRoute.of(context)!.settings.arguments as UsuariodataSet;
+    rname = data.name;
+    rgender = data.gender;
     txtname.text = data.name;
     txtsurname.text = data.surname;
     txtpeso.text = data.weight.toString();
@@ -374,7 +377,9 @@ class _MiperfilactuState extends State<Miperfilactu> {
                 ),
               ),
             ],
+
           ),
+          
         ),
       ),
     );
