@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'package:apponertesano/src/model/user.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 // Define un widget de formulario personalizado
 class Miperfilactu extends StatefulWidget {
@@ -10,7 +12,7 @@ class Miperfilactu extends StatefulWidget {
 }
 
 class _MiperfilactuState extends State<Miperfilactu> {
-  final _formKey1 = GlobalKey<FormState>();
+  final _formKeyactuperfil = GlobalKey<FormState>();
   int currenttIndex = 1;
 
   final txtpeso = TextEditingController();
@@ -26,17 +28,16 @@ class _MiperfilactuState extends State<Miperfilactu> {
 
   bool isVisible = false;
 
-  int _value = 0;
+  dynamic _value = 0;
 
   String dropdownvalue = 'Seleccione su sexo aquí';
+
   List<String> items = <String>[
     'Seleccione su sexo aquí',
     'Masculino',
     'Femenino',
   ];
-  String remail = "";
-  String rpassword = "";
-  int rid_role = 2;
+
   String rname = "";
   String rsurname = "";
   int rage = 0;
@@ -44,12 +45,21 @@ class _MiperfilactuState extends State<Miperfilactu> {
   String rgender = "";
   double rheight = 0;
   int rid_activity = 0;
+  int id_user = 0;
 
   @override
   Widget build(BuildContext context) {
     //  args = ModalRoute.of(context).settings.arguments;
     UsuariodataSet data =
         ModalRoute.of(context)!.settings.arguments as UsuariodataSet;
+    txtname.text = data.name;
+    txtsurname.text = data.surname;
+    txtpeso.text = data.weight.toString();
+    _txtaltura.text = data.height.toString();
+    txtage.text = data.age.toString();
+    //_value = data.value_level;
+    id_user = data.id_user;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Actualizar perfil'),
@@ -59,7 +69,7 @@ class _MiperfilactuState extends State<Miperfilactu> {
       body: SingleChildScrollView(
         padding: EdgeInsets.fromLTRB(5, 10, 5, 20),
         child: Form(
-          key: _formKey1,
+          key: _formKeyactuperfil,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
@@ -106,56 +116,61 @@ class _MiperfilactuState extends State<Miperfilactu> {
                           labelText: 'Nombre:',
                           prefixIcon: Icon(Icons.verified_user),
                         ),
-                        onChanged: (text) {
-                          setState(() => email = data.email);
-                        },
                       ),
                     ),
                     SizedBox(height: 15),
+                    Container(
+                      width: 300,
+                      child: TextFormField(
+                        validator: (value) {
+                          if (value == null || value == "" || value.isEmpty) {
+                            return 'Ingresa tus apellidos';
+                          }
+                          if (value.length <= 8) {
+                            return 'Ingresa tu apellido mayor a 8 caracteres';
+                          }
+                          return null;
+                        },
+                        controller: txtsurname,
+                        keyboardType: TextInputType.text,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(32.0)),
+                          labelText: 'Apellidos',
+                          prefixIcon: Icon(Icons.verified_user),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 15),
+                    Container(
+                      width: 300.0,
+                      child: TextFormField(
+                        validator: (value) {
+                          if (value == null || value == "" || value.isEmpty) {
+                            return 'Ingresa tu edad';
+                          }
+                          return null;
+                        },
+                        controller: txtage,
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(32.0)),
+                          labelText: 'Edad',
+                          prefixIcon: Icon(Icons.verified_user),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
                     Row(
                       children: <Widget>[
-                        Flexible(
-                            child: Column(children: <Widget>[
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(45, 1, 1, 1),
-                            child: Container(
-                              width: 150.0,
-                              child: TextFormField(
-                                validator: (value) {
-                                  if (value == null ||
-                                      value == "" ||
-                                      value.isEmpty) {
-                                    return 'Ingresa tu estatura en cm';
-                                  }
-                                  if (value.length <= 2) {
-                                    return 'Ingresa tu estatura en cm ej: 186';
-                                  }
-                                  return null;
-                                },
-                                controller: _txtaltura,
-                                keyboardType: TextInputType.numberWithOptions(
-                                    decimal: true),
-                                decoration: InputDecoration(
-                                  contentPadding:
-                                      EdgeInsets.fromLTRB(5, 5, 5, 0),
-                                  border: OutlineInputBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(32.0)),
-                                  labelText: 'Estatura(Cm)',
-                                  prefixIcon: Icon(Icons.height_outlined),
-                                ),
-                                onChanged: (text) {
-                                  setState(() => rheight = double.parse(text));
-                                },
-                              ),
-                            ),
-                          ),
-                        ])),
                         Flexible(
                           child: Column(
                             children: <Widget>[
                               Padding(
-                                padding: const EdgeInsets.all(0.2),
+                                padding: EdgeInsets.fromLTRB(30, 1, 5, 1),
                                 child: Container(
                                   width: 150.0,
                                   child: TextFormField(
@@ -179,133 +194,182 @@ class _MiperfilactuState extends State<Miperfilactu> {
                                       labelText: 'Peso (Kg):',
                                       prefixIcon: Icon(Icons.monitor_weight),
                                     ),
-                                    onChanged: (text) {
-                                      setState(
-                                          () => rweight = double.parse(text));
-                                    },
                                   ),
                                 ),
                               ),
                             ],
                           ),
                         ),
+                        Flexible(
+                            child: Column(children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(2, 1, 5, 1),
+                            child: Container(
+                              width: 150.0,
+                              child: TextFormField(
+                                validator: (value) {
+                                  if (value == null ||
+                                      value == "" ||
+                                      value.isEmpty) {
+                                    return 'Ingresa tu estatura en cm';
+                                  }
+                                  if (value.length <= 2) {
+                                    return 'Ingresa tu estatura en cm ej: 186';
+                                  }
+                                  return null;
+                                },
+                                controller: _txtaltura,
+                                keyboardType: TextInputType.numberWithOptions(
+                                    decimal: true),
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(32.0)),
+                                  labelText: 'Estatura(Cm)',
+                                  prefixIcon: Icon(Icons.height_outlined),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ])),
                       ],
                     ),
                     SizedBox(
                       height: 15,
                     ),
+                    SizedBox(
+                      height: 15,
+                    ),
                     Container(
-                      width: 300,
-                      child: TextFormField(
-                        validator: (value) {
-                          if (value == null || value == "" || value.isEmpty) {
-                            return 'Ingresa tus apellidos';
-                          }
-                          if (value.length <= 8) {
-                            return 'Ingresa tu apellido mayor a 8 caracteres';
-                          }
-                          return null;
+                      width: 250.0,
+                      child: DropdownButtonFormField<String>(
+                        key: _dropdowngener,
+                        value: data.gender,
+                        icon: const Icon(Icons.arrow_downward),
+                        iconSize: 24,
+                        elevation: 16,
+                        style: const TextStyle(color: Colors.deepPurple),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            dropdownvalue = newValue!;
+                            rgender = dropdownvalue;
+                          });
                         },
-                        controller: txtsurname,
-                        keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(32.0)),
-                          labelText: 'Apellidos',
-                          prefixIcon: Icon(Icons.verified_user),
-                        ),
+                        validator: (value) {
+                          if (value == 'Seleccione su sexo aquí') {
+                            return 'Seleccione su genero';
+                          }
+                        },
+                        items:
+                            items.map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
                       ),
                     ),
+                    SizedBox(height: 20),
                     Container(
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Container(
-                              margin: EdgeInsets.fromLTRB(10, 20, 10, 1),
-                              child: FloatingActionButton(
-                                heroTag: Text("btn1"),
-                                onPressed: () {},
-                                child: const Icon(Icons.border_color_rounded),
-                                backgroundColor: Colors.green,
-                              ),
+                      width: 330.0,
+                      child: Column(children: <Widget>[
+                        Text("Nivel de actividad fisica",
+                            style: TextStyle(
+                                color: Colors.black87,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold)),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Radio(
+                              key: _txtfisico,
+                              value: 1,
+                              groupValue: _value,
+                              onChanged: (value) {
+                                setState(() {
+                                  _value = 1;
+                                  rid_activity = _value;
+                                });
+                              },
                             ),
-                            Container(
-                              margin: EdgeInsets.fromLTRB(10, 20, 10, 1),
-                              child: FloatingActionButton(
-                                heroTag: Text("btn2"),
-                                onPressed: () {},
-                                child: const Icon(Icons.today_rounded),
-                                backgroundColor: Colors.green,
-                              ),
+                            SizedBox(width: 10.0),
+                            Text("No hago nada de ejercicio"),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Radio(
+                              value: 2,
+                              groupValue: _value,
+                              onChanged: (value) {
+                                setState(() {
+                                  _value = 2;
+                                  rid_activity = _value;
+                                });
+                              },
                             ),
-                            Container(
-                              margin: EdgeInsets.fromLTRB(10, 20, 10, 1),
-                              child: FloatingActionButton(
-                                heroTag: Text("btn3"),
-                                onPressed: () {
-                                  Navigator.pushNamed(
-                                      context, "/historialcomida",
-                                      arguments: UsuariodataSet(
-                                          data.id_user,
-                                          data.email,
-                                          data.password,
-                                          data.id_role,
-                                          data.name,
-                                          data.surname,
-                                          data.age,
-                                          data.weight,
-                                          data.gender,
-                                          data.height,
-                                          data.name_level,
-                                          data.value_level));
-                                },
-                                child: const Icon(Icons.date_range),
-                                backgroundColor: Colors.green,
-                              ),
-                            )
-                          ]),
+                            SizedBox(width: 10.0),
+                            Text("Ejercicio de 1 a 3 veces por semana"),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Radio(
+                              value: 3,
+                              groupValue: _value,
+                              onChanged: (value) {
+                                setState(() {
+                                  _value = 3;
+                                  rid_activity = _value;
+                                });
+                              },
+                            ),
+                            SizedBox(width: 10.0),
+                            Text("Ejercicio de 3 a 5 veces por semana"),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Radio(
+                              value: 4,
+                              groupValue: _value,
+                              onChanged: (value) {
+                                setState(() {
+                                  _value = 4;
+                                  rid_activity = _value;
+                                });
+                              },
+                            ),
+                            SizedBox(width: 10.0),
+                            Text("Ejercicio de 6 a 7 veces por semana"),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Radio(
+                              value: 5,
+                              groupValue: _value,
+                              onChanged: (value) {
+                                setState(() {
+                                  _value = 5;
+                                  rid_activity = _value;
+                                });
+                              },
+                            ),
+                            SizedBox(width: 10.0),
+                            Text("Entrenamientos de más de 4 horas diarias"),
+                          ],
+                        ),
+                      ]),
                     ),
-                    Container(
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                          Container(
-                            margin: EdgeInsets.fromLTRB(15, 5, 5, 1),
-                            child: Text(
-                              "Actualizar",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 12,
-                                  color: Colors.grey,
-                                  decoration: TextDecoration.none),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.fromLTRB(8, 5, 8, 1),
-                            child: Text(
-                              "Historial hoy",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 12,
-                                  color: Colors.grey,
-                                  decoration: TextDecoration.none),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.fromLTRB(8, 5, 5, 1),
-                            child: Text(
-                              "Mi historial",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 12,
-                                  color: Colors.grey,
-                                  decoration: TextDecoration.none),
-                            ),
-                          )
-                        ]))
+                    SizedBox(
+                      height: 15,
+                    ),
+                    RegistrarButton(context),
                   ],
                 ),
               ),
@@ -313,38 +377,90 @@ class _MiperfilactuState extends State<Miperfilactu> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currenttIndex,
-        selectedItemColor: Colors.lightGreen.shade500,
-        unselectedItemColor: Colors.lightGreen.shade800,
-        backgroundColor: Colors.grey.shade200,
-        onTap: (index) => setState(() {
-          currenttIndex = index;
-        }),
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.account_circle_sharp,
-              color: Colors.lightGreen.shade600,
-            ),
-            label: 'Mi perfil',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home,
-              color: Colors.lightGreen.shade600,
-            ),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.school,
-              color: Colors.lightGreen.shade600,
-            ),
-            label: 'School',
-          ),
-        ],
-      ),
     );
   }
+
+  Widget RegistrarButton(BuildContext context) {
+    return MaterialButton(
+      onPressed: () {
+        if (_formKeyactuperfil.currentState!.validate()) {
+          actualizarUsu(
+              context,
+              txtname.text,
+              txtsurname.text,
+              int.parse(txtage.text),
+              double.parse(txtpeso.text),
+              rgender,
+              double.parse(_txtaltura.text),
+              rid_activity,
+              id_user);
+        }
+      },
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(28),
+      ),
+      minWidth: 200.0,
+      height: 45.0,
+      color: Colors.green.shade600,
+      child:
+          Text('Actualizar mis datos', style: TextStyle(color: Colors.white)),
+    );
+  }
+}
+
+Future actualizarUsu(
+  BuildContext context,
+  String name,
+  String surname,
+  int? age,
+  double? weight,
+  String gender,
+  double? height,
+  int? id_activity,
+  int? id_user,
+) async {
+  Map data = {
+    'name': name,
+    'surname': surname,
+    'weight': weight,
+    'age': age,
+    'gender': gender,
+    'height': height,
+    'id_activity': id_activity,
+    'id_user': id_user
+  };
+  var body = json.encode(data);
+
+  final response = await http.put(
+      Uri.parse("https://apiapponertesano.azurewebsites.net/api/update"),
+      headers: {"Content-Type": "application/json"},
+      body: body);
+
+  final value = json.decode(response.body)["statusCode"];
+
+  if (response.statusCode == 200) {
+    _showDialog(context, 'Se actualizo correctamente tus datos');
+  } else {
+    _showDialog(context, 'No se Actualizo, intenta nuevamente');
+  }
+}
+
+void _showDialog(BuildContext context, String texto1) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: new Text("Mensaje"),
+        content: new Text(texto1),
+        actions: <Widget>[
+          new FlatButton(
+            child: new Text("OK"),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
 }

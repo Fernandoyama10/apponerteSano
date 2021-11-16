@@ -10,7 +10,6 @@ import 'package:apponertesano/src/ui/fb_info_user_calories_reg.dart';
 import 'package:apponertesano/src/ui/info_user_reg.dart';
 import 'package:apponertesano/src/ui/info_user_calories_reg.dart';
 import 'package:apponertesano/src/ui/inicio.dart';
-import 'package:apponertesano/src/ui/inicio_fb.dart';
 import 'package:apponertesano/src/ui/miperfil.dart';
 import 'package:apponertesano/src/ui/miperfil_actualizar.dart';
 import 'package:apponertesano/src/ui/registrar_user.dart';
@@ -50,7 +49,6 @@ class MyApp extends StatelessWidget {
           '/': (context) => SplashScreen(), //SplashScreen
           '/login': (context) => Login(),
           '/inicio': (context) => Diseno(),
-          '/iniciofb': (context) => Diseno_fb(),
           '/tipocomida': (context) => Tipocomida(),
           '/registeruser': (context) => RegisterUser(),
           '/infouser': (context) => InfoUserReg(),

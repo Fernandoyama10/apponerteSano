@@ -10,7 +10,7 @@ class Miperfil extends StatefulWidget {
 }
 
 class _MiperfilState extends State<Miperfil> {
-  final _formKey1 = GlobalKey<FormState>();
+  final _formKeymiperfil = GlobalKey<FormState>();
   int currenttIndex = 1;
 
   bool isVisible = false;
@@ -29,7 +29,7 @@ class _MiperfilState extends State<Miperfil> {
       body: SingleChildScrollView(
         padding: EdgeInsets.fromLTRB(5, 5, 5, 20),
         child: Form(
-          key: _formKey1,
+          key: _formKeymiperfil,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
@@ -69,10 +69,10 @@ class _MiperfilState extends State<Miperfil> {
                             children: [
                               Text(
                                 data.name + " " + data.surname,
-                                textAlign: TextAlign.end,
+                                textAlign: TextAlign.center,
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 20,
+                                    fontSize: 15,
                                     color: Colors.green[600],
                                     decoration: TextDecoration.none),
                               ),
@@ -84,7 +84,7 @@ class _MiperfilState extends State<Miperfil> {
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontWeight: FontWeight.w600,
-                                fontSize: 15,
+                                fontSize: 14,
                                 color: Colors.deepOrange[300],
                                 decoration: TextDecoration.none),
                           ),
@@ -423,38 +423,6 @@ class _MiperfilState extends State<Miperfil> {
             ],
           ),
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currenttIndex,
-        selectedItemColor: Colors.lightGreen.shade500,
-        unselectedItemColor: Colors.lightGreen.shade800,
-        backgroundColor: Colors.grey.shade200,
-        onTap: (index) => setState(() {
-          currenttIndex = index;
-        }),
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.account_circle_sharp,
-              color: Colors.lightGreen.shade600,
-            ),
-            label: 'Mi perfil',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home,
-              color: Colors.lightGreen.shade600,
-            ),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.school,
-              color: Colors.lightGreen.shade600,
-            ),
-            label: 'School',
-          ),
-        ],
       ),
     );
   }
