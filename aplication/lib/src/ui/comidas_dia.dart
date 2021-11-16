@@ -632,7 +632,7 @@ setState(() {
         _carbs = recipes2[0].carbs!;
         _sugar = recipes2[0].sugar!;
         _sodium = recipes2[0].sodium!;
-        _initialcalories = recipes2[0].initialcalories!;
+        _initialcalories = recipes2[0].initial_calories!;
         _diferencia = _initialcalories - _calories;
       } else {}
     }
