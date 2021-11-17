@@ -18,6 +18,7 @@ class ComidaInternacionalListPageState extends State<BuscarInternacional> {
   String query = '';
   Timer? debouncer;
   int id_user= 0;
+  int fb_complete = 0;
   String name = "";
   int initialcalories = 0;
   @override
@@ -57,6 +58,7 @@ class ComidaInternacionalListPageState extends State<BuscarInternacional> {
         id_user = data.id_user;
         name = data.name;
         initialcalories = data.initialCalories;
+        fb_complete = data.fb_complete;
     return Scaffold(
 
         appBar: AppBar(
@@ -123,6 +125,7 @@ class ComidaInternacionalListPageState extends State<BuscarInternacional> {
                 name,
                 initialcalories,
                 hit.recipe!.totalNutrients!.procnt!.quantity!.toDouble(),
+                fb_complete
               ));
         },
       );

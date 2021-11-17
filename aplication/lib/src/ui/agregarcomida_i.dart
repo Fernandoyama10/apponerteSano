@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:material_dialogs/material_dialogs.dart';
 import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:material_dialogs/widgets/buttons/icon_outline_button.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class AgregarInternacional extends StatefulWidget {
   const AgregarInternacional({Key? key}) : super(key: key);
@@ -34,6 +35,7 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
   int id_estatus = 4;
   String nameuser = "";
   int initial_calories = 0;
+  int fb_iscompleted = 0;
   @override
   Widget build(BuildContext context) {
     GetRecipe args = ModalRoute.of(context)!.settings.arguments as GetRecipe;
@@ -44,6 +46,7 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
     id_user = args.id_user;
     nameuser = args.name;
     initial_calories = args.initialcalories;
+    fb_iscompleted= args.fb_complete;
     //operaciones
 
     return Scaffold(
@@ -364,6 +367,37 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
     );
   }
 
+void _mensajeFeedback(BuildContext context){
+   Alert(
+        context: context,
+        title: "Porfavor calificanos",
+        content: Column(
+          children: <Widget>[
+            TextField(
+              decoration: InputDecoration(
+                icon: Icon(Icons.account_circle),
+                labelText: 'Username',
+              ),
+            ),
+            TextField(
+              obscureText: true,
+              decoration: InputDecoration(
+                icon: Icon(Icons.lock),
+                labelText: 'Password',
+              ),
+            ),
+          ],
+        ),
+        buttons: [
+          DialogButton(
+            onPressed: () => {},
+            child: Text(
+              "Calificar",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+          )
+        ]).show();
+}
   
   void _mensajeRegistrar(BuildContext context) {
   Dialogs.bottomMaterialDialog(
@@ -426,7 +460,12 @@ void _mensajeSuccess(BuildContext context, String nombre) {
           actions: [
             IconsButton(
               onPressed: () {
-                Navigator.pop(context);
+                if(fb_iscompleted == 0) {
+                  _mensajeFeedback(context);
+                }else if(fb_iscompleted == 1){
+   Navigator.pop(context);
+                }
+             
               },
               text: 'Aceptar',
               iconData: Icons.done,

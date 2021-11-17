@@ -119,7 +119,8 @@ setState(() {
                                             data.height,
                                             data.name_level,
                                             data.value_level,
-                                            data.initialCalories));
+                                            data.initialCalories,
+                                            data.fb_complete));
                                   }, // needed
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(100.0),
@@ -206,7 +207,8 @@ setState(() {
                                             data.height,
                                             data.name_level,
                                             data.value_level,
-                                            data.initialCalories));
+                                            data.initialCalories,
+                                            data.fb_complete));
                                   }, // needed
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(100.0),

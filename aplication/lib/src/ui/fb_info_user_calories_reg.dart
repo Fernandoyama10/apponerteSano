@@ -458,7 +458,8 @@ Future<List<Usuario>> verifyLogin(BuildContext context, String email) async {
                   lista[0].gender!,
                   lista[0].height!,
                   lista[0].name_level!,
-                  lista[0].value_level!));
+                  lista[0].value_level!,
+                     lista[0].fb_complete!));
        
       } else {
         print('este usuario se puede registrar');

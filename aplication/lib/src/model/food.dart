@@ -182,6 +182,7 @@ class GetRecipe {
   final String name;
   final int initialcalories;
   late final double quantityprocnt;
+    final int fb_complete;
   GetRecipe(
       this.label,
       this.image,
@@ -194,7 +195,8 @@ class GetRecipe {
       this.id_user,
       this.name,
       this.initialcalories,
-      this.quantityprocnt);
+      this.quantityprocnt,
+      this.fb_complete);
 }
 
 class RecipeYucatan {
@@ -269,6 +271,7 @@ class GetRecipeYuc {
   final String name;
   final int initialcalories;
   late final double quantityprocnt;
+    final int fb_complete;
   GetRecipeYuc(
       this.label,
       this.image,
@@ -282,7 +285,8 @@ class GetRecipeYuc {
       this.id_user,
       this.name,
       this.initialcalories,
-      this.quantityprocnt);
+      this.quantityprocnt,
+      this.fb_complete);
 }
 
 class FoodRecord {

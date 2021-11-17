@@ -196,7 +196,8 @@ class _DisenoState extends State<Diseno> {
                                             data.gender,
                                             data.height,
                                             data.name_level,
-                                            data.value_level));
+                                            data.value_level,
+                                            data.fb_complete));
                                   },
                                   child: CircleAvatar(
                                     backgroundColor: Colors.green[200],
@@ -423,7 +424,8 @@ class _DisenoState extends State<Diseno> {
                                               data.height,
                                               data.name_level,
                                               data.value_level,
-                                              _resultCalories));
+                                              _resultCalories,
+                                              data.fb_complete));
                                       //Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => Consumolista(listapost: fetchPost1(args.clave.toString()),p: args.puntos,usu: args.id_usu,id_sa: args.id_salon)));
                                     },
                                     color: Colors.green[400],

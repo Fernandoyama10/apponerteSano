@@ -236,7 +236,8 @@ class _LoginState extends State<Login> {
                   lista[0].gender!,
                   lista[0].height!,
                   lista[0].name_level!,
-                  lista[0].value_level!));
+                  lista[0].value_level!,
+                  lista[0].fb_complete!));
         } else {
           _showDialog(context, 'Contraseña incorrecta');
         }

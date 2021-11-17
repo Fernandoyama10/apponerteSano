@@ -334,7 +334,8 @@ class _MiperfilState extends State<Miperfil> {
                                           data.gender,
                                           data.height,
                                           data.name_level,
-                                          data.value_level));
+                                          data.value_level,
+                                          data.fb_complete));
                                 },
                                 child: const Icon(Icons.border_color_rounded),
                                 backgroundColor: Colors.green,
@@ -359,7 +360,8 @@ class _MiperfilState extends State<Miperfil> {
                                           data.gender,
                                           data.height,
                                           data.name_level,
-                                          data.value_level));
+                                          data.value_level,
+                                          data.fb_complete));
                                 },
                                 child: const Icon(Icons.today_rounded),
                                 backgroundColor: Colors.green,
@@ -384,7 +386,8 @@ class _MiperfilState extends State<Miperfil> {
                                           data.gender,
                                           data.height,
                                           data.name_level,
-                                          data.value_level));
+                                          data.value_level,
+                                          data.fb_complete));
                                 },
                                 child: const Icon(Icons.date_range),
                                 backgroundColor: Colors.green,

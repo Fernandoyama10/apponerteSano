@@ -24,7 +24,7 @@ class UsuariodataSet {
   final dynamic height;
   final String name_level;
   final double value_level;
-
+  final int fb_complete;
   UsuariodataSet(
       this.id_user,
       this.email,
@@ -37,7 +37,8 @@ class UsuariodataSet {
       this.gender,
       this.height,
       this.name_level,
-      this.value_level);
+      this.value_level,
+           this.fb_complete);
 }
 
 
@@ -100,6 +101,7 @@ class SendUserDataInfo {
   final String name_level;
   final double value_level;
   final int initialCalories ;
+  final int fb_complete;
 
   SendUserDataInfo(
       this.id_user,
@@ -114,7 +116,8 @@ class SendUserDataInfo {
       this.height,
       this.name_level,
       this.value_level,
-      this.initialCalories);
+      this.initialCalories,
+      this.fb_complete);
 }
 
 
@@ -131,7 +134,7 @@ class Usuario {
   dynamic height;
   String? name_level;
   double? value_level;
-
+  int? fb_complete;
   Usuario({
     this.id_user,
     this.email,
@@ -145,6 +148,7 @@ class Usuario {
     this.height,
     this.name_level,
     this.value_level,
+    this.fb_complete
   });
 
   factory Usuario.fromJson(Map<String, dynamic> json) {
@@ -160,7 +164,8 @@ class Usuario {
         gender: json['gender'],
         height: json['height'],
         name_level: json['name_level'],
-        value_level: json['value_level']);
+        value_level: json['value_level'],
+             fb_complete: json['fb_complete']);
   }
 }
 
