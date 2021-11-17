@@ -530,7 +530,8 @@ class _MiperfilactuState extends State<Miperfilactu> {
                 lista[0].gender!,
                 lista[0].height!,
                 lista[0].name_level!,
-                lista[0].value_level!));
+                lista[0].value_level!,
+                lista[0].fb_complete!));
 
         _mensajeSuccess(context, name);
       } else {

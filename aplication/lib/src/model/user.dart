@@ -190,7 +190,7 @@ class UsuarioDataupdate {
   dynamic height;
   String? name_level;
   double? value_level;
-
+  int? fb_complete;
   UsuarioDataupdate({
     this.id_user,
     this.email,
@@ -204,6 +204,7 @@ class UsuarioDataupdate {
     this.height,
     this.name_level,
     this.value_level,
+    this.fb_complete
   });
 
   factory UsuarioDataupdate.fromJson(Map<String, dynamic> json) {
@@ -219,7 +220,8 @@ class UsuarioDataupdate {
         gender: json['gender'],
         height: json['height'],
         name_level: json['name_level'],
-        value_level: json['value_level']);
+        value_level: json['value_level'],
+          fb_complete: json['fb_complete']);
   }
 }
 

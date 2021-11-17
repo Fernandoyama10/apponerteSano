@@ -36,6 +36,7 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
   String nameuser = "";
   int initial_calories = 0;
   int fb_iscompleted = 0;
+  dynamic valuefeed = 0;
   @override
   Widget build(BuildContext context) {
     GetRecipe args = ModalRoute.of(context)!.settings.arguments as GetRecipe;
@@ -46,7 +47,7 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
     id_user = args.id_user;
     nameuser = args.name;
     initial_calories = args.initialcalories;
-    fb_iscompleted= args.fb_complete;
+    fb_iscompleted = args.fb_complete;
     //operaciones
 
     return Scaffold(
@@ -373,19 +374,89 @@ void _mensajeFeedback(BuildContext context){
         title: "Porfavor calificanos",
         content: Column(
           children: <Widget>[
-            TextField(
-              decoration: InputDecoration(
-                icon: Icon(Icons.account_circle),
-                labelText: 'Username',
-              ),
-            ),
-            TextField(
-              obscureText: true,
-              decoration: InputDecoration(
-                icon: Icon(Icons.lock),
-                labelText: 'Password',
-              ),
-            ),
+         Container(
+                  width: 330.0,
+                  child: Column(children: <Widget>[
+                     SizedBox(
+                  height: 10,
+                ),
+                    Text("Valorar nuestra aplicación nos ayuda a mejorar.",
+                        style: TextStyle(
+                            color: Colors.black87,
+                            fontSize: 13,
+                            fontWeight: FontWeight.bold)),
+                             SizedBox(
+                  height: 10,
+                ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Radio(
+                          value: 1,
+                          groupValue: valuefeed,
+                          onChanged: (value) {
+                            setState(() {
+                    
+                              valuefeed = value;
+                            });
+                          },
+                        ),
+                        SizedBox(width: 10.0),
+                        Text("⭐(Deficiente)"),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Radio(
+                          value: 2,
+                          groupValue: valuefeed,
+                          onChanged: (value) {
+                            setState(() {
+                              valuefeed = value;
+                            });
+                          },
+                        ),
+                        SizedBox(width: 10.0),
+                        Text("⭐⭐(Bien)"),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Radio(
+                          value: 3,
+                          groupValue: valuefeed,
+                          onChanged: (value) {
+                            setState(() {
+                         
+                              valuefeed = value;
+                            });
+                          },
+                        ),
+                        SizedBox(width: 10.0),
+                        Text("⭐⭐⭐(Muy bien)"),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Radio(
+                          value: 4,
+                          groupValue: valuefeed,
+                          onChanged: (value) {
+                            setState(() {
+                          
+                              valuefeed = value;
+                            });
+                          },
+                        ),
+                        SizedBox(width: 10.0),
+                        Text("⭐⭐⭐⭐(Excelente)"),
+                      ],
+                    ),
+                  ]),
+                ),
           ],
         ),
         buttons: [
@@ -461,10 +532,13 @@ void _mensajeSuccess(BuildContext context, String nombre) {
             IconsButton(
               onPressed: () {
                 if(fb_iscompleted == 0) {
+                     Navigator.pop(context);
                   _mensajeFeedback(context);
                 }else if(fb_iscompleted == 1){
    Navigator.pop(context);
                 }
+ 
+              
              
               },
               text: 'Aceptar',
@@ -526,6 +600,7 @@ Future registrarFood(
        _showDialog(context, 'Error 404, contacta administrador');
     } else {
       _mensajeSuccess(context, nameuser);
+
     }
   } else {
     throw Exception('No se Agrego, intenta nuevamente');
