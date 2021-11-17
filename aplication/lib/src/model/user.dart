@@ -175,60 +175,6 @@ List<Usuario> parsePost(String responseBody) {
   return parsed.map<Usuario>((json) => Usuario.fromJson(json)).toList();
 }
 
-
-
-class UsuarioDataupdate {
-  int? id_user;
-  String? email;
-  String? password;
-  int? id_role;
-  String? name;
-  String? surname;
-  int? age;
-  dynamic weight;
-  String? gender;
-  dynamic height;
-  String? name_level;
-  double? value_level;
-
-  UsuarioDataupdate({
-    this.id_user,
-    this.email,
-    this.password,
-    this.id_role,
-    this.name,
-    this.surname,
-    this.age,
-    this.weight,
-    this.gender,
-    this.height,
-    this.name_level,
-    this.value_level,
-  });
-
-  factory UsuarioDataupdate.fromJson(Map<String, dynamic> json) {
-    return UsuarioDataupdate(
-        id_user: json['id_user'],
-        email: json['email'],
-        password: json['password'],
-        id_role: json['id_role'],
-        name: json['name'],
-        surname: json['surname'],
-        age: json['age'],
-        weight: json['weight'],
-        gender: json['gender'],
-        height: json['height'],
-        name_level: json['name_level'],
-        value_level: json['value_level']);
-  }
-}
-
-List<UsuarioDataupdate> parsePostupdate(String responseBody) {
-  final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
-
-  return parsed.map<UsuarioDataupdate>((json) => UsuarioDataupdate.fromJson(json)).toList();
-}
-
 class UserRegistroStep2 {
   final String email;
   final String password;

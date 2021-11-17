@@ -3,9 +3,7 @@ import 'package:apponertesano/src/blocs/search_api.dart';
 import 'package:apponertesano/src/model/user.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:material_dialogs/material_dialogs.dart';
-import 'package:material_dialogs/widgets/buttons/icon_button.dart';
-import 'package:material_dialogs/widgets/buttons/icon_outline_button.dart';
+import 'package:apponertesano/src/resources/userData.dart' as globals;
 
 // Define un widget de formulario personalizado
 class Miperfilactu extends StatefulWidget {
@@ -34,6 +32,8 @@ class _MiperfilactuState extends State<Miperfilactu> {
 
   dynamic _value = 1;
   String valueactivity = "";
+
+  String dropdownvalue = 'Seleccione su sexo aquí';
 
   List<String> items = <String>[
     'Seleccione su sexo aquí',
@@ -294,7 +294,8 @@ class _MiperfilactuState extends State<Miperfilactu> {
                         style: const TextStyle(color: Colors.deepPurple),
                         onChanged: (String? newValue) {
                           setState(() {
-                            rgender = newValue!;
+                            dropdownvalue = newValue!;
+                            rgender = dropdownvalue;
                           });
                         },
                         validator: (value) {
@@ -420,7 +421,16 @@ class _MiperfilactuState extends State<Miperfilactu> {
     return MaterialButton(
       onPressed: () {
         if (_formKeyactuperfil.currentState!.validate()) {
-          _mensajeactualizar(context);
+          actualizarUsu(
+              context,
+              txtname.text,
+              txtsurname.text,
+              int.parse(txtage.text),
+              double.parse(txtpeso.text),
+              rgender,
+              double.parse(_txtaltura.text),
+              _value,
+              id_user);
         }
       },
       shape: RoundedRectangleBorder(
@@ -433,132 +443,61 @@ class _MiperfilactuState extends State<Miperfilactu> {
           Text('Actualizar mis datos', style: TextStyle(color: Colors.white)),
     );
   }
+}
 
-  void _mensajeactualizar(BuildContext context) {
-    Dialogs.bottomMaterialDialog(
-        msg: '¿Esta seguro que quiere actualizar tus datos?',
-        title: 'Actualizar datos',
-        context: context,
-        actions: [
-          IconsOutlineButton(
+Future actualizarUsu(
+  BuildContext context,
+  String name,
+  String surname,
+  int? age,
+  double? weight,
+  String gender,
+  double? height,
+  int? id_activity,
+  int? id_user,
+) async {
+  Map data = {
+    'name': name,
+    'surname': surname,
+    'weight': weight,
+    'age': age,
+    'gender': gender,
+    'height': height,
+    'id_activity': id_activity,
+    'id_user': id_user
+  };
+  var body = json.encode(data);
+
+  final response = await http.put(
+      Uri.parse("https://apiapponertesano.azurewebsites.net/api/update"),
+      headers: {"Content-Type": "application/json"},
+      body: body);
+
+  final value = json.decode(response.body)["statusCode"];
+
+  if (response.statusCode == 200) {
+    _showDialog(context, 'Se actualizo correctamente tus datos');
+  } else {
+    _showDialog(context, 'No se Actualizo, intenta nuevamente');
+  }
+}
+
+void _showDialog(BuildContext context, String texto1) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: new Text("Mensaje"),
+        content: new Text(texto1),
+        actions: <Widget>[
+          new FlatButton(
+            child: new Text("OK"),
             onPressed: () {
-              Navigator.pop(context);
+              Navigator.of(context).pop();
             },
-            text: 'Cancelar',
-            iconData: Icons.cancel_outlined,
-            textStyle: TextStyle(color: Colors.grey),
-            iconColor: Colors.grey,
           ),
-          IconsButton(
-            onPressed: () {
-              Navigator.pop(context);
-              actualizarUsu(
-                  context,
-                  txtname.text,
-                  txtsurname.text,
-                  int.parse(txtage.text),
-                  double.parse(txtpeso.text),
-                  rgender,
-                  double.parse(_txtaltura.text),
-                  _value,
-                  id_user);
-            },
-            text: 'Actualizar',
-            iconData: Icons.border_color_rounded,
-            color: Colors.green,
-            textStyle: TextStyle(color: Colors.white),
-            iconColor: Colors.white,
-          ),
-        ]);
-  }
-
-  void _mensajeSuccess(BuildContext context, String nombre) {
-    Dialogs.materialDialog(
-        color: Colors.white,
-        msg: 'Se actualizarón correctamente tus datos   (tap para salir)',
-        title: nombre + ', actualización exitoso',
-        lottieBuilder: Lottie.asset(
-          'images/62669-success-lottie-animation.json',
-          height: 25,
-          width: 25,
-        ),
-        context: context,
-        actions: []);
-  }
-
-  Future actualizarUsu(
-    BuildContext context,
-    String name,
-    String surname,
-    int? age,
-    double? weight,
-    String gender,
-    double? height,
-    int? id_activity,
-    int? id_user,
-  ) async {
-    Map data = {
-      'name': name,
-      'surname': surname,
-      'weight': weight,
-      'age': age,
-      'gender': gender,
-      'height': height,
-      'id_activity': id_activity,
-      'id_user': id_user
-    };
-    var body = json.encode(data);
-
-    final response = await http.put(
-        Uri.parse("https://apiapponertesano.azurewebsites.net/api/update"),
-        headers: {"Content-Type": "application/json"},
-        body: body);
-
-    if (response.statusCode == 200) {
-      List<UsuarioDataupdate> lista = parsePostupdate(response.body);
-      if (lista.length > 0) {
-        Navigator.pushReplacementNamed(context, "/inicio",
-            arguments: UsuariodataSet(
-                lista[0].id_user!,
-                lista[0].email!,
-                lista[0].password!,
-                lista[0].id_role!,
-                lista[0].name!,
-                lista[0].surname!,
-                lista[0].age!,
-                lista[0].weight!,
-                lista[0].gender!,
-                lista[0].height!,
-                lista[0].name_level!,
-                lista[0].value_level!));
-
-        _mensajeSuccess(context, name);
-      } else {
-        _showDialog(context, 'No existe el usuario en la aplicación');
-      }
-      return lista;
-    } else {
-      _showDialog(context, 'No se Actualizo, intenta nuevamente');
-    }
-  }
-
-  void _showDialog(BuildContext context, String texto1) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: new Text("Mensaje"),
-          content: new Text(texto1),
-          actions: <Widget>[
-            new FlatButton(
-              child: new Text("OK"),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
+        ],
+      );
+    },
+  );
 }
