@@ -178,7 +178,194 @@ class GetRecipe {
   final double quantityna;
   final double quantitychocdf;
   final double quantityfat;
+  final int id_user;
+  final String name;
+  final int initialcalories;
   late final double quantityprocnt;
-  GetRecipe(this.label, this.image, this.yield, this.calories,
-      this.quantitysugar, this.quantityna, this.quantitychocdf, this.quantityfat,this.quantityprocnt);
+    final int fb_complete;
+  GetRecipe(
+      this.label,
+      this.image,
+      this.yield,
+      this.calories,
+      this.quantitysugar,
+      this.quantityna,
+      this.quantitychocdf,
+      this.quantityfat,
+      this.id_user,
+      this.name,
+      this.initialcalories,
+      this.quantityprocnt,
+      this.fb_complete);
+}
+
+class RecipeYucatan {
+  int? id_yucatan_food;
+  String? food_name;
+  String? image;
+  String? tipo;
+  int? quantity;
+  dynamic calories;
+  dynamic protein;
+  dynamic fat;
+  dynamic carbs;
+  dynamic sugar;
+  dynamic sodium;
+
+  RecipeYucatan(
+      {this.id_yucatan_food,
+      this.food_name,
+      this.image,
+      this.tipo,
+      this.quantity,
+      this.calories,
+      this.protein,
+      this.fat,
+      this.carbs,
+      this.sugar,
+      this.sodium});
+
+  RecipeYucatan.fromJson(Map<String, dynamic> json) {
+    id_yucatan_food = json['id_yucatan_food'];
+    food_name = json['food_name'];
+    image = json['image'];
+    tipo = json['tipo'];
+    quantity = json['quantity'];
+    calories = json['calories'];
+    protein = json['protein'];
+    fat = json['fat'];
+    carbs = json['carbs'];
+    sugar = json['sugar'];
+    sodium = json['sodium'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id_yucatan_food'] = this.id_yucatan_food;
+
+    data['food_name'] = this.food_name;
+    data['image'] = this.image;
+    data['tipo'] = this.tipo;
+    data['quantity'] = this.quantity;
+    data['calories'] = this.calories;
+    data['protein'] = this.protein;
+    data['fat'] = this.fat;
+    data['carbs'] = this.carbs;
+    data['sugar'] = this.sugar;
+    data['sodium'] = this.sodium;
+    return data;
+  }
+}
+
+class GetRecipeYuc {
+  final String label;
+  final String image;
+  final double yield;
+  final String tipo;
+  final double calories;
+  final double quantitysugar;
+  final double quantityna;
+  final double quantitychocdf;
+  final double quantityfat;
+  final int id_user;
+  final String name;
+  final int initialcalories;
+  late final double quantityprocnt;
+    final int fb_complete;
+  GetRecipeYuc(
+      this.label,
+      this.image,
+      this.yield,
+      this.tipo,
+      this.calories,
+      this.quantitysugar,
+      this.quantityna,
+      this.quantitychocdf,
+      this.quantityfat,
+      this.id_user,
+      this.name,
+      this.initialcalories,
+      this.quantityprocnt,
+      this.fb_complete);
+}
+
+class FoodRecord {
+  int? id_meal;
+  String? label;
+    String? date_r;
+  String? image;
+  String? type;
+  dynamic quantity;
+  dynamic calories;
+  dynamic protein;
+  dynamic fat;
+  dynamic carbs;
+  dynamic sugar;
+  dynamic sodium;
+  int? id_user;
+
+  FoodRecord({
+    this.id_meal,
+    this.label,
+    this.date_r,
+    this.image,
+    this.type,
+    this.quantity,
+    this.calories,
+    this.protein,
+    this.fat,
+    this.carbs,
+    this.sugar,
+    this.sodium,
+    this.id_user,
+  });
+
+  factory FoodRecord.fromJson(Map<String, dynamic> json) {
+    return FoodRecord(
+          id_meal: json['id_meal'],
+        label: json['label'],
+           date_r: json['date_r'],
+        image: json['image'],
+        type: json['type'],
+        quantity: json['quantity'],
+        calories: json['calories'],
+        protein: json['protein'],
+        fat: json['fat'],
+        carbs: json['carbs'],
+        sugar: json['sugar'],
+        sodium: json['sodium'],
+              id_user: json['id_user']);
+  }
+}
+
+List<FoodRecord> parsePost2(String responseBody) {
+  final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
+
+  return parsed.map<FoodRecord>((json) => FoodRecord.fromJson(json)).toList();
+}
+
+class GetDetailFood {
+  String label;
+  String image;
+  String type;
+  dynamic quantity;
+  dynamic calories;
+  dynamic protein;
+  dynamic fat;
+  dynamic carbs;
+  dynamic sugar;
+  dynamic sodium;
+
+  GetDetailFood(
+    this.label,
+    this.image,
+    this.type,
+    this.quantity,
+    this.calories,
+    this.protein,
+    this.fat,
+    this.carbs,
+    this.sugar,
+    this.sodium,
+  );
 }

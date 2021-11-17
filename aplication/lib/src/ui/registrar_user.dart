@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:apponertesano/src/model/user.dart';
 import 'package:flutter/material.dart';
 
@@ -162,6 +160,10 @@ class _RegisterUserState extends State<RegisterUser> {
           ));
     }
   }
+
+  
+
+
 }
 
 

@@ -11,7 +11,7 @@ class _SplashLoadingState extends State<SplashLoading> {
   @override
   void initState() {
     Timer(Duration(seconds: 3),
-        () => Navigator.of(context).pushReplacementNamed('/inicio'));
+        () => Navigator.of(context).pushReplacementNamed('/login'));
   }
 
   @override
@@ -41,7 +41,7 @@ class _SplashLoadingState extends State<SplashLoading> {
             alignment: Alignment.centerRight,
             width: 300,
             child: Text(
-              "Estamos calculando tus calorias...",
+              "Estamos guardando tus datos...",
               style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.w700,
@@ -55,4 +55,5 @@ class _SplashLoadingState extends State<SplashLoading> {
       ),
     );
   }
+  
 }

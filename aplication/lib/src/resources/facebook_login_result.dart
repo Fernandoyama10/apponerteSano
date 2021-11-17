@@ -9,8 +9,7 @@ class FacebookSignInController with ChangeNotifier {
         
     if (result.status == LoginStatus.success) {
       final requestData =
-          await FacebookAuth.instance.getUserData(fields: "email, name, picture");
-
+          await FacebookAuth.instance.getUserData(fields: "email, name, picture, id");
       userData = requestData;
       notifyListeners();
     }

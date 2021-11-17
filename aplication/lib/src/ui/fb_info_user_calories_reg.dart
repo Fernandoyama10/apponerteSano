@@ -1,18 +1,21 @@
 import 'dart:convert';
+import 'package:apponertesano/src/resources/facebook_login_result.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:apponertesano/src/model/user.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 // Define un widget de formulario personalizado
-class InfoUserCaloriesReg extends StatefulWidget {
+class FBInfoUserCaloriesReg extends StatefulWidget {
   //la llave validadora
-  const InfoUserCaloriesReg({Key? key}) : super(key: key);
+  const FBInfoUserCaloriesReg({Key? key}) : super(key: key);
   @override
   State<StatefulWidget> createState() => _InfoUserCaloriesRegState();
 }
 
-class _InfoUserCaloriesRegState extends State<InfoUserCaloriesReg> {
+class _InfoUserCaloriesRegState extends State<FBInfoUserCaloriesReg> {
+    final txtage = TextEditingController();
   final _formKey1 = GlobalKey<FormState>();
   final txtpeso = TextEditingController();
   final _txtfisico = GlobalKey<FormState>();
@@ -37,18 +40,43 @@ class _InfoUserCaloriesRegState extends State<InfoUserCaloriesReg> {
   String rgender = "";
   double rheight = 0;
   int rid_activity = 0;
+
+  
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance!.addPostFrameCallback((_){
+            Future<List<Usuario>> listapost = verifyLogin(context, remail);
+
+          });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+
   @override
   Widget build(BuildContext context) {
-    UserRegistroStep3 args =
-        ModalRoute.of(context)!.settings.arguments as UserRegistroStep3;
-    remail = args.email;
-    rpassword = args.password;
-    rname = args.name;
-    rsurname = args.surname;
-    rage = int.parse(args.age);
+late UserDat data =
+        ModalRoute.of(context)!.settings.arguments as UserDat;
+    remail = data.email;
+    rpassword = data.id;
+    print(rpassword);
+    var string = data.name;
+    var splitag = string.split(" "); 
+    rname = splitag[0];
+    rsurname = splitag[1];
+   
+    
+    print(rname);
+    print(rsurname);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Paso 3:'),
+        title: Text('Antes de continuar:'),
         backgroundColor: Colors.lightGreen.shade600,
         centerTitle: true,
       ),
@@ -74,16 +102,42 @@ class _InfoUserCaloriesRegState extends State<InfoUserCaloriesReg> {
                 SizedBox(height: 30),
                 Container(
                   child: Text(
-                    "¡Por ultimo, te ayudamos a controlar tus calorias!",
+                    "Gracias, ¡Por ultimo, te ayudamos a controlar tus calorias!",
                     style: TextStyle(
-                        fontSize: 25,
+                        fontSize: 20,
                         fontWeight: FontWeight.w700,
                         color: Colors.green.shade800,
                         decoration: TextDecoration.none),
                   ),
                   padding: EdgeInsets.symmetric(horizontal: 32),
                 ),
+          
                 SizedBox(height: 35),
+                Container(
+                  width: 250.0,
+                  child: TextFormField(
+                    validator: (value) {
+                      if (value == null || value == "" || value.isEmpty) {
+                        return 'Ingresa tu edad';
+                      }
+                      return null;
+                    },
+                    controller: txtage,
+                    keyboardType:
+                        TextInputType.numberWithOptions(decimal: true),
+                    autofocus: true,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(32.0)),
+                      labelText: 'Edad',
+                       prefixIcon: Icon(Icons.verified_user),
+                    ),
+                    onChanged: (text) {
+                      setState(() => rage = int.parse(text));
+                    },
+                  ),
+                ),
+                   SizedBox(height: 20),
                 Container(
                   width: 250.0,
                   child: TextFormField(
@@ -283,6 +337,7 @@ class _InfoUserCaloriesRegState extends State<InfoUserCaloriesReg> {
     );
   }
 
+
   Widget RegistrarButton(BuildContext context) {
     return MaterialButton(
       onPressed: () {
@@ -311,7 +366,6 @@ class _InfoUserCaloriesRegState extends State<InfoUserCaloriesReg> {
       child: Text('Registrarme', style: TextStyle(color: Colors.white)),
     );
   }
-}
 
 Future registrarUsu(
   BuildContext context,
@@ -377,4 +431,46 @@ void _showDialog(BuildContext context, String texto1) {
       );
     },
   );
+
+
+  
+  
 }
+
+Future<List<Usuario>> verifyLogin(BuildContext context, String email) async {
+    final url = Uri.parse(
+        'http://apiapponertesano.azurewebsites.net/api/logindata/$email');
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      List<Usuario> lista = parsePost(response.body);
+      if (lista.length > 0) {
+        print(lista[0].password);
+          Navigator.pushReplacementNamed(context, "/inicio",
+              arguments: UsuariodataSet(
+                  lista[0].id_user!,
+                  lista[0].email!,
+                  lista[0].password!,
+                  lista[0].id_role!,
+                  lista[0].name!,
+                  lista[0].surname!,
+                  lista[0].age!,
+                  lista[0].weight!,
+                  lista[0].gender!,
+                  lista[0].height!,
+                  lista[0].name_level!,
+                  lista[0].value_level!,
+                     lista[0].fb_complete!));
+       
+      } else {
+        print('este usuario se puede registrar');
+      }
+      return lista;
+    } else {
+      _showDialog(context, 'No existe conexión');
+      throw Exception('Unable to fetch products from the REST API');
+    }
+  }
+
+}
+
+

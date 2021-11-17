@@ -3,9 +3,15 @@ import 'package:apponertesano/src/ui/agregarcomida_i.dart';
 import 'package:apponertesano/src/ui/agregarcomida_r.dart';
 import 'package:apponertesano/src/ui/comidainternacional.dart';
 import 'package:apponertesano/src/ui/comidaregional.dart';
+import 'package:apponertesano/src/ui/comidas_dia.dart';
+import 'package:apponertesano/src/ui/comidas_historial.dart';
+import 'package:apponertesano/src/ui/consultar_detallecomida.dart';
+import 'package:apponertesano/src/ui/fb_info_user_calories_reg.dart';
 import 'package:apponertesano/src/ui/info_user_reg.dart';
 import 'package:apponertesano/src/ui/info_user_calories_reg.dart';
 import 'package:apponertesano/src/ui/inicio.dart';
+import 'package:apponertesano/src/ui/miperfil.dart';
+import 'package:apponertesano/src/ui/miperfil_actualizar.dart';
 import 'package:apponertesano/src/ui/registrar_user.dart';
 import 'package:apponertesano/src/ui/splash_loading.dart';
 import 'package:apponertesano/src/ui/tipocomida.dart';
@@ -47,11 +53,17 @@ class MyApp extends StatelessWidget {
           '/registeruser': (context) => RegisterUser(),
           '/infouser': (context) => InfoUserReg(),
           '/infousercalories': (context) => InfoUserCaloriesReg(),
+          '/registrarfb': (context) => FBInfoUserCaloriesReg(),
           '/splashloading': (context) => SplashLoading(),
           '/comidainter': (context) => BuscarInternacional(),
           '/comidareg': (context) => BuscarRegional(),
           '/agrega_inter': (context) => AgregarInternacional(),
           '/agregarcomida_regi': (context) => AgregarRegional(),
+          '/historialcomida': (context) => ComidaHistorial(),
+          '/comidadetail': (context) => ConsultarComida(),
+          '/historialdia': (context) => ComidaDia(),
+          '/miperfil': (context) => Miperfil(),
+          '/miperfilactu': (context) => Miperfilactu(),
         },
         /*
      home: Center(
