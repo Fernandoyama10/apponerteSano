@@ -5,6 +5,8 @@ import 'package:http/http.dart' as http;
 import 'package:apponertesano/src/resources/facebook_login_result.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:material_dialogs/material_dialogs.dart';
+import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:provider/provider.dart';
 import 'package:apponertesano/src/model/user.dart';
 import 'package:flutter/cupertino.dart';
@@ -184,7 +186,7 @@ class _LoginState extends State<Login> {
             arguments: UserDat(
               model.userData!["email"].toString(),
               model.userData!["name"].toString(),
-               model.userData!["id"].toString(),
+              model.userData!["id"].toString(),
             )));
   }
 
@@ -238,35 +240,40 @@ class _LoginState extends State<Login> {
                   lista[0].name_level!,
                   lista[0].value_level!));
         } else {
-          _showDialog(context, 'Contraseña incorrecta');
+          _mensajeSuccess(context, 'Contraseña incorrecta');
         }
       } else {
-        _showDialog(context, 'No existe el usuario en la aplicación');
+        _mensajeSuccess(context, 'No existe el usuario en la aplicación');
       }
       return lista;
     } else {
-      _showDialog(context, 'No existe conexión');
+      _mensajeSuccess(context, 'No existe conexión');
       throw Exception('Unable to fetch products from the REST API');
     }
   }
 
-  void _showDialog(BuildContext context, String texto1) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: new Text("Mensaje"),
-          content: new Text(texto1),
-          actions: <Widget>[
-            new FlatButton(
-              child: new Text("OK"),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
+  void _mensajeSuccess(BuildContext context, String texto1) {
+    Dialogs.materialDialog(
+        color: Colors.white,
+        msg: "Intenta nuevamente",
+        title: texto1,
+        lottieBuilder: Lottie.asset(
+          'images/19230-payment-failed.json',
+          height: 25,
+          width: 25,
+        ),
+        context: context,
+        actions: [
+          IconsButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            text: 'Aceptar',
+            iconData: Icons.done,
+            color: Colors.blue,
+            textStyle: TextStyle(color: Colors.white),
+            iconColor: Colors.white,
+          ),
+        ]);
   }
 }

@@ -71,7 +71,7 @@ class _DisenoState extends State<Diseno> {
     return _resultCalories;
   }
 
-  Future init2() async {
+  Future init2() async {  
     final recipes2 =
         await RecordCaloriesInicio.getRecipes(_datetoday, _id_user);
     if (recipes2.length > 0) {
