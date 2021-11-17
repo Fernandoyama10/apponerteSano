@@ -63,8 +63,8 @@ setState(() {
   }
 
   Future<void> _refresh() {
-      init();
-      init2();
+    init();
+    init2();
     return Future.delayed(Duration(seconds: 0));
   }
 
@@ -84,15 +84,13 @@ setState(() {
       ),
 
       body: RefreshIndicator(
-         onRefresh: _refresh,
-
+        onRefresh: _refresh,
         child: Form(
-          
           key: _formKey1,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-                     SizedBox(
+              SizedBox(
                 height: 30,
               ),
               const Text(
@@ -100,6 +98,7 @@ setState(() {
                 style: TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.bold,
+                  color: Colors.red,
                   letterSpacing: 1.0,
                 ),
               ),
@@ -178,13 +177,14 @@ setState(() {
                                                   ],
                                                 ),
                                                 subtitle: Text(
-                                                  _calories.toStringAsFixed(0) + " cal",
+                                                  _calories.toStringAsFixed(0) +
+                                                      " cal",
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       fontSize: 15,
-                                                     color: Colors
+                                                      color: Colors
                                                           .deepOrange[400],
                                                       decoration:
                                                           TextDecoration.none),
@@ -228,7 +228,8 @@ setState(() {
                                                     children: [
                                                       Text(
                                                         _initialcalories
-                                                                .toStringAsFixed(0) +
+                                                                .toStringAsFixed(
+                                                                    0) +
                                                             " cal",
                                                         textAlign:
                                                             TextAlign.end,
@@ -236,8 +237,9 @@ setState(() {
                                                             fontWeight:
                                                                 FontWeight.bold,
                                                             fontSize: 13,
-                                                        color: Colors
-                                                          .deepOrange[400],
+                                                            color: Colors
+                                                                    .deepOrange[
+                                                                400],
                                                             decoration:
                                                                 TextDecoration
                                                                     .none),
@@ -288,14 +290,15 @@ setState(() {
                                                   ],
                                                 ),
                                                 subtitle: Text(
-                                                  _diferencia.toStringAsFixed(0) +
+                                                  _diferencia
+                                                          .toStringAsFixed(0) +
                                                       " cal",
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       fontSize: 15,
-                                                     color: Colors
+                                                      color: Colors
                                                           .deepOrange[400],
                                                       decoration:
                                                           TextDecoration.none),
@@ -620,7 +623,8 @@ setState(() {
         subtitle: Text('Registro #' + (hit.id_meal!).toString()),
         trailing: Icon(Icons.delete),
         onTap: () {
-          _showDialog(context, hit.id_meal!, hit.calories!, hit.id_user!, hit.date_r!);
+          _showDialog(
+              context, hit.id_meal!, hit.calories!, hit.id_user!, hit.date_r!);
         },
       );
 
@@ -635,6 +639,7 @@ setState(() {
   Future borrarcomida(int id_meal) async {
     final recipes = await DeleteFoodApi.getRecipes(id_meal);
   }
+
   Future init2() async {
     final recipes2 = await RecordCaloriess.getRecipes(datetoday, id_user);
     if (recipes2.length > 0) {
@@ -649,7 +654,7 @@ setState(() {
         _initialcalories = recipes2[0].initial_calories!;
         _diferencia = _initialcalories - _calories;
       } else {
- _calories = 0;
+        _calories = 0;
         _protein = 0;
         _fat = 0;
         _carbs = 0;
@@ -657,7 +662,6 @@ setState(() {
         _sodium = 0;
         _initialcalories = 0;
         _diferencia = 0;
-
       }
     }
 
@@ -667,8 +671,8 @@ setState(() {
     }
   }
 
-
-  void _showDialog(BuildContext context, int id_meal, dynamic calories, int id_user, String date) {
+  void _showDialog(BuildContext context, int id_meal, dynamic calories,
+      int id_user, String date) {
     Dialogs.bottomMaterialDialog(
         msg: '¿Esta seguro que quiere borrar este registro?',
         title: 'Eliminar el registro ' + id_meal.toString(),
@@ -685,18 +689,15 @@ setState(() {
           ),
           IconsButton(
             onPressed: () {
-                     Navigator.pop(context);
-   
-             borrarcomida(id_meal);
+              Navigator.pop(context);
+
+              borrarcomida(id_meal);
               deletecalories(
-            context,
-            calories,
-            id_user,
-            date,
-          );
-            
-          
-        
+                context,
+                calories,
+                id_user,
+                date,
+              );
             },
             text: 'Borrar',
             iconData: Icons.delete,
@@ -707,89 +708,84 @@ setState(() {
         ]);
   }
 
-
-void _mensajeSuccess(BuildContext context) {
- Dialogs.materialDialog(
-          color: Colors.white,
-          msg: 'Esta comida fue eliminada de tu historial de hoy',
-          title: 'Perfecto!',
-          lottieBuilder: Lottie.asset(
+  void _mensajeSuccess(BuildContext context) {
+    Dialogs.materialDialog(
+        color: Colors.white,
+        msg: 'Esta comida fue eliminada de tu historial de hoy',
+        title: 'Perfecto!',
+        lottieBuilder: Lottie.asset(
           'images/62669-success-lottie-animation.json',
           height: 25,
           width: 25,
         ),
-          context: context,
-          actions: [
-            IconsButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              text: 'Aceptar',
-              iconData: Icons.done,
-              color: Colors.blue,
-              textStyle: TextStyle(color: Colors.white),
-              iconColor: Colors.white,
-            ),
-          ]);
-}
-
-
-Future deletecalories(
-  BuildContext context,
-  dynamic calories,
-  int id_user,
-  String date,
-) async {
-  Map data = {
-    'calories': calories,
-    'id_user': id_user,
-    'date': date,
-  };
-  var body = json.encode(data);
-
-  final response = await http.post(
-      Uri.parse(
-          "https://apiapponertesano.azurewebsites.net/apiyucfood/deletecalories"),
-      headers: {"Content-Type": "application/json"},
-      body: body);
-
-  final value = json.decode(response.body)["statusCode"];
-
-  if (response.statusCode == 200) {
-    if (value == 400) {
-       _showDialog2(context, 'Error 404, contacta administrador');
-    } else {
-             init();
-          init2();
-      _mensajeSuccess(context);
-    }
-  } else {
-    throw Exception('No se Agrego, intenta nuevamente');
-  }
-}
-
-void _showDialog2(BuildContext context, String texto1) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: new Text("Mensaje"),
-        content: new Text(texto1),
-        actions: <Widget>[
-          new FlatButton(
-            child: new Text("OK"),
+        context: context,
+        actions: [
+          IconsButton(
             onPressed: () {
-              Navigator.of(context).pop();
+              Navigator.pop(context);
             },
+            text: 'Aceptar',
+            iconData: Icons.done,
+            color: Colors.blue,
+            textStyle: TextStyle(color: Colors.white),
+            iconColor: Colors.white,
           ),
-        ],
-      );
-    },
-  );
-}
+        ]);
+  }
 
+  Future deletecalories(
+    BuildContext context,
+    dynamic calories,
+    int id_user,
+    String date,
+  ) async {
+    Map data = {
+      'calories': calories,
+      'id_user': id_user,
+      'date': date,
+    };
+    var body = json.encode(data);
 
+    final response = await http.post(
+        Uri.parse(
+            "https://apiapponertesano.azurewebsites.net/apiyucfood/deletecalories"),
+        headers: {"Content-Type": "application/json"},
+        body: body);
 
+    final value = json.decode(response.body)["statusCode"];
+
+    if (response.statusCode == 200) {
+      if (value == 400) {
+        _showDialog2(context, 'Error 404, contacta administrador');
+      } else {
+        init();
+        init2();
+        _mensajeSuccess(context);
+      }
+    } else {
+      throw Exception('No se Agrego, intenta nuevamente');
+    }
+  }
+
+  void _showDialog2(BuildContext context, String texto1) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: new Text("Mensaje"),
+          content: new Text(texto1),
+          actions: <Widget>[
+            new FlatButton(
+              child: new Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }
 
 /* 
