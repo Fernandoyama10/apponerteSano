@@ -52,6 +52,7 @@ class _AgregarScreenState extends State<AgregarRegional> {
     type = args.tipo;
     name = args.name;
     initial_calories = args.initialcalories;
+     fb_iscompleted = args.fb_complete;
     //operaciones
 
     return SafeArea(
