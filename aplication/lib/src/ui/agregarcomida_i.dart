@@ -43,6 +43,7 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
   int initial_calories = 0;
   int fb_iscompleted = 0;
   dynamic valuefeed = 0;
+  String type = "-";
   @override
   Widget build(BuildContext context) {
     GetRecipe args = ModalRoute.of(context)!.settings.arguments as GetRecipe;
@@ -498,6 +499,7 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
                   timetoday,
                   label,
                   image,
+                  type,
                   dropdownvalue,
                   caloriesyield,
                   proteyield,
@@ -570,6 +572,7 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
     String time,
     String label,
     String image,
+      String type,
     dynamic yieldd,
     double? calories,
     double? protein,
@@ -586,6 +589,7 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
       'time': time,
       'label': label,
       'image': image,
+        'type': type,
       'quantity': yieldd,
       'calories': calories,
       //gogle
