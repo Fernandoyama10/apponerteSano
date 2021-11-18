@@ -21,8 +21,8 @@ class AgregarInternacional extends StatefulWidget {
 class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
 
   final _formKey1 = GlobalKey<FormState>();
-    final _formKey2 = GlobalKey<FormState>();
-    final txtcalif = TextEditingController();
+
+
   double yields = 1;
   double proteyield = 0;
   double carbsyield = 0;
@@ -378,7 +378,7 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
         context: context,
         title: "Porfavor calificanos",
         content: Form(
-             key: _formKey2,
+       
            child: 
             Column(
           children: <Widget>[
@@ -412,7 +412,7 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
                   onRatingUpdate: (rating) {
 
                       valuefeed = rating;
-                      txtcalif.text = "Haz seleccionado: " + valuefeed.toStringAsFixed(0) + " estrella(s)";
+                   
                       print(rating);
                     
                   },
@@ -556,7 +556,7 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
        msg: 'Haz click en cualquier parte de la pantalla para cerrar.',
         title: nombre + ', gracias por tus comentarios!',
         lottieBuilder: Lottie.asset(
-          'images/6134-stars-rating.json',
+ 'images/3152-star-success.json',
           height: 25,
           width: 25,
         ),
