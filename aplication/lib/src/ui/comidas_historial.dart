@@ -61,6 +61,7 @@ setState(() {
       setState(() => this.recipes = recipes);
     }
   }
+  
 
   Future init2() async {
     final recipes2 = await RecordCaloriess.getRecipes(datetoday, id_user);
@@ -73,7 +74,7 @@ setState(() {
         _carbs = recipes2[0].carbs!;
         _sugar = recipes2[0].sugar!;
         _sodium = recipes2[0].sodium!;
-        _initialcalories = recipes2[0].initial_calories!;
+               _initialcalories = recipes2[0].initial_calories!;
         _diferencia = _initialcalories - _calories;
       } else {}
     }
@@ -111,7 +112,6 @@ setState(() {
                       "• Consulta tus historial resultados •",
                       style: TextStyle(
                         fontSize: 15,
-                        color: Colors.red,
                         fontWeight: FontWeight.bold,
                         letterSpacing: 1.0,
                       ),
@@ -205,7 +205,7 @@ setState(() {
                               child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
-                                Row(
+                              Row(
                                   children: <Widget>[
                                     Flexible(
                                       child: Column(
@@ -250,14 +250,13 @@ setState(() {
                                                   ],
                                                 ),
                                                 subtitle: Text(
-                                                  _calories.toStringAsFixed(0) +
-                                                      " cal",
+                                                  _calories.toStringAsFixed(0) + " cal",
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       fontSize: 15,
-                                                      color: Colors
+                                                     color: Colors
                                                           .deepOrange[400],
                                                       decoration:
                                                           TextDecoration.none),
@@ -301,8 +300,7 @@ setState(() {
                                                     children: [
                                                       Text(
                                                         _initialcalories
-                                                                .toStringAsFixed(
-                                                                    0) +
+                                                                .toStringAsFixed(0) +
                                                             " cal",
                                                         textAlign:
                                                             TextAlign.end,
@@ -310,9 +308,8 @@ setState(() {
                                                             fontWeight:
                                                                 FontWeight.bold,
                                                             fontSize: 13,
-                                                            color: Colors
-                                                                    .deepOrange[
-                                                                400],
+                                                        color: Colors
+                                                          .deepOrange[400],
                                                             decoration:
                                                                 TextDecoration
                                                                     .none),
@@ -363,15 +360,14 @@ setState(() {
                                                   ],
                                                 ),
                                                 subtitle: Text(
-                                                  _diferencia
-                                                          .toStringAsFixed(0) +
+                                                  _diferencia.toStringAsFixed(0) +
                                                       " cal",
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       fontSize: 15,
-                                                      color: Colors
+                                                     color: Colors
                                                           .deepOrange[400],
                                                       decoration:
                                                           TextDecoration.none),
@@ -654,7 +650,7 @@ setState(() {
                               ])),
                         ),
                       ])),
-              SizedBox(
+                       SizedBox(
                 height: 8,
               ),
               const Text(

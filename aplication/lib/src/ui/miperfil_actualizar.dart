@@ -3,9 +3,7 @@ import 'package:apponertesano/src/blocs/search_api.dart';
 import 'package:apponertesano/src/model/user.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:material_dialogs/material_dialogs.dart';
-import 'package:material_dialogs/widgets/buttons/icon_button.dart';
-import 'package:material_dialogs/widgets/buttons/icon_outline_button.dart';
+import 'package:apponertesano/src/resources/userData.dart' as globals;
 
 // Define un widget de formulario personalizado
 class Miperfilactu extends StatefulWidget {
@@ -34,6 +32,8 @@ class _MiperfilactuState extends State<Miperfilactu> {
 
   dynamic _value = 1;
   String valueactivity = "";
+
+  String dropdownvalue = 'Seleccione su sexo aquí';
 
   List<String> items = <String>[
     'Seleccione su sexo aquí',
@@ -294,7 +294,8 @@ class _MiperfilactuState extends State<Miperfilactu> {
                         style: const TextStyle(color: Colors.deepPurple),
                         onChanged: (String? newValue) {
                           setState(() {
-                            rgender = newValue!;
+                            dropdownvalue = newValue!;
+                            rgender = dropdownvalue;
                           });
                         },
                         validator: (value) {
@@ -420,7 +421,16 @@ class _MiperfilactuState extends State<Miperfilactu> {
     return MaterialButton(
       onPressed: () {
         if (_formKeyactuperfil.currentState!.validate()) {
-          _mensajeactualizar(context);
+          actualizarUsu(
+              context,
+              txtname.text,
+              txtsurname.text,
+              int.parse(txtage.text),
+              double.parse(txtpeso.text),
+              rgender,
+              double.parse(_txtaltura.text),
+              _value,
+              id_user);
         }
       },
       shape: RoundedRectangleBorder(
@@ -433,7 +443,9 @@ class _MiperfilactuState extends State<Miperfilactu> {
           Text('Actualizar mis datos', style: TextStyle(color: Colors.white)),
     );
   }
+}
 
+<<<<<<< HEAD
   void _mensajeactualizar(BuildContext context) {
     Dialogs.bottomMaterialDialog(
         msg: '¿Esta seguro que quiere actualizar tus datos?',
@@ -508,12 +520,37 @@ class _MiperfilactuState extends State<Miperfilactu> {
       'id_user': id_user
     };
     var body = json.encode(data);
+=======
+Future actualizarUsu(
+  BuildContext context,
+  String name,
+  String surname,
+  int? age,
+  double? weight,
+  String gender,
+  double? height,
+  int? id_activity,
+  int? id_user,
+) async {
+  Map data = {
+    'name': name,
+    'surname': surname,
+    'weight': weight,
+    'age': age,
+    'gender': gender,
+    'height': height,
+    'id_activity': id_activity,
+    'id_user': id_user
+  };
+  var body = json.encode(data);
+>>>>>>> develop-b
 
-    final response = await http.put(
-        Uri.parse("https://apiapponertesano.azurewebsites.net/api/update"),
-        headers: {"Content-Type": "application/json"},
-        body: body);
+  final response = await http.put(
+      Uri.parse("https://apiapponertesano.azurewebsites.net/api/update"),
+      headers: {"Content-Type": "application/json"},
+      body: body);
 
+<<<<<<< HEAD
   
 
     if (response.statusCode == 200) {
@@ -534,34 +571,33 @@ class _MiperfilactuState extends State<Miperfilactu> {
                 lista[0].name_level!,
                 lista[0].value_level!,
                 lista[0].fb_complete!));
+=======
+  final value = json.decode(response.body)["statusCode"];
+>>>>>>> develop-b
 
-        _mensajeSuccess(context, name);
-      } else {
-        _showDialog(context, 'No existe el usuario en la aplicación');
-      }
-      return lista;
-    } else {
-      _showDialog(context, 'No se Actualizo, intenta nuevamente');
-    }
+  if (response.statusCode == 200) {
+    _showDialog(context, 'Se actualizo correctamente tus datos');
+  } else {
+    _showDialog(context, 'No se Actualizo, intenta nuevamente');
   }
+}
 
-  void _showDialog(BuildContext context, String texto1) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: new Text("Mensaje"),
-          content: new Text(texto1),
-          actions: <Widget>[
-            new FlatButton(
-              child: new Text("OK"),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
+void _showDialog(BuildContext context, String texto1) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: new Text("Mensaje"),
+        content: new Text(texto1),
+        actions: <Widget>[
+          new FlatButton(
+            child: new Text("OK"),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
 }
