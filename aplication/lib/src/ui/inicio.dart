@@ -66,7 +66,7 @@ class _DisenoState extends State<Diseno> {
         _operation_calories_final = (_operationcalories1.abs()).round();
         _text_operation = "*Pasadas";
       } else {
-        _operation_calories_final = _operationcalories1;
+        _operation_calories_final = _operationcalories1.round();
         _text_operation = "Restantes";
       }
       print("METOSDO PARA CALCULAR CALORIAS");
@@ -80,8 +80,9 @@ class _DisenoState extends State<Diseno> {
         _operation_calories_final = (_operationcalories1.abs()).round();
         _text_operation = "*Pasadas";
       } else {
-        _operation_calories_final = _operationcalories1;
+        _operation_calories_final = _operationcalories1.round();
         _text_operation = "Restantes";
+        //aquí niñoooo
       }
 
       print(_resultCalories);
@@ -291,7 +292,7 @@ class _DisenoState extends State<Diseno> {
                                         children: [
                                           Text(
                                             "tu calculo",
-                                            textAlign: TextAlign.end,
+                                            textAlign: TextAlign.center,
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 13,
@@ -334,7 +335,7 @@ class _DisenoState extends State<Diseno> {
                                         children: [
                                           Text(
                                             '$_text_operation',
-                                            textAlign: TextAlign.end,
+                                            textAlign: TextAlign.center,
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 13,
