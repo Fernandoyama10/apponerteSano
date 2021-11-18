@@ -63,7 +63,7 @@ class _DisenoState extends State<Diseno> {
       _lowcalories = _resultCalories - 500;
       _operationcalories1 = _resultCalories - _calories;
       if (_operationcalories1 < 0) {
-        _operation_calories_final = _operationcalories1.abs();
+        _operation_calories_final = (_operationcalories1.abs()).round();
         _text_operation = "Pasadas";
       } else {
         _operation_calories_final = _operationcalories1;
