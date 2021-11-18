@@ -333,7 +333,7 @@ class _DisenoState extends State<Diseno> {
                                             MainAxisAlignment.end,
                                         children: [
                                           Text(
-                                            " $_text_operation",
+                                            '$_text_operation',
                                             textAlign: TextAlign.end,
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
