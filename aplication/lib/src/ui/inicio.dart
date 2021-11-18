@@ -38,7 +38,10 @@ class _DisenoState extends State<Diseno> {
   dynamic _sugar1 = 0;
   dynamic _sodium = 0;
   dynamic _sodium1 = 0;
+
   dynamic _operationcalories1 = 0;
+  String _text_operation = "";
+  dynamic _operation_calories_final = 0;
   List<RecordCalories> recipes2 = [];
   @override
   void initState() {
@@ -59,6 +62,13 @@ class _DisenoState extends State<Diseno> {
       _resultCalories = (_mtb * activity).round();
       _lowcalories = _resultCalories - 500;
       _operationcalories1 = _resultCalories - _calories;
+      if (_operationcalories1 < 0) {
+        _operation_calories_final = (_operationcalories1.abs()).round();
+        _text_operation = "Pasadas";
+      } else {
+        _operation_calories_final = _operationcalories1;
+        _text_operation = "Restantes";
+      }
       print("METOSDO PARA CALCULAR CALORIAS");
       print(_resultCalories);
     } else {
@@ -66,12 +76,13 @@ class _DisenoState extends State<Diseno> {
       _resultCalories = (_mtb * activity).round();
       _lowcalories = _resultCalories - 500;
       _operationcalories1 = _resultCalories - _calories;
+
       print(_resultCalories);
     }
     return _resultCalories;
   }
 
-  Future init2() async {  
+  Future init2() async {
     final recipes2 =
         await RecordCaloriesInicio.getRecipes(_datetoday, _id_user);
     if (recipes2.length > 0) {
@@ -84,8 +95,8 @@ class _DisenoState extends State<Diseno> {
         _sugar = recipes2[0].sugar!;
         _sodium = recipes2[0].sodium!;
       } else {
-          _calories = 0;
-              _protein = 0;
+        _calories = 0;
+        _protein = 0;
         _fat = 0;
         _carbs = 0;
         _sugar = 0;
@@ -302,7 +313,8 @@ class _DisenoState extends State<Diseno> {
                                   elevation: 5,
                                   child: ListTile(
                                       title: Text(
-                                        '$_operationcalories1' + " cal",
+                                        '$_operation_calories_final' +
+                                            " $_text_operation",
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
@@ -994,6 +1006,8 @@ class _DisenoState extends State<Diseno> {
     );
   }
 }
+
+
 /* 
 class Choice{
   final String title;
