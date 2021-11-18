@@ -82,6 +82,7 @@ class _DisenoState extends State<Diseno> {
       } else {
         _operation_calories_final = _operationcalories1.round();
         _text_operation = "Restantes";
+        //aquí niñoooo
       }
 
       print(_resultCalories);
