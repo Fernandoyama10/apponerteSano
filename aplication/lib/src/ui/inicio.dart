@@ -64,7 +64,7 @@ class _DisenoState extends State<Diseno> {
       _operationcalories1 = _resultCalories - _calories;
       if (_operationcalories1 < 0) {
         _operation_calories_final = (_operationcalories1.abs()).round();
-        _text_operation = "Pasadas";
+        _text_operation = "*Pasadas";
       } else {
         _operation_calories_final = _operationcalories1;
         _text_operation = "Restantes";
@@ -76,6 +76,13 @@ class _DisenoState extends State<Diseno> {
       _resultCalories = (_mtb * activity).round();
       _lowcalories = _resultCalories - 500;
       _operationcalories1 = _resultCalories - _calories;
+      if (_operationcalories1 < 0) {
+        _operation_calories_final = (_operationcalories1.abs()).round();
+        _text_operation = "*Pasadas";
+      } else {
+        _operation_calories_final = _operationcalories1;
+        _text_operation = "Restantes";
+      }
 
       print(_resultCalories);
     }
@@ -313,8 +320,7 @@ class _DisenoState extends State<Diseno> {
                                   elevation: 5,
                                   child: ListTile(
                                       title: Text(
-                                        '$_operation_calories_final' +
-                                            " $_text_operation",
+                                        '$_operation_calories_final' + " cal",
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
@@ -327,7 +333,7 @@ class _DisenoState extends State<Diseno> {
                                             MainAxisAlignment.end,
                                         children: [
                                           Text(
-                                            "restantes",
+                                            " $_text_operation",
                                             textAlign: TextAlign.end,
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
