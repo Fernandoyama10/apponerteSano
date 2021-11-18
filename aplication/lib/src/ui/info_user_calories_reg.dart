@@ -226,6 +226,7 @@ class _InfoUserCaloriesRegState extends State<InfoUserCaloriesReg> {
                         SizedBox(width: 10.0),
                         Text("Ejercicio de 3 a 5 veces por semana"),
                       ],
+                      
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -256,12 +257,15 @@ class _InfoUserCaloriesRegState extends State<InfoUserCaloriesReg> {
                               rid_activity = _value;
                             });
                           },
+                          
                         ),
                         SizedBox(width: 10.0),
                         Text("Entrenamientos de más de 4 horas diarias"),
                       ],
                     ),
                   ]),
+
+                  
                 ),
 
                 SizedBox(height: 30),
