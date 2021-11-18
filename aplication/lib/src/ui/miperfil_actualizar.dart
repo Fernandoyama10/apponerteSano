@@ -478,7 +478,7 @@ class _MiperfilactuState extends State<Miperfilactu> {
         msg: 'Se actualizarón correctamente tus datos   (tap para salir)',
         title: nombre + ', actualización exitoso',
         lottieBuilder: Lottie.asset(
-          'images/62669-success-lottie-animation.json',
+          'images/3152-star-success.json',
           height: 25,
           width: 25,
         ),
@@ -513,6 +513,8 @@ class _MiperfilactuState extends State<Miperfilactu> {
         Uri.parse("https://apiapponertesano.azurewebsites.net/api/update"),
         headers: {"Content-Type": "application/json"},
         body: body);
+
+  
 
     if (response.statusCode == 200) {
       List<UsuarioDataupdate> lista = parsePostupdate(response.body);
