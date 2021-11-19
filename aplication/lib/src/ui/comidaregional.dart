@@ -20,7 +20,8 @@ class ComidaInternacionalListPageState extends State<BuscarRegional> {
   int id_user= 0;
   int fb_complete = 0;
   String name = "";
-  int initialcalories = 0;
+  dynamic initialcalories = 0;
+  dynamic caloriasconsumidas= 0;
   @override
   void initState() {
     super.initState();
@@ -59,6 +60,7 @@ class ComidaInternacionalListPageState extends State<BuscarRegional> {
         name = data.name;
         initialcalories = data.initialCalories;
         fb_complete = data.fb_complete;
+        caloriasconsumidas = data.caloriasconsumidas;
     return Scaffold(
 
         appBar: AppBar(
@@ -125,6 +127,7 @@ class ComidaInternacionalListPageState extends State<BuscarRegional> {
                 id_user,
                 name,
                 initialcalories,
+                caloriasconsumidas,
                 hit.protein!.toDouble(),
                 fb_complete
               ));

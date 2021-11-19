@@ -36,7 +36,7 @@ class _AgregarScreenState extends State<AgregarRegional> {
   String name = "";
   int id_estatus = 4;
   String type = "";
-  int initial_calories = 0;
+  dynamic initial_calories = 0;
     int fb_iscompleted = 0;
   dynamic valuefeed = 0;
     int fbstatus = 1;

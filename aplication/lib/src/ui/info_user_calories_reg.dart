@@ -18,7 +18,7 @@ class _InfoUserCaloriesRegState extends State<InfoUserCaloriesReg> {
   final _txtfisico = GlobalKey<FormState>();
   final _dropdowngener = GlobalKey<FormState>();
   final _txtaltura = TextEditingController();
-
+  int fb_completed = 0;
   int _value = 0;
 
   String dropdownvalue = 'Seleccione su sexo aquí';
@@ -303,6 +303,7 @@ class _InfoUserCaloriesRegState extends State<InfoUserCaloriesReg> {
             rgender,
             rheight,
             rid_activity,
+            fb_completed
           );
         }
       },
@@ -329,6 +330,7 @@ Future registrarUsu(
   String gender,
   double? height,
   int? id_activity,
+  int? fb_complete
 ) async {
   Map data = {
     'email': email,
@@ -342,6 +344,7 @@ Future registrarUsu(
     'gender': gender,
     'height': height,
     'id_activity': id_activity,
+    'fb_complete': fb_complete
   };
   var body = json.encode(data);
 

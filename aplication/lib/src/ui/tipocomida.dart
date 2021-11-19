@@ -105,7 +105,7 @@ setState(() {
 
                                 child: InkWell(
                                   onTap: () {
-                                      Navigator.pushNamed(context, "/comidareg",
+                                    Navigator.pushNamed(context, "/comidareg",
                                         arguments: SendUserDataInfo(
                                             data.id_user,
                                             data.email,
@@ -120,6 +120,8 @@ setState(() {
                                             data.name_level,
                                             data.value_level,
                                             data.initialCalories,
+                                            data.caloriasconsumidas,
+                                            data.id_status,
                                             data.fb_complete));
                                   }, // needed
                                   child: ClipRRect(
@@ -208,6 +210,8 @@ setState(() {
                                             data.name_level,
                                             data.value_level,
                                             data.initialCalories,
+                                            data.caloriasconsumidas,
+                                            data.id_status,
                                             data.fb_complete));
                                   }, // needed
                                   child: ClipRRect(

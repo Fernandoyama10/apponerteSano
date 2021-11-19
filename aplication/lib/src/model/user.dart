@@ -100,7 +100,9 @@ class SendUserDataInfo {
   final dynamic height;
   final String name_level;
   final double value_level;
-  final int initialCalories ;
+  final dynamic initialCalories ;
+  final dynamic caloriasconsumidas;
+  final dynamic id_status;
   final int fb_complete;
 
   SendUserDataInfo(
@@ -117,6 +119,8 @@ class SendUserDataInfo {
       this.name_level,
       this.value_level,
       this.initialCalories,
+      this.caloriasconsumidas,
+      this.id_status,
       this.fb_complete);
 }
 

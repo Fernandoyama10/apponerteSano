@@ -113,7 +113,37 @@ class RecordCaloriesInicio {
   }
 }
 
+class RecordCaloriesStatus {
+  static Future<List<RecordCalories>> getRecipes(
+    
+    String date_r, 
+    int id_user
+    ) async {
+       Map data = {
+      'date_r': date_r,
+      'id_user': id_user
+    };
+        var body = json.encode(data);
 
+    final response = await http.post(
+        Uri.parse(
+            "http://apiapponertesano.azurewebsites.net/apicalories/calories"),
+        headers: {"Content-Type": "application/json"},
+        body: body);
+
+
+    if (response.statusCode == 200) {
+      String body = response.body;
+      final parse = jsonDecode(body);
+      print(parse);
+      final List recipeYucatan = parse;
+
+        return recipeYucatan.map((json) => RecordCalories.fromJson(json)).toList();
+    } else {
+      throw Exception();
+    }
+  }
+}
 
 class InfoUser {
   static Future<List<InfoDatauser>> getRecipes(int id_user) async {

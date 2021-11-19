@@ -180,7 +180,9 @@ class GetRecipe {
   final double quantityfat;
   final int id_user;
   final String name;
-  final int initialcalories;
+  final dynamic initialcalories;
+  final dynamic caloriasconsumidas;
+  final dynamic id_status;
   late final double quantityprocnt;
     final int fb_complete;
   GetRecipe(
@@ -195,6 +197,8 @@ class GetRecipe {
       this.id_user,
       this.name,
       this.initialcalories,
+      this.caloriasconsumidas,
+      this.id_status,
       this.quantityprocnt,
       this.fb_complete);
 }
@@ -269,7 +273,8 @@ class GetRecipeYuc {
   final double quantityfat;
   final int id_user;
   final String name;
-  final int initialcalories;
+  final dynamic initialcalories;
+  final dynamic caloriasconsumidas;
   late final double quantityprocnt;
     final int fb_complete;
   GetRecipeYuc(
@@ -285,6 +290,7 @@ class GetRecipeYuc {
       this.id_user,
       this.name,
       this.initialcalories,
+      this.caloriasconsumidas,
       this.quantityprocnt,
       this.fb_complete);
 }

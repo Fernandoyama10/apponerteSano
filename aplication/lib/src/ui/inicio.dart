@@ -38,7 +38,8 @@ class _DisenoState extends State<Diseno> {
   dynamic _sugar1 = 0;
   dynamic _sodium = 0;
   dynamic _sodium1 = 0;
-
+  dynamic _statusname = "";
+  dynamic _idstatus = 0;
   dynamic _operationcalories1 = 0;
   String _text_operation = "";
   dynamic _operation_calories_final = 0;
@@ -90,9 +91,11 @@ class _DisenoState extends State<Diseno> {
     return _resultCalories;
   }
 
+
+
   Future init2() async {
     final recipes2 =
-        await RecordCaloriesInicio.getRecipes(_datetoday, _id_user);
+        await RecordCaloriesStatus.getRecipes(_datetoday, _id_user);
     if (recipes2.length > 0) {
       final calories = recipes2[0].calories;
       if (calories != null) {
@@ -102,6 +105,12 @@ class _DisenoState extends State<Diseno> {
         _carbs = recipes2[0].carbs!;
         _sugar = recipes2[0].sugar!;
         _sodium = recipes2[0].sodium!;
+   _idstatus = recipes2[0].id_status!;
+     _statusname = recipes2[0].name_status!;
+
+       
+
+
       } else {
         _calories = 0;
         _protein = 0;
@@ -109,6 +118,8 @@ class _DisenoState extends State<Diseno> {
         _carbs = 0;
         _sugar = 0;
         _sodium = 0;
+        _idstatus = 0;
+        _statusname = "No haz registrado";
         CaloriesdataSet(0, 0, 0, 0, 0, 0);
       }
     }
@@ -364,7 +375,7 @@ class _DisenoState extends State<Diseno> {
                                   elevation: 5,
                                   child: ListTile(
                                       title: Text(
-                                        "Excelente trabajo!",
+                                        '$_statusname',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
@@ -444,6 +455,8 @@ class _DisenoState extends State<Diseno> {
                                               data.name_level,
                                               data.value_level,
                                               _resultCalories,
+                                              _calories,
+                                              _idstatus,
                                               data.fb_complete));
                                       //Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => Consumolista(listapost: fetchPost1(args.clave.toString()),p: args.puntos,usu: args.id_usu,id_sa: args.id_salon)));
                                     },

@@ -19,9 +19,7 @@ class AgregarInternacional extends StatefulWidget {
 }
 
 class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
-
   final _formKey1 = GlobalKey<FormState>();
-
 
   double yields = 1;
   double proteyield = 0;
@@ -37,13 +35,22 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
   String datetoday = DateFormat("yyyy-MM-dd").format(DateTime.now());
   String timetoday = DateFormat('hh:mm:ss').format(DateTime.now());
   int id_user = 0;
-  int id_estatus = 4;
+  int id_estatus = 1;
   int fbstatus = 1;
   String nameuser = "";
-  int initial_calories = 0;
+  dynamic initial_calories = 0;
   int fb_iscompleted = 0;
   dynamic valuefeed = 0;
   String type = "-";
+  dynamic caloriasconsumidas = 0;
+double cal = 0;
+ void DefinirStatus(double _cal)  {
+
+
+
+    
+  }
+ 
   @override
   Widget build(BuildContext context) {
     GetRecipe args = ModalRoute.of(context)!.settings.arguments as GetRecipe;
@@ -55,6 +62,11 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
     nameuser = args.name;
     initial_calories = args.initialcalories;
     fb_iscompleted = args.fb_complete;
+    caloriasconsumidas = args.caloriasconsumidas;
+    id_estatus = args.id_status;
+
+
+
     //operaciones
 
     return Scaffold(
@@ -130,12 +142,16 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
 
                           caloriesyield =
                               (calories_yield * double.parse(value));
+            
                           carbsyield = (carbs_yield * double.parse(value));
                           proteyield = (prote_yield * double.parse(value));
                           sugaryield = (sugar_yield * double.parse(value));
                           sodiumyield = (sodium_yield * double.parse(value));
                           fatyield = (fat_yield * double.parse(value));
+                    
+                     
                         });
+                         
                       },
                       validator: (value) {
                         if (value == '0') {
@@ -184,7 +200,6 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
                     SizedBox(
                       height: 10,
                     ),
-                    
                     Text(
                       'Calorias por porción: ' +
                           (args.calories).toStringAsFixed(2),
@@ -361,6 +376,9 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
       label: Text('Agregar a dieta de Hoy'),
       onPressed: () {
         if (_formKey1.currentState!.validate()) {
+         
+        
+      
           _mensajeRegistrar(context);
         }
       },
@@ -378,74 +396,59 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
         context: context,
         title: "Porfavor calificanos",
         content: Form(
-       
-           child: 
-            Column(
-          children: <Widget>[
-            
-            Container(
-              width: 330.0,
-              child: Column(children: <Widget>[
-                SizedBox(
-                  height: 10,
-                ),
-                Text("Valorar nuestra aplicación nos ayuda a mejorar.",
-                    style: TextStyle(
-                        color: Colors.black87,
-                        fontSize: 13,
-                        fontWeight: FontWeight.bold)),
-                SizedBox(
-                  height: 10,
-                ),
-               
-                RatingBar.builder(
-                  initialRating: 0,
-                  minRating: 1,
-                  direction: Axis.horizontal,
-                  allowHalfRating: false,
-                  itemCount: 5,
-                  itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                  itemBuilder: (context, _) => Icon(
-                    Icons.star,
-                    color: Colors.amber,
+          child: Column(
+            children: <Widget>[
+              Container(
+                width: 330.0,
+                child: Column(children: <Widget>[
+                  SizedBox(
+                    height: 10,
                   ),
-                  onRatingUpdate: (rating) {
-
+                  Text("Valorar nuestra aplicación nos ayuda a mejorar.",
+                      style: TextStyle(
+                          color: Colors.black87,
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold)),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  RatingBar.builder(
+                    initialRating: 0,
+                    minRating: 1,
+                    direction: Axis.horizontal,
+                    allowHalfRating: false,
+                    itemCount: 5,
+                    itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                    itemBuilder: (context, _) => Icon(
+                      Icons.star,
+                      color: Colors.amber,
+                    ),
+                    onRatingUpdate: (rating) {
                       valuefeed = rating;
-                   
+
                       print(rating);
-                    
-                  },
-                ),
-        
-                    
-             
-              ]),
-            ),
-          ],
+                    },
+                  ),
+                ]),
+              ),
+            ],
+          ),
         ),
-           
-        ),
-      
         buttons: [
           DialogButton(
             onPressed: () => {
-              if(valuefeed == 0){
-                _nostarselected(context)
-              }else{
- Navigator.pop(context),
-              registrarfeedback(
-                context,
-                id_user,
-                fbstatus,
-                valuefeed,
-                
-              ),
-              }
-         
-           
-        
-              
+              if (valuefeed == 0)
+                {_nostarselected(context)}
+              else
+                {
+                  Navigator.pop(context),
+                  registrarfeedback(
+                    context,
+                    id_user,
+                    fbstatus,
+                    valuefeed,
+                  ),
+                }
             },
             child: Text(
               "Calificar",
@@ -455,7 +458,7 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
         ]).show();
   }
 
-    void _nostarselected(BuildContext context) {
+  void _nostarselected(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -493,6 +496,7 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
           IconsButton(
             onPressed: () {
               Navigator.pop(context);
+           
               registrarFood(
                   context,
                   datetoday,
@@ -553,10 +557,10 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
   void _graciascomentarios(BuildContext context, String nombre) {
     Dialogs.materialDialog(
         color: Colors.white,
-       msg: 'Haz click en cualquier parte de la pantalla para cerrar.',
+        msg: 'Haz click en cualquier parte de la pantalla para cerrar.',
         title: nombre + ', gracias por tus comentarios!',
         lottieBuilder: Lottie.asset(
- 'images/3152-star-success.json',
+          'images/3152-star-success.json',
           height: 25,
           width: 25,
         ),
@@ -564,15 +568,13 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
         actions: []);
   }
 
-
-
   Future registrarFood(
     BuildContext context,
     String date_r,
     String time,
     String label,
     String image,
-      String type,
+    String type,
     dynamic yieldd,
     double? calories,
     double? protein,
@@ -589,7 +591,7 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
       'time': time,
       'label': label,
       'image': image,
-        'type': type,
+      'type': type,
       'quantity': yieldd,
       'calories': calories,
       //gogle
@@ -617,7 +619,6 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
         _showDialog(context, 'Error 404, contacta administrador');
       } else {
         _mensajeSuccess(context, nameuser);
-   
       }
     } else {
       throw Exception('No se Agrego, intenta nuevamente');
@@ -642,7 +643,6 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
         headers: {"Content-Type": "application/json"},
         body: body);
 
-
     if (response.statusCode == 200) {
       List<UsuarioDataupdate> lista = parsePostupdate(response.body);
       if (lista.length > 0) {
@@ -662,7 +662,7 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
                 lista[0].value_level!,
                 lista[0].fb_complete!));
 
-      _graciascomentarios(context, nameuser);
+        _graciascomentarios(context, nameuser);
       } else {
         _showDialog(context, 'No existe el usuario en la aplicación');
       }
@@ -671,7 +671,6 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
       _showDialog(context, 'No se Actualizo, intenta nuevamente');
     }
   }
-
 
   void _showDialog(BuildContext context, String texto1) {
     showDialog(

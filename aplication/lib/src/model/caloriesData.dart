@@ -59,16 +59,19 @@ class RecordCalories {
   dynamic sugar;
   dynamic sodium;
   dynamic initial_calories;
+  dynamic id_status;
+  dynamic name_status;
 
-  RecordCalories({
-    this.calories,
-    this.protein,
-    this.fat,
-    this.carbs,
-    this.sugar,
-    this.sodium,
-    this.initial_calories
-  });
+  RecordCalories(
+      {this.calories,
+      this.protein,
+      this.fat,
+      this.carbs,
+      this.sugar,
+      this.sodium,
+      this.initial_calories,
+      this.id_status,
+      this.name_status});
 
   factory RecordCalories.fromJson(Map<String, dynamic> json) {
     return RecordCalories(
@@ -78,8 +81,9 @@ class RecordCalories {
         carbs: json['carbs'],
         sugar: json['sugar'],
         sodium: json['sodium'],
-           initial_calories: json['initial_calories']);
-
+        initial_calories: json['initial_calories'],
+        id_status: json['id_status'],
+        name_status: json['name_status']);
   }
 }
 
@@ -90,3 +94,5 @@ List<RecordCalories> parsePost3(String responseBody) {
       .map<RecordCalories>((json) => RecordCalories.fromJson(json))
       .toList();
 }
+
+
