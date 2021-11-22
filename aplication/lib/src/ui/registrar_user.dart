@@ -1,7 +1,6 @@
 import 'package:apponertesano/src/model/user.dart';
 import 'package:flutter/material.dart';
 
-
 // Define un widget de formulario personalizado
 class RegisterUser extends StatefulWidget {
   //la llave validadora
@@ -160,10 +159,4 @@ class _RegisterUserState extends State<RegisterUser> {
           ));
     }
   }
-
-  
-
-
 }
-
-

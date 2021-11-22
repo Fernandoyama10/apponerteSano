@@ -15,13 +15,13 @@ class FBInfoUserCaloriesReg extends StatefulWidget {
 }
 
 class _InfoUserCaloriesRegState extends State<FBInfoUserCaloriesReg> {
-    final txtage = TextEditingController();
+  final txtage = TextEditingController();
   final _formKey1 = GlobalKey<FormState>();
   final txtpeso = TextEditingController();
   final _txtfisico = GlobalKey<FormState>();
   final _dropdowngener = GlobalKey<FormState>();
   final _txtaltura = TextEditingController();
-  int fb_complete  = 0;
+  int fb_complete = 0;
   int _value = 0;
 
   String dropdownvalue = 'Seleccione su sexo aquí';
@@ -41,16 +41,13 @@ class _InfoUserCaloriesRegState extends State<FBInfoUserCaloriesReg> {
   double rheight = 0;
   int rid_activity = 0;
 
-  
-
   @override
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance!.addPostFrameCallback((_){
-            Future<List<Usuario>> listapost = verifyLogin(context, remail);
-
-          });
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      Future<List<Usuario>> listapost = verifyLogin(context, remail);
+    });
   }
 
   @override
@@ -58,20 +55,17 @@ class _InfoUserCaloriesRegState extends State<FBInfoUserCaloriesReg> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
-late UserDat data =
-        ModalRoute.of(context)!.settings.arguments as UserDat;
+    late UserDat data = ModalRoute.of(context)!.settings.arguments as UserDat;
     remail = data.email;
     rpassword = data.id;
     print(rpassword);
     var string = data.name;
-    var splitag = string.split(" "); 
+    var splitag = string.split(" ");
     rname = splitag[0];
     rsurname = splitag[1];
-   
-    
+
     print(rname);
     print(rsurname);
     return Scaffold(
@@ -111,7 +105,7 @@ late UserDat data =
                   ),
                   padding: EdgeInsets.symmetric(horizontal: 32),
                 ),
-          
+
                 SizedBox(height: 35),
                 Container(
                   width: 250.0,
@@ -130,14 +124,14 @@ late UserDat data =
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(32.0)),
                       labelText: 'Edad',
-                       prefixIcon: Icon(Icons.verified_user),
+                      prefixIcon: Icon(Icons.verified_user),
                     ),
                     onChanged: (text) {
                       setState(() => rage = int.parse(text));
                     },
                   ),
                 ),
-                   SizedBox(height: 20),
+                SizedBox(height: 20),
                 Container(
                   width: 250.0,
                   child: TextFormField(
@@ -337,25 +331,12 @@ late UserDat data =
     );
   }
 
-
   Widget RegistrarButton(BuildContext context) {
     return MaterialButton(
       onPressed: () {
         if (_formKey1.currentState!.validate()) {
-          registrarUsu(
-            context,
-            remail,
-            rpassword,
-            rid_role,
-            rname,
-            rsurname,
-            rage,
-            rweight,
-            rgender,
-            rheight,
-            rid_activity,
-            fb_complete
-          );
+          registrarUsu(context, remail, rpassword, rid_role, rname, rsurname,
+              rage, rweight, rgender, rheight, rid_activity, fb_complete);
         }
       },
       shape: RoundedRectangleBorder(
@@ -368,79 +349,74 @@ late UserDat data =
     );
   }
 
-Future registrarUsu(
-  BuildContext context,
-  String email,
-  String password,
-  int id_role,
-  String name,
-  String surname,
-  int? age,
-  double? weight,
-  String gender,
-  double? height,
-  int? id_activity,
-  int? fb_complete
-) async {
-  Map data = {
-    'email': email,
-    'password': password,
-    'id_role': id_role,
-    'name': name,
-    'surname': surname,
-    'weight': weight,
-    //gogle
-    'age': age,
-    'gender': gender,
-    'height': height,
-    'id_activity': id_activity,
-       'fb_complete': fb_complete
-  };
-  var body = json.encode(data);
+  Future registrarUsu(
+      BuildContext context,
+      String email,
+      String password,
+      int id_role,
+      String name,
+      String surname,
+      int? age,
+      double? weight,
+      String gender,
+      double? height,
+      int? id_activity,
+      int? fb_complete) async {
+    Map data = {
+      'email': email,
+      'password': password,
+      'id_role': id_role,
+      'name': name,
+      'surname': surname,
+      'weight': weight,
+      //gogle
+      'age': age,
+      'gender': gender,
+      'height': height,
+      'id_activity': id_activity,
+      'fb_complete': fb_complete
+    };
+    var body = json.encode(data);
 
-  final response = await http.post(
-      Uri.parse("http://apiapponertesano.azurewebsites.net/api/register"),
-      headers: {"Content-Type": "application/json"},
-      body: body);
+    final response = await http.post(
+        Uri.parse("http://apiapponertesano.azurewebsites.net/api/register"),
+        headers: {"Content-Type": "application/json"},
+        body: body);
 
-  final value = json.decode(response.body)["statusCode"];
+    final value = json.decode(response.body)["statusCode"];
 
-  if (response.statusCode == 200) {
-    if (value == 400) {
-      _showDialog(context, 'Usuario ya registrado anteriormente');
+    if (response.statusCode == 200) {
+      if (value == 400) {
+        _showDialog(context, 'Usuario ya registrado anteriormente');
+      } else {
+        Navigator.pushNamed(context, '/splashloading');
+      }
     } else {
-      Navigator.pushNamed(context, '/splashloading');
+      throw Exception('No se Agrego, intenta nuevamente');
     }
-  } else {
-    throw Exception('No se Agrego, intenta nuevamente');
   }
-}
 
-void _showDialog(BuildContext context, String texto1) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: new Text("Mensaje"),
-        content: new Text(texto1),
-        actions: <Widget>[
-          new FlatButton(
-            child: new Text("OK"),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
-      );
-    },
-  );
+  void _showDialog(BuildContext context, String texto1) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: new Text("Mensaje"),
+          content: new Text(texto1),
+          actions: <Widget>[
+            new FlatButton(
+              child: new Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
-
-  
-  
-}
-
-Future<List<Usuario>> verifyLogin(BuildContext context, String email) async {
+  Future<List<Usuario>> verifyLogin(BuildContext context, String email) async {
     final url = Uri.parse(
         'http://apiapponertesano.azurewebsites.net/api/logindata/$email');
     final response = await http.get(url);
@@ -448,22 +424,21 @@ Future<List<Usuario>> verifyLogin(BuildContext context, String email) async {
       List<Usuario> lista = parsePost(response.body);
       if (lista.length > 0) {
         print(lista[0].password);
-          Navigator.pushReplacementNamed(context, "/inicio",
-              arguments: UsuariodataSet(
-                  lista[0].id_user!,
-                  lista[0].email!,
-                  lista[0].password!,
-                  lista[0].id_role!,
-                  lista[0].name!,
-                  lista[0].surname!,
-                  lista[0].age!,
-                  lista[0].weight!,
-                  lista[0].gender!,
-                  lista[0].height!,
-                  lista[0].name_level!,
-                  lista[0].value_level!,
-                     lista[0].fb_complete!));
-       
+        Navigator.pushReplacementNamed(context, "/inicio",
+            arguments: UsuariodataSet(
+                lista[0].id_user!,
+                lista[0].email!,
+                lista[0].password!,
+                lista[0].id_role!,
+                lista[0].name!,
+                lista[0].surname!,
+                lista[0].age!,
+                lista[0].weight!,
+                lista[0].gender!,
+                lista[0].height!,
+                lista[0].name_level!,
+                lista[0].value_level!,
+                lista[0].fb_complete!));
       } else {
         print('este usuario se puede registrar');
       }
@@ -473,7 +448,4 @@ Future<List<Usuario>> verifyLogin(BuildContext context, String email) async {
       throw Exception('Unable to fetch products from the REST API');
     }
   }
-
 }
-
-

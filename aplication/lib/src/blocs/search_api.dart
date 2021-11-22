@@ -103,7 +103,7 @@ class RecordCaloriesInicio {
     if (response.statusCode == 200) {
       String body = response.body;
       final parse = jsonDecode(body);
-      print(parse);
+
       final List recipeYucatan = parse;
 
         return recipeYucatan.map((json) => RecordCalories.fromJson(json)).toList();
@@ -135,7 +135,7 @@ class RecordCaloriesStatus {
     if (response.statusCode == 200) {
       String body = response.body;
       final parse = jsonDecode(body);
-      print(parse);
+    
       final List recipeYucatan = parse;
 
         return recipeYucatan.map((json) => RecordCalories.fromJson(json)).toList();

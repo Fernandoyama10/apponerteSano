@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:apponertesano/src/model/user.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:apponertesano/src/model/food.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -10,6 +11,7 @@ import 'package:material_dialogs/material_dialogs.dart';
 import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:material_dialogs/widgets/buttons/icon_outline_button.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+
 class AgregarRegional extends StatefulWidget {
   const AgregarRegional({Key? key}) : super(key: key);
 
@@ -37,9 +39,9 @@ class _AgregarScreenState extends State<AgregarRegional> {
   int id_estatus = 4;
   String type = "";
   dynamic initial_calories = 0;
-    int fb_iscompleted = 0;
+  int fb_iscompleted = 0;
   dynamic valuefeed = 0;
-    int fbstatus = 1;
+  int fbstatus = 1;
   @override
   Widget build(BuildContext context) {
     GetRecipeYuc args =
@@ -52,7 +54,7 @@ class _AgregarScreenState extends State<AgregarRegional> {
     type = args.tipo;
     name = args.name;
     initial_calories = args.initialcalories;
-     fb_iscompleted = args.fb_complete;
+    fb_iscompleted = args.fb_complete;
     //operaciones
 
     return SafeArea(
@@ -73,12 +75,17 @@ class _AgregarScreenState extends State<AgregarRegional> {
                   children: [
                     Hero(
                       tag: args.label,
-                      child: Image.network(
-                        args.image,
-                        fit: BoxFit.cover,
-                        width: MediaQuery.of(context).size.width,
-                        height: 180,
-                      ),
+                      child: CachedNetworkImage(
+                          fit: BoxFit.fill,
+                          height: 200,
+                          width: 250,
+                          imageUrl: args.image,
+                          placeholder: (context, url) =>
+                              CircularProgressIndicator(),
+                          errorWidget: (context, url, error) => Image.asset(
+                                'images/page-not-found.png',
+                                fit: BoxFit.fill,
+                              )),
                     ),
                   ],
                 ),
@@ -369,10 +376,8 @@ class _AgregarScreenState extends State<AgregarRegional> {
       ),
       label: Text('Agregar a dieta de Hoy'),
       onPressed: () {
-        
         if (_formKey1.currentState!.validate()) {
           _mensajeRegistrar(context);
-         
         }
       },
       style: ElevatedButton.styleFrom(
@@ -383,78 +388,64 @@ class _AgregarScreenState extends State<AgregarRegional> {
       ),
     );
   }
- void _mensajeFeedback(BuildContext context) {
+
+  void _mensajeFeedback(BuildContext context) {
     Alert(
         context: context,
         title: "Porfavor calificanos",
         content: Form(
-         
-           child: 
-            Column(
-          children: <Widget>[
-            
-            Container(
-              width: 330.0,
-              child: Column(children: <Widget>[
-                SizedBox(
-                  height: 10,
-                ),
-                Text("Valorar nuestra aplicación nos ayuda a mejorar.",
-                    style: TextStyle(
-                        color: Colors.black87,
-                        fontSize: 13,
-                        fontWeight: FontWeight.bold)),
-                SizedBox(
-                  height: 10,
-                ),
-               
-                RatingBar.builder(
-                  initialRating: 0,
-                  minRating: 1,
-                  direction: Axis.horizontal,
-                  allowHalfRating: false,
-                  itemCount: 5,
-                  itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                  itemBuilder: (context, _) => Icon(
-                    Icons.star,
-                    color: Colors.amber,
+          child: Column(
+            children: <Widget>[
+              Container(
+                width: 330.0,
+                child: Column(children: <Widget>[
+                  SizedBox(
+                    height: 10,
                   ),
-                  onRatingUpdate: (rating) {
-
+                  Text("Valorar nuestra aplicación nos ayuda a mejorar.",
+                      style: TextStyle(
+                          color: Colors.black87,
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold)),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  RatingBar.builder(
+                    initialRating: 0,
+                    minRating: 1,
+                    direction: Axis.horizontal,
+                    allowHalfRating: false,
+                    itemCount: 5,
+                    itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                    itemBuilder: (context, _) => Icon(
+                      Icons.star,
+                      color: Colors.amber,
+                    ),
+                    onRatingUpdate: (rating) {
                       valuefeed = rating;
                       print(rating);
-                    
-                  },
-                ),
-        
-                    
-             
-              ]),
-            ),
-          ],
+                    },
+                  ),
+                ]),
+              ),
+            ],
+          ),
         ),
-           
-        ),
-      
         buttons: [
           DialogButton(
             onPressed: () => {
-              if(valuefeed == 0){
-                _nostarselected(context)
-              }else{
- Navigator.pop(context),
-              registrarfeedback(
-                context,
-                id_user,
-                fbstatus,
-                valuefeed,
-                
-              ),
-              }
-         
-           
-        
-              
+              if (valuefeed == 0)
+                {_nostarselected(context)}
+              else
+                {
+                  Navigator.pop(context),
+                  registrarfeedback(
+                    context,
+                    id_user,
+                    fbstatus,
+                    valuefeed,
+                  ),
+                }
             },
             child: Text(
               "Calificar",
@@ -464,7 +455,7 @@ class _AgregarScreenState extends State<AgregarRegional> {
         ]).show();
   }
 
-    void _nostarselected(BuildContext context) {
+  void _nostarselected(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -562,10 +553,10 @@ class _AgregarScreenState extends State<AgregarRegional> {
   void _graciascomentarios(BuildContext context, String nombre) {
     Dialogs.materialDialog(
         color: Colors.white,
-       msg: 'Haz click en cualquier parte de la pantalla para cerrar.',
+        msg: 'Haz click en cualquier parte de la pantalla para cerrar.',
         title: nombre + ', gracias por tus comentarios!',
         lottieBuilder: Lottie.asset(
-                 'images/3152-star-success.json',
+          'images/3152-star-success.json',
           height: 25,
           width: 25,
         ),
@@ -573,15 +564,13 @@ class _AgregarScreenState extends State<AgregarRegional> {
         actions: []);
   }
 
-
-
   Future registrarFood(
     BuildContext context,
     String date_r,
     String time,
     String label,
     String image,
-      String type,
+    String type,
     dynamic yieldd,
     double? calories,
     double? protein,
@@ -598,7 +587,7 @@ class _AgregarScreenState extends State<AgregarRegional> {
       'time': time,
       'label': label,
       'image': image,
-        'type': type,
+      'type': type,
       'quantity': yieldd,
       'calories': calories,
       //gogle
@@ -626,7 +615,6 @@ class _AgregarScreenState extends State<AgregarRegional> {
         _showDialog(context, 'Error 404, contacta administrador');
       } else {
         _mensajeSuccess(context, name);
-   
       }
     } else {
       throw Exception('No se Agrego, intenta nuevamente');
@@ -651,7 +639,6 @@ class _AgregarScreenState extends State<AgregarRegional> {
         headers: {"Content-Type": "application/json"},
         body: body);
 
-
     if (response.statusCode == 200) {
       List<UsuarioDataupdate> lista = parsePostupdate(response.body);
       if (lista.length > 0) {
@@ -671,7 +658,7 @@ class _AgregarScreenState extends State<AgregarRegional> {
                 lista[0].value_level!,
                 lista[0].fb_complete!));
 
-      _graciascomentarios(context, name);
+        _graciascomentarios(context, name);
       } else {
         _showDialog(context, 'No existe el usuario en la aplicación');
       }
@@ -681,28 +668,23 @@ class _AgregarScreenState extends State<AgregarRegional> {
     }
   }
 
-
-void _showDialog(BuildContext context, String texto1) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: new Text("Mensaje"),
-        content: new Text(texto1),
-        actions: <Widget>[
-          new FlatButton(
-            child: new Text("OK"),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
-      );
-    },
-  );
+  void _showDialog(BuildContext context, String texto1) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: new Text("Mensaje"),
+          content: new Text(texto1),
+          actions: <Widget>[
+            new FlatButton(
+              child: new Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }
-
-}
-
-
-

@@ -63,20 +63,24 @@ class _MiperfilactuState extends State<Miperfilactu> {
   }
 
   Future init() async {
-    final recipes2 = await InfoUser.getRecipes(id_user);
-    if (recipes2.length > 0) {
-      txtname.text = recipes2[0].name!;
-      txtsurname.text = recipes2[0].surname!;
-      txtage.text = recipes2[0].age!.toString();
-      txtpeso.text = recipes2[0].weight!.toString();
-      _txtaltura.text = recipes2[0].height!.toString();
-      // _value = recipes2[0].id_activity!.toString();
-      // print(_value + " API");
-    }
+    try {
+      final recipes2 = await InfoUser.getRecipes(id_user);
+      if (recipes2.length > 0) {
+        txtname.text = recipes2[0].name!;
+        txtsurname.text = recipes2[0].surname!;
+        txtage.text = recipes2[0].age!.toString();
+        txtpeso.text = recipes2[0].weight!.toString();
+        _txtaltura.text = recipes2[0].height!.toString();
+        // _value = recipes2[0].id_activity!.toString();
+        // print(_value + " API");
+      }
 
-    if (this.mounted) {
-      // check whether the state object is in tree
-      setState(() => this.user = user);
+      if (this.mounted) {
+        // check whether the state object is in tree
+        setState(() => this.user = user);
+      }
+    } catch (e) {
+      _mensajeERROR(context);
     }
   }
 
@@ -514,8 +518,6 @@ class _MiperfilactuState extends State<Miperfilactu> {
         headers: {"Content-Type": "application/json"},
         body: body);
 
-  
-
     if (response.statusCode == 200) {
       List<UsuarioDataupdate> lista = parsePostupdate(response.body);
       if (lista.length > 0) {
@@ -563,5 +565,30 @@ class _MiperfilactuState extends State<Miperfilactu> {
         );
       },
     );
+  }
+
+  void _mensajeERROR(BuildContext context) {
+    Dialogs.materialDialog(
+        color: Colors.white,
+        msg: "Vuelve a iniciar sesión o intenta más tarde.",
+        title: "Hubo un error",
+        lottieBuilder: Lottie.asset(
+          'images/19230-payment-failed.json',
+          height: 25,
+          width: 25,
+        ),
+        context: context,
+        actions: [
+          IconsButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            text: 'Haz Tap en cualquier parte de la pantalla',
+            iconData: Icons.close,
+            color: Colors.red,
+            textStyle: TextStyle(color: Colors.white),
+            iconColor: Colors.white,
+          ),
+        ]);
   }
 }

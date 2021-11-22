@@ -1,13 +1,11 @@
 import 'package:apponertesano/src/model/food.dart';
 import 'package:flutter/material.dart';
 
-
 class ConsultarComida extends StatefulWidget {
   const ConsultarComida({Key? key}) : super(key: key);
 
   @override
-  _ConsultarComidaScreenState createState() =>
-      _ConsultarComidaScreenState();
+  _ConsultarComidaScreenState createState() => _ConsultarComidaScreenState();
 }
 
 class _ConsultarComidaScreenState extends State<ConsultarComida> {
@@ -21,11 +19,12 @@ class _ConsultarComidaScreenState extends State<ConsultarComida> {
   double fatyield = 0;
   String label = "";
   String image = "";
-  
+
   int id_estatus = 4;
   @override
   Widget build(BuildContext context) {
-    GetDetailFood args = ModalRoute.of(context)!.settings.arguments as GetDetailFood;
+    GetDetailFood args =
+        ModalRoute.of(context)!.settings.arguments as GetDetailFood;
     //porciones
     yields = args.quantity;
     label = args.label;
@@ -34,8 +33,8 @@ class _ConsultarComidaScreenState extends State<ConsultarComida> {
     proteyield = args.protein;
     carbsyield = args.carbs;
     sugaryield = args.sugar;
-  caloriesyield = args.protein;
-  sodiumyield = args.sodium;
+    caloriesyield = args.protein;
+    sodiumyield = args.sodium;
     //operaciones
 
     return SafeArea(
@@ -92,7 +91,6 @@ class _ConsultarComidaScreenState extends State<ConsultarComida> {
                       SizedBox(
                         width: 2,
                       ),
-                    
                     ],
                   ),
                 ),
@@ -128,7 +126,6 @@ class _ConsultarComidaScreenState extends State<ConsultarComida> {
                                   text: args.label),
                             ),
                           ),
-                        
                         ],
                       ),
                       SizedBox(
@@ -142,7 +139,6 @@ class _ConsultarComidaScreenState extends State<ConsultarComida> {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                    
                     ],
                   ),
                 ),
@@ -294,9 +290,4 @@ class _ConsultarComidaScreenState extends State<ConsultarComida> {
       ),
     );
   }
-
- 
 }
-
-
-

@@ -4,6 +4,8 @@ import 'package:apponertesano/src/model/user.dart';
 import 'package:apponertesano/src/model/food.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:material_dialogs/material_dialogs.dart';
+import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 
 // Define un widget de formulario personalizado
 class ComidaHistorial extends StatefulWidget {
@@ -26,7 +28,7 @@ class _DisenoState extends State<ComidaHistorial> {
   dynamic _sodium = 0;
   dynamic _initialcalories = 0;
   dynamic _diferencia = 0;
-    dynamic _statusname = "";
+  dynamic _statusname = "";
   dynamic _idstatus = 0;
   List<FoodRecord> recipes = [];
   List<RecordCalories> recipes2 = [];
@@ -57,41 +59,50 @@ setState(() {
   }
 
   Future init() async {
-    final recipes = await RecordApi.getRecipes(datetoday, id_user);
-    if (this.mounted) {
-      // check whether the state object is in tree
-      setState(() => this.recipes = recipes);
+    try {
+      final recipes = await RecordApi.getRecipes(datetoday, id_user);
+      if (this.mounted) {
+        // check whether the state object is in tree
+        setState(() => this.recipes = recipes);
+      }
+    } catch (e) {
+      _mensajeERROR(context);
     }
   }
 
   Future init2() async {
-    final recipes2 = await RecordCaloriesStatus.getRecipes(datetoday, id_user);
-    if (recipes2.length > 0) {
-      final calories = recipes2[0].calories;
-      if (calories != null) {
-        _calories = recipes2[0].calories!;
-        _protein = recipes2[0].protein!;
-        _fat = recipes2[0].fat!;
-        _carbs = recipes2[0].carbs!;
-        _sugar = recipes2[0].sugar!;
-        _sodium = recipes2[0].sodium!;
-        _initialcalories = recipes2[0].initial_calories!;
-        _diferencia = _initialcalories - _calories;
-      } else {
-            _calories = 0;
-        _protein = 0;
-        _fat = 0;
-        _carbs = 0;
-        _sugar = 0;
-        _sodium = 0;
-        _initialcalories = 0;
-        _diferencia = 0;
-        _idstatus = 0;
+    try {
+      final recipes2 =
+          await RecordCaloriesStatus.getRecipes(datetoday, id_user);
+      if (recipes2.length > 0) {
+        final calories = recipes2[0].calories;
+        if (calories != null) {
+          _calories = recipes2[0].calories!;
+          _protein = recipes2[0].protein!;
+          _fat = recipes2[0].fat!;
+          _carbs = recipes2[0].carbs!;
+          _sugar = recipes2[0].sugar!;
+          _sodium = recipes2[0].sodium!;
+          _initialcalories = recipes2[0].initial_calories!;
+          _diferencia = _initialcalories - _calories;
+        } else {
+          _calories = 0;
+          _protein = 0;
+          _fat = 0;
+          _carbs = 0;
+          _sugar = 0;
+          _sodium = 0;
+          _initialcalories = 0;
+          _diferencia = 0;
+          _idstatus = 0;
+        }
       }
-    }
-    if (this.mounted) {
-      // check whether the state object is in tree
-      setState(() => this.recipes2 = recipes2);
+      if (this.mounted) {
+        // check whether the state object is in tree
+        setState(() => this.recipes2 = recipes2);
+      }
+    } catch (e) {
+      _mensajeERROR(context);
     }
   }
 
@@ -723,6 +734,31 @@ setState(() {
               ));
         },
       );
+
+  void _mensajeERROR(BuildContext context) {
+    Dialogs.materialDialog(
+        color: Colors.white,
+        msg: "Vuelve a iniciar sesión o intenta más tarde.",
+        title: "Hubo un error",
+        lottieBuilder: Lottie.asset(
+          'images/19230-payment-failed.json',
+          height: 25,
+          width: 25,
+        ),
+        context: context,
+        actions: [
+          IconsButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            text: 'Haz Tap en cualquier parte de la pantalla',
+            iconData: Icons.close,
+            color: Colors.red,
+            textStyle: TextStyle(color: Colors.white),
+            iconColor: Colors.white,
+          ),
+        ]);
+  }
 }
 
 /* 

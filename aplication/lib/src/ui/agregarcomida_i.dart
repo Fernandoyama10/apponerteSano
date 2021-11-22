@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:apponertesano/src/model/user.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:http/http.dart' as http;
 import 'package:apponertesano/src/model/food.dart';
 import 'package:flutter/material.dart';
@@ -43,14 +44,9 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
   dynamic valuefeed = 0;
   String type = "-";
   dynamic caloriasconsumidas = 0;
-double cal = 0;
- void DefinirStatus(double _cal)  {
+  double cal = 0;
+  void DefinirStatus(double _cal) {}
 
-
-
-    
-  }
- 
   @override
   Widget build(BuildContext context) {
     GetRecipe args = ModalRoute.of(context)!.settings.arguments as GetRecipe;
@@ -64,8 +60,6 @@ double cal = 0;
     fb_iscompleted = args.fb_complete;
     caloriasconsumidas = args.caloriasconsumidas;
     id_estatus = args.id_status;
-
-
 
     //operaciones
 
@@ -86,12 +80,17 @@ double cal = 0;
                 children: [
                   Hero(
                     tag: args.label,
-                    child: Image.network(
-                      args.image,
-                      fit: BoxFit.cover,
-                      width: MediaQuery.of(context).size.width,
-                      height: 180,
-                    ),
+                    child: CachedNetworkImage(
+                        fit: BoxFit.fill,
+                        height: 200,
+                        width: 250,
+                        imageUrl: args.image,
+                        placeholder: (context, url) =>
+                            CircularProgressIndicator(),
+                        errorWidget: (context, url, error) => Image.asset(
+                              'images/page-not-found.png',
+                              fit: BoxFit.fill,
+                            )),
                   ),
                 ],
               ),
@@ -142,16 +141,13 @@ double cal = 0;
 
                           caloriesyield =
                               (calories_yield * double.parse(value));
-            
+
                           carbsyield = (carbs_yield * double.parse(value));
                           proteyield = (prote_yield * double.parse(value));
                           sugaryield = (sugar_yield * double.parse(value));
                           sodiumyield = (sodium_yield * double.parse(value));
                           fatyield = (fat_yield * double.parse(value));
-                    
-                     
                         });
-                         
                       },
                       validator: (value) {
                         if (value == '0') {
@@ -376,9 +372,6 @@ double cal = 0;
       label: Text('Agregar a dieta de Hoy'),
       onPressed: () {
         if (_formKey1.currentState!.validate()) {
-         
-        
-      
           _mensajeRegistrar(context);
         }
       },
@@ -496,7 +489,7 @@ double cal = 0;
           IconsButton(
             onPressed: () {
               Navigator.pop(context);
-           
+
               registrarFood(
                   context,
                   datetoday,

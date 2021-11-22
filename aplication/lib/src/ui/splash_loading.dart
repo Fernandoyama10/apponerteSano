@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-//import 'package:prueba_login/src/paginas/login.dart';
 
 class SplashLoading extends StatefulWidget {
   @override
@@ -10,7 +9,7 @@ class SplashLoading extends StatefulWidget {
 class _SplashLoadingState extends State<SplashLoading> {
   @override
   void initState() {
-    Timer(Duration(seconds: 3),
+    Timer(Duration(seconds: 2),
         () => Navigator.of(context).pushReplacementNamed('/login'));
   }
 

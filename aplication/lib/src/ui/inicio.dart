@@ -4,6 +4,8 @@ import 'package:apponertesano/src/model/user.dart';
 import 'package:apponertesano/src/resources/facebook_login_result.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:material_dialogs/material_dialogs.dart';
+import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:provider/provider.dart';
 
 // Define un widget de formulario personalizado
@@ -70,8 +72,7 @@ class _DisenoState extends State<Diseno> {
         _operation_calories_final = _operationcalories1.round();
         _text_operation = "Restantes";
       }
-      print("METOSDO PARA CALCULAR CALORIAS");
-      print(_resultCalories);
+   
     } else {
       _mtb = ((655 + (9.6 * weight)) + ((1.8 * height) - (4.7 * age)));
       _resultCalories = (_mtb * activity).round();
@@ -86,46 +87,45 @@ class _DisenoState extends State<Diseno> {
         //aquí niñoooo
       }
 
-      print(_resultCalories);
+ 
     }
     return _resultCalories;
   }
 
-
-
   Future init2() async {
-    final recipes2 =
-        await RecordCaloriesStatus.getRecipes(_datetoday, _id_user);
-    if (recipes2.length > 0) {
-      final calories = recipes2[0].calories;
-      if (calories != null) {
-        _calories = recipes2[0].calories!;
-        _protein = recipes2[0].protein!;
-        _fat = recipes2[0].fat!;
-        _carbs = recipes2[0].carbs!;
-        _sugar = recipes2[0].sugar!;
-        _sodium = recipes2[0].sodium!;
-   _idstatus = recipes2[0].id_status!;
-     _statusname = recipes2[0].name_status!;
-
-       
-
-
-      } else {
-        _calories = 0;
-        _protein = 0;
-        _fat = 0;
-        _carbs = 0;
-        _sugar = 0;
-        _sodium = 0;
-        _idstatus = 0;
-        _statusname = "No haz registrado";
-        CaloriesdataSet(0, 0, 0, 0, 0, 0);
+    try {
+      final recipes2 =
+          await RecordCaloriesStatus.getRecipes(_datetoday, _id_user);
+      if (recipes2.length > 0) {
+        final calories = recipes2[0].calories;
+        if (calories != null) {
+          _calories = recipes2[0].calories!;
+          _protein = recipes2[0].protein!;
+          _fat = recipes2[0].fat!;
+          _carbs = recipes2[0].carbs!;
+          _sugar = recipes2[0].sugar!;
+          _sodium = recipes2[0].sodium!;
+          _idstatus = recipes2[0].id_status!;
+          _statusname = recipes2[0].name_status!;
+        } else {
+          _calories = 0;
+          _protein = 0;
+          _fat = 0;
+          _carbs = 0;
+          _sugar = 0;
+          _sodium = 0;
+          _idstatus = 0;
+          _statusname = "No haz registrado";
+          CaloriesdataSet(0, 0, 0, 0, 0, 0);
+        }
       }
-    }
-    if (this.mounted) {
-      // check whether the state object is in tree
-      setState(() => this.recipes2 = recipes2);
+      if (this.mounted) {
+        // check whether the state object is in tree
+        setState(() => this.recipes2 = recipes2);
+      }
+    } catch (e) {
+      Navigator.pushReplacementNamed(context, "/login");
+      _mensajeERROR(context);
     }
   }
 
@@ -245,8 +245,7 @@ class _DisenoState extends State<Diseno> {
                                   Provider.of<FacebookSignInController>(context,
                                           listen: false)
                                       .logOut();
-                                  Navigator.pushReplacementNamed(
-                                      context, '/login');
+                                Navigator.of(context).pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
                                 },
                                 backgroundColor: Colors.white,
                                 icon: Icon(
@@ -583,7 +582,11 @@ class _DisenoState extends State<Diseno> {
                                                     TextDecoration.none),
                                           ),
                                           Text(
-                                            "Tienes " + '$_operation_calories_final' + " cal. " + _text_operation + " según tu cálculo calorico para mantener tu peso.",
+                                            "Tienes " +
+                                                '$_operation_calories_final' +
+                                                " cal. " +
+                                                _text_operation +
+                                                " según tu cálculo calorico para mantener tu peso.",
                                             style: TextStyle(
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.w500,
@@ -1024,6 +1027,29 @@ class _DisenoState extends State<Diseno> {
         ),
       ),
     );
+  }
+
+  void _mensajeERROR(BuildContext context) {
+    Dialogs.materialDialog(
+        color: Colors.white,
+        msg: "Vuelve a iniciar sesión o intenta más tarde.",
+        title: "Hubo un error",
+        lottieBuilder: Lottie.asset(
+          'images/19230-payment-failed.json',
+          height: 25,
+          width: 25,
+        ),
+        context: context,
+        actions: [
+          IconsButton(
+            onPressed: () {},
+            text: 'Haz Tap en cualquier parte de la pantalla',
+            iconData: Icons.close,
+            color: Colors.red,
+            textStyle: TextStyle(color: Colors.white),
+            iconColor: Colors.white,
+          ),
+        ]);
   }
 }
 

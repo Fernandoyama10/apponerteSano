@@ -740,10 +740,14 @@ setState(() {
       );
 
   Future init() async {
-    final recipes = await RecordApi.getRecipes(datetoday, id_user);
-    if (this.mounted) {
-      // check whether the state object is in tree
-      setState(() => this.recipes = recipes);
+    try {
+      final recipes = await RecordApi.getRecipes(datetoday, id_user);
+      if (this.mounted) {
+        // check whether the state object is in tree
+        setState(() => this.recipes = recipes);
+      }
+    } catch (e) {
+      _mensajeERROR(context);
     }
   }
 
@@ -752,37 +756,42 @@ setState(() {
   }
 
   Future init2() async {
-    final recipes2 = await RecordCaloriesStatus.getRecipes(datetoday, id_user);
-    if (recipes2.length > 0) {
-      final calories = recipes2[0].calories;
-      if (calories != null) {
-        _calories = recipes2[0].calories!;
-        _protein = recipes2[0].protein!;
-        _fat = recipes2[0].fat!;
-        _carbs = recipes2[0].carbs!;
-        _sugar = recipes2[0].sugar!;
-        _sodium = recipes2[0].sodium!;
-        _initialcalories = recipes2[0].initial_calories!;
-        _diferencia = _initialcalories - _calories;
-        _idstatus = recipes2[0].id_status!;
-        _statusname = recipes2[0].name_status!;
-      } else {
-        _calories = 0;
-        _protein = 0;
-        _fat = 0;
-        _carbs = 0;
-        _sugar = 0;
-        _sodium = 0;
-        _initialcalories = 0;
-        _diferencia = 0;
-        _idstatus = 0;
-        _statusname = "No haz registrado";
+    try {
+      final recipes2 =
+          await RecordCaloriesStatus.getRecipes(datetoday, id_user);
+      if (recipes2.length > 0) {
+        final calories = recipes2[0].calories;
+        if (calories != null) {
+          _calories = recipes2[0].calories!;
+          _protein = recipes2[0].protein!;
+          _fat = recipes2[0].fat!;
+          _carbs = recipes2[0].carbs!;
+          _sugar = recipes2[0].sugar!;
+          _sodium = recipes2[0].sodium!;
+          _initialcalories = recipes2[0].initial_calories!;
+          _diferencia = _initialcalories - _calories;
+          _idstatus = recipes2[0].id_status!;
+          _statusname = recipes2[0].name_status!;
+        } else {
+          _calories = 0;
+          _protein = 0;
+          _fat = 0;
+          _carbs = 0;
+          _sugar = 0;
+          _sodium = 0;
+          _initialcalories = 0;
+          _diferencia = 0;
+          _idstatus = 0;
+          _statusname = "No haz registrado";
+        }
       }
-    }
 
-    if (this.mounted) {
-      // check whether the state object is in tree
-      setState(() => this.recipes2 = recipes2);
+      if (this.mounted) {
+        // check whether the state object is in tree
+        setState(() => this.recipes2 = recipes2);
+      }
+    } catch (e) {
+      _mensajeERROR(context);
     }
   }
 
@@ -900,6 +909,31 @@ setState(() {
         );
       },
     );
+  }
+
+  void _mensajeERROR(BuildContext context) {
+    Dialogs.materialDialog(
+        color: Colors.white,
+        msg: "Vuelve a iniciar sesión o intenta más tarde.",
+        title: "Hubo un error",
+        lottieBuilder: Lottie.asset(
+          'images/19230-payment-failed.json',
+          height: 25,
+          width: 25,
+        ),
+        context: context,
+        actions: [
+          IconsButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            text: 'Haz Tap en cualquier parte de la pantalla',
+            iconData: Icons.close,
+            color: Colors.red,
+            textStyle: TextStyle(color: Colors.white),
+            iconColor: Colors.white,
+          ),
+        ]);
   }
 }
 

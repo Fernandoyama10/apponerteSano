@@ -21,7 +21,7 @@ class Hits {
 
 class Recipe {
   String? label;
-  String? image;
+  dynamic image;
   double? yield;
   double? calories;
   TotalNutrients? totalNutrients;

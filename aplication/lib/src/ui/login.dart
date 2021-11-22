@@ -1,10 +1,7 @@
 import 'dart:async';
-import 'dart:convert';
-import 'package:apponertesano/src/resources/userData.dart';
 import 'package:http/http.dart' as http;
 import 'package:apponertesano/src/resources/facebook_login_result.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:material_dialogs/material_dialogs.dart';
 import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:provider/provider.dart';
