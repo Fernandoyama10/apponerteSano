@@ -125,7 +125,7 @@ class _MiperfilactuState extends State<Miperfilactu> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Text(
-                              "Actualiza tus datos",
+                              "• Actualiza tus datos •",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontWeight: FontWeight.w600,

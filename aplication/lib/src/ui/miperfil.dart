@@ -42,7 +42,7 @@ class _MiperfilState extends State<Miperfil> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Text(
-                              "Tus datos Personales",
+                              "• Tus datos personales •",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontWeight: FontWeight.w600,
@@ -119,7 +119,7 @@ class _MiperfilState extends State<Miperfil> {
                             ],
                           ),
                           title: Text(
-                            "edad",
+                            "Edad",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontWeight: FontWeight.w600,

@@ -26,6 +26,8 @@ class _DisenoState extends State<ComidaHistorial> {
   dynamic _sodium = 0;
   dynamic _initialcalories = 0;
   dynamic _diferencia = 0;
+    dynamic _statusname = "";
+  dynamic _idstatus = 0;
   List<FoodRecord> recipes = [];
   List<RecordCalories> recipes2 = [];
   // static datosArguments args;
@@ -63,7 +65,7 @@ setState(() {
   }
 
   Future init2() async {
-    final recipes2 = await RecordCaloriess.getRecipes(datetoday, id_user);
+    final recipes2 = await RecordCaloriesStatus.getRecipes(datetoday, id_user);
     if (recipes2.length > 0) {
       final calories = recipes2[0].calories;
       if (calories != null) {
@@ -75,7 +77,17 @@ setState(() {
         _sodium = recipes2[0].sodium!;
         _initialcalories = recipes2[0].initial_calories!;
         _diferencia = _initialcalories - _calories;
-      } else {}
+      } else {
+            _calories = 0;
+        _protein = 0;
+        _fat = 0;
+        _carbs = 0;
+        _sugar = 0;
+        _sodium = 0;
+        _initialcalories = 0;
+        _diferencia = 0;
+        _idstatus = 0;
+      }
     }
     if (this.mounted) {
       // check whether the state object is in tree
@@ -237,13 +249,13 @@ setState(() {
                                                                 const TextStyle(
                                                               color:
                                                                   Colors.green,
-                                                              fontSize: 13.5,
+                                                              fontSize: 13,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .bold,
                                                             ),
                                                             text:
-                                                                "Calorias sumadas:"),
+                                                                "Calorias Sumadas:"),
                                                       ),
                                                     ),
                                                     SizedBox(width: 10),
@@ -347,7 +359,7 @@ setState(() {
                                                       MainAxisAlignment.center,
                                                   children: [
                                                     Text(
-                                                      "Calorias Restantes:",
+                                                      "Diferencia:",
                                                       textAlign: TextAlign.end,
                                                       style: TextStyle(
                                                           fontWeight:

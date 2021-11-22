@@ -302,7 +302,7 @@ class _DisenoState extends State<Diseno> {
                                             MainAxisAlignment.end,
                                         children: [
                                           Text(
-                                            "tu calculo",
+                                            "Tu cálculo",
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
@@ -388,7 +388,7 @@ class _DisenoState extends State<Diseno> {
                                             MainAxisAlignment.center,
                                         children: [
                                           Text(
-                                            " estado",
+                                            " Estatus",
                                             textAlign: TextAlign.end,
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
@@ -572,9 +572,9 @@ class _DisenoState extends State<Diseno> {
                                             CrossAxisAlignment.start,
                                         children: <Widget>[
                                           Text(
-                                            "llevas consumido " +
+                                            "Hoy llevas consumido " +
                                                 '$_calories' +
-                                                " cal. hoy",
+                                                " cal.",
                                             style: TextStyle(
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.w700,
@@ -583,7 +583,7 @@ class _DisenoState extends State<Diseno> {
                                                     TextDecoration.none),
                                           ),
                                           Text(
-                                            "te quedan 1500 cal. restantes según tu calculo calorico para mantener tu peso",
+                                            "Tienes " + '$_operation_calories_final' + " cal. " + _text_operation + " según tu cálculo calorico para mantener tu peso.",
                                             style: TextStyle(
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.w500,
@@ -639,7 +639,7 @@ class _DisenoState extends State<Diseno> {
                                             CrossAxisAlignment.start,
                                         children: <Widget>[
                                           Text(
-                                            "Calorias para bajar de peso necesitas " +
+                                            "Calorias para bajar de peso necesitas: " +
                                                 _lowcalories.toString() +
                                                 " cal.",
                                             style: TextStyle(
@@ -650,7 +650,7 @@ class _DisenoState extends State<Diseno> {
                                                     TextDecoration.none),
                                           ),
                                           Text(
-                                            "lo recomendable por día, en base a tus calorias inciales",
+                                            "Lo recomendable por día, en base a tus calorias iniciales.",
                                             style: TextStyle(
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.w500,
@@ -725,9 +725,9 @@ class _DisenoState extends State<Diseno> {
                                             CrossAxisAlignment.start,
                                         children: <Widget>[
                                           Text(
-                                            "llevas " +
+                                            "Llevas " +
                                                 '$_fat' +
-                                                "g de grasas totales",
+                                                "g de grasas totales.",
                                             style: TextStyle(
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.w700,
@@ -736,7 +736,7 @@ class _DisenoState extends State<Diseno> {
                                                     TextDecoration.none),
                                           ),
                                           Text(
-                                            "Totales de grasas registradas al día de hoy",
+                                            "Totales de grasas registradas al día de hoy.",
                                             style: TextStyle(
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.w500,
@@ -808,9 +808,9 @@ class _DisenoState extends State<Diseno> {
                                             CrossAxisAlignment.start,
                                         children: <Widget>[
                                           Text(
-                                            "llevas " +
+                                            "Llevas " +
                                                 '$_protein' +
-                                                "g de proteina ",
+                                                "g de proteina. ",
                                             style: TextStyle(
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.w700,
@@ -819,7 +819,7 @@ class _DisenoState extends State<Diseno> {
                                                     TextDecoration.none),
                                           ),
                                           Text(
-                                            "Proteina registrada del día de hoy",
+                                            "Proteina registrada del día de hoy.",
                                             style: TextStyle(
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.w500,
@@ -903,7 +903,7 @@ class _DisenoState extends State<Diseno> {
                                                     TextDecoration.none),
                                           ),
                                           Text(
-                                            "Carbohidratos registrado del día de hoy",
+                                            "Carbohidratos registrado del día de hoy.",
                                             style: TextStyle(
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.w500,
@@ -984,7 +984,7 @@ class _DisenoState extends State<Diseno> {
                                                     TextDecoration.none),
                                           ),
                                           Text(
-                                            "Azucares registrado del día de hoy",
+                                            "Azucares registrado del día de hoy.",
                                             style: TextStyle(
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.w500,

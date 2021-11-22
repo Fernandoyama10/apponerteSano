@@ -32,6 +32,8 @@ class _DisenoState extends State<ComidaDia> {
   dynamic _sodium = 0;
   dynamic _initialcalories = 0;
   dynamic _diferencia = 0;
+  dynamic _statusname = "";
+  dynamic _idstatus = 0;
   List<FoodRecord> recipes = [];
   List<RecordCalories> recipes2 = [];
   // static datosArguments args;
@@ -274,7 +276,7 @@ setState(() {
                                                       MainAxisAlignment.center,
                                                   children: [
                                                     Text(
-                                                      "Calorias Restantes:",
+                                                      "Diferencia:",
                                                       textAlign: TextAlign.end,
                                                       style: TextStyle(
                                                           fontWeight:
@@ -323,14 +325,14 @@ setState(() {
                                               elevation: 5,
                                               child: ListTile(
                                                   title: Text(
-                                                    "Total Azucar:",
+                                                    '$_statusname',
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.bold,
                                                         fontSize: 13.5,
-                                                        color: Colors
-                                                            .deepOrange[400],
+                                                        color:
+                                                            Colors.green[400],
                                                         decoration:
                                                             TextDecoration
                                                                 .none),
@@ -341,8 +343,7 @@ setState(() {
                                                             .center,
                                                     children: [
                                                       Text(
-                                                        _sugar.toString() +
-                                                            " gr",
+                                                        " estado",
                                                         textAlign:
                                                             TextAlign.end,
                                                         style: TextStyle(
@@ -578,6 +579,116 @@ setState(() {
                                     ),
                                   ],
                                 ),
+                                Row(
+                                  children: <Widget>[
+                                    Flexible(
+                                      child: Column(
+                                        children: <Widget>[
+                                          Padding(
+                                            padding: const EdgeInsets.all(0.2),
+                                            child: Card(
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(18),
+                                              ),
+                                              color: Colors.amber[50],
+                                              elevation: 5,
+                                              child: ListTile(
+                                                  title: Text(
+                                                    "Total Azucar:",
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 13.5,
+                                                        color: Colors
+                                                            .deepOrange[400],
+                                                        decoration:
+                                                            TextDecoration
+                                                                .none),
+                                                  ),
+                                                  subtitle: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Text(
+                                                        _sugar.toString() +
+                                                            " gr",
+                                                        textAlign:
+                                                            TextAlign.end,
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 13,
+                                                            color: Colors
+                                                                    .deepOrange[
+                                                                300],
+                                                            decoration:
+                                                                TextDecoration
+                                                                    .none),
+                                                      ),
+                                                      SizedBox(width: 10),
+                                                    ],
+                                                  )),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Flexible(
+                                      child: Column(
+                                        children: <Widget>[
+                                          Padding(
+                                            padding: const EdgeInsets.all(1.0),
+                                            child: Card(
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(18),
+                                              ),
+                                              color: Colors.amber[50],
+                                              elevation: 5,
+                                              child: ListTile(
+                                                title: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      "-",
+                                                      textAlign: TextAlign.end,
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 13,
+                                                          color: Colors
+                                                              .deepOrange[300],
+                                                          decoration:
+                                                              TextDecoration
+                                                                  .none),
+                                                    ),
+                                                    SizedBox(width: 10),
+                                                  ],
+                                                ),
+                                                subtitle: Text(
+                                                  "-",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 15,
+                                                      color: Colors
+                                                          .deepOrange[400],
+                                                      decoration:
+                                                          TextDecoration.none),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ])),
                         ),
                       ])),
@@ -641,7 +752,7 @@ setState(() {
   }
 
   Future init2() async {
-    final recipes2 = await RecordCaloriess.getRecipes(datetoday, id_user);
+    final recipes2 = await RecordCaloriesStatus.getRecipes(datetoday, id_user);
     if (recipes2.length > 0) {
       final calories = recipes2[0].calories;
       if (calories != null) {
@@ -653,6 +764,8 @@ setState(() {
         _sodium = recipes2[0].sodium!;
         _initialcalories = recipes2[0].initial_calories!;
         _diferencia = _initialcalories - _calories;
+        _idstatus = recipes2[0].id_status!;
+        _statusname = recipes2[0].name_status!;
       } else {
         _calories = 0;
         _protein = 0;
@@ -662,6 +775,8 @@ setState(() {
         _sodium = 0;
         _initialcalories = 0;
         _diferencia = 0;
+        _idstatus = 0;
+        _statusname = "No haz registrado";
       }
     }
 
