@@ -1,0 +1,5 @@
+  keytool -genkey -v -keystore key\upload-keystore.jks -storetype JKS -keyalg RSA -keysize 2048 -validity 10000 -alias apponertesano
+
+
+alias: apponertesano
+pass: FBPC2021UTM
