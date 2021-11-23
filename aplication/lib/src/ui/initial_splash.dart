@@ -10,7 +10,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    Timer(Duration(seconds: 6),
+    Timer(Duration(seconds: 3),
         () => Navigator.of(context).pushReplacementNamed('/login'));
   }
 

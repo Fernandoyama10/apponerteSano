@@ -40,14 +40,10 @@ class _InfoUserCaloriesRegState extends State<FBInfoUserCaloriesReg> {
   String rgender = "";
   double rheight = 0;
   int rid_activity = 0;
-
+  int fb_completed = 0;
   @override
   void initState() {
     super.initState();
-
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
-      Future<List<Usuario>> listapost = verifyLogin(context, remail);
-    });
   }
 
   @override
@@ -314,7 +310,16 @@ class _InfoUserCaloriesRegState extends State<FBInfoUserCaloriesReg> {
 
                 SizedBox(height: 30),
                 //botón
+                Row(
+                   mainAxisAlignment: MainAxisAlignment.center,
+                  children: [  
+                   
                 RegistrarButton(context),
+                  SizedBox(width: 10),
+                 RegistrarButton2(context),]
+
+                ),
+             
                 Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -342,10 +347,28 @@ class _InfoUserCaloriesRegState extends State<FBInfoUserCaloriesReg> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(28),
       ),
-      minWidth: 200.0,
+      minWidth: 150.0,
       height: 45.0,
       color: Colors.green.shade600,
       child: Text('Registrarme', style: TextStyle(color: Colors.white)),
+    );
+  }
+
+    Widget RegistrarButton2(BuildContext context) {
+    return MaterialButton(
+      onPressed: () {
+         Provider.of<FacebookSignInController>(context,
+                                          listen: false)
+                                      .logOut();
+                                Navigator.of(context).pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
+      },
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(28),
+      ),
+      minWidth: 150.0,
+      height: 45.0,
+      color: Colors.red.shade600,
+      child: Text('Cancelar', style: TextStyle(color: Colors.white)),
     );
   }
 
@@ -389,7 +412,7 @@ class _InfoUserCaloriesRegState extends State<FBInfoUserCaloriesReg> {
       if (value == 400) {
         _showDialog(context, 'Usuario ya registrado anteriormente');
       } else {
-        Navigator.pushNamed(context, '/splashloading');
+        Navigator.pushReplacementNamed(context, '/splashloading');
       }
     } else {
       throw Exception('No se Agrego, intenta nuevamente');
@@ -416,36 +439,4 @@ class _InfoUserCaloriesRegState extends State<FBInfoUserCaloriesReg> {
     );
   }
 
-  Future<List<Usuario>> verifyLogin(BuildContext context, String email) async {
-    final url = Uri.parse(
-        'http://apiapponertesano.azurewebsites.net/api/logindata/$email');
-    final response = await http.get(url);
-    if (response.statusCode == 200) {
-      List<Usuario> lista = parsePost(response.body);
-      if (lista.length > 0) {
-        print(lista[0].password);
-        Navigator.pushReplacementNamed(context, "/inicio",
-            arguments: UsuariodataSet(
-                lista[0].id_user!,
-                lista[0].email!,
-                lista[0].password!,
-                lista[0].id_role!,
-                lista[0].name!,
-                lista[0].surname!,
-                lista[0].age!,
-                lista[0].weight!,
-                lista[0].gender!,
-                lista[0].height!,
-                lista[0].name_level!,
-                lista[0].value_level!,
-                lista[0].fb_complete!));
-      } else {
-        print('este usuario se puede registrar');
-      }
-      return lista;
-    } else {
-      _showDialog(context, 'No existe conexión');
-      throw Exception('Unable to fetch products from the REST API');
-    }
-  }
 }

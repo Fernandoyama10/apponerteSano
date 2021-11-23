@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:apponertesano/src/model/user.dart';
 import 'package:flutter/material.dart';
 
 class SplashLoading extends StatefulWidget {
@@ -9,12 +10,13 @@ class SplashLoading extends StatefulWidget {
 class _SplashLoadingState extends State<SplashLoading> {
   @override
   void initState() {
-    Timer(Duration(seconds: 2),
+    Timer(Duration(seconds: 3),
         () => Navigator.of(context).pushReplacementNamed('/login'));
   }
 
   @override
   Widget build(BuildContext context) {
+   
     return Container(
       width: double.infinity,
       height: double.infinity,
