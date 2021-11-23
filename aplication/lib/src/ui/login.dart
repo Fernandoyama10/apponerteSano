@@ -179,7 +179,7 @@ class _LoginState extends State<Login> {
   loggedInUI(FacebookSignInController model) {
     Timer(
         Duration(seconds: -1),
-        () => Navigator.of(context).pushReplacementNamed('/registrarfb',
+        () => Navigator.of(context).pushReplacementNamed('/splashloadingFB',
             arguments: UserDat(
               model.userData!["email"].toString(),
               model.userData!["name"].toString(),

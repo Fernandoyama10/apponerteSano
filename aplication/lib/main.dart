@@ -14,6 +14,7 @@ import 'package:apponertesano/src/ui/miperfil.dart';
 import 'package:apponertesano/src/ui/miperfil_actualizar.dart';
 import 'package:apponertesano/src/ui/registrar_user.dart';
 import 'package:apponertesano/src/ui/splash_loading.dart';
+import 'package:apponertesano/src/ui/splash_loading_fb.dart';
 import 'package:apponertesano/src/ui/tipocomida.dart';
 import 'package:flutter/material.dart';
 import 'package:apponertesano/src/UI/initial_splash.dart';
@@ -55,6 +56,7 @@ class MyApp extends StatelessWidget {
           '/infousercalories': (context) => InfoUserCaloriesReg(),
           '/registrarfb': (context) => FBInfoUserCaloriesReg(),
           '/splashloading': (context) => SplashLoading(),
+                    '/splashloadingFB': (context) => SplashLoadingFB(),
           '/comidainter': (context) => BuscarInternacional(),
           '/comidareg': (context) => BuscarRegional(),
           '/agrega_inter': (context) => AgregarInternacional(),
