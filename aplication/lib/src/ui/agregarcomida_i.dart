@@ -110,11 +110,10 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
                       width: 8,
                     ),
                     Text(
-                      'Tamaño de la Porciones: (' +
-                          (args.yield).toStringAsFixed(0) +
-                          ')',
+                      'Calorias de tu porción: ' +
+                          caloriesyield.toStringAsFixed(2),
                       style: TextStyle(
-                        fontSize: 13,
+                        fontSize: 14,
                         fontWeight: FontWeight.w400,
                       ),
                     ),
@@ -197,15 +196,16 @@ class _ComidaInternacionalScreenState extends State<AgregarInternacional> {
                       height: 10,
                     ),
                     Text(
-                      'Calorias por porción: ' +
-                          (args.calories).toStringAsFixed(2),
+                      'Tamaño de la Porciones: (' +
+                          (args.yield).toStringAsFixed(0) +
+                          ')',
                       style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w400,
                       ),
                     ),
                     Text(
-                      'Calorias totales: ' + caloriesyield.toStringAsFixed(2),
+                      'Calorias totales: ' + (args.calories).toStringAsFixed(2),
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,

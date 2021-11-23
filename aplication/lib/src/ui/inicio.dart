@@ -49,6 +49,7 @@ class _DisenoState extends State<Diseno> {
 
   Color _changecolor = Colors.grey;
   Color _changecolor2 = Colors.yellow.shade400;
+  Color _changetext = Colors.grey.shade500;
   @override
   void initState() {
     super.initState();
@@ -112,18 +113,22 @@ class _DisenoState extends State<Diseno> {
             case "No haz registrado":
               _changecolor = Colors.grey;
               _changecolor2 = Colors.yellow.shade400;
+              _changetext = Colors.grey.shade500;
               break;
             case "Vas bien":
               _changecolor = Colors.blue;
               _changecolor2 = Colors.yellow.shade400;
+              _changetext = Colors.grey.shade500;
               break;
             case "Equilibrado":
               _changecolor = Colors.green;
               _changecolor2 = Colors.yellow.shade400;
+              _changetext = Colors.green.shade400;
               break;
             case "Excedido":
               _changecolor = Colors.red;
               _changecolor2 = Colors.red;
+              _changetext = Colors.red;
               break;
           }
         } else {
@@ -138,6 +143,7 @@ class _DisenoState extends State<Diseno> {
           CaloriesdataSet(0, 0, 0, 0, 0, 0);
           _changecolor = Colors.grey;
           _changecolor2 = Colors.yellow.shade400;
+          _changetext = Colors.grey.shade500;
         }
       }
       if (this.mounted) {
@@ -613,7 +619,7 @@ class _DisenoState extends State<Diseno> {
                                             style: TextStyle(
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.w500,
-                                                color: Colors.grey[500],
+                                                color: _changetext,
                                                 decoration:
                                                     TextDecoration.none),
                                           ),
