@@ -85,8 +85,8 @@ setState(() {
         centerTitle: true,
       ),
 
-      body: RefreshIndicator(
-        onRefresh: _refresh,
+      body: SingleChildScrollView(
+        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 22),
         child: Form(
           key: _formKey1,
           child: Column(
@@ -166,13 +166,75 @@ setState(() {
                                                                 const TextStyle(
                                                               color:
                                                                   Colors.green,
+                                                              fontSize: 13,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
+                                                            text: "Estado"),
+                                                      ),
+                                                    ),
+                                                    SizedBox(width: 10),
+                                                  ],
+                                                ),
+                                                subtitle: Text(
+                                                  '$_statusname',
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 15,
+                                                      color: Colors
+                                                          .deepOrange[400],
+                                                      decoration:
+                                                          TextDecoration.none),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    Flexible(
+                                      child: Column(
+                                        children: <Widget>[
+                                          Padding(
+                                            padding: const EdgeInsets.all(1.0),
+                                            child: Card(
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(18),
+                                              ),
+                                              color: Colors.amber[50],
+                                              elevation: 5,
+                                              child: ListTile(
+                                                title: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Flexible(
+                                                      child: RichText(
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        strutStyle: StrutStyle(
+                                                            fontSize: 15.0),
+                                                        text: TextSpan(
+                                                            style:
+                                                                const TextStyle(
+                                                              color:
+                                                                  Colors.green,
                                                               fontSize: 13.5,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .bold,
                                                             ),
-                                                            text:
-                                                                "Calorias sumadas:"),
+                                                            text: "Consumido:"),
                                                       ),
                                                     ),
                                                     SizedBox(width: 10),
@@ -217,8 +279,7 @@ setState(() {
                                                         fontWeight:
                                                             FontWeight.bold,
                                                         fontSize: 13,
-                                                        color:
-                                                            Colors.green[700],
+                                                        color: Colors.green,
                                                         decoration:
                                                             TextDecoration
                                                                 .none),
@@ -276,14 +337,13 @@ setState(() {
                                                       MainAxisAlignment.center,
                                                   children: [
                                                     Text(
-                                                      "Diferencia:",
+                                                      "Pasadas:",
                                                       textAlign: TextAlign.end,
                                                       style: TextStyle(
                                                           fontWeight:
                                                               FontWeight.bold,
                                                           fontSize: 13,
-                                                          color:
-                                                              Colors.green[700],
+                                                          color: Colors.red,
                                                           decoration:
                                                               TextDecoration
                                                                   .none),
@@ -301,7 +361,7 @@ setState(() {
                                                           FontWeight.bold,
                                                       fontSize: 15,
                                                       color: Colors
-                                                          .deepOrange[400],
+                                                          .deepOrange[600],
                                                       decoration:
                                                           TextDecoration.none),
                                                 ),
@@ -311,64 +371,6 @@ setState(() {
                                         ],
                                       ),
                                     ),
-                                    Flexible(
-                                      child: Column(
-                                        children: <Widget>[
-                                          Padding(
-                                            padding: const EdgeInsets.all(0.2),
-                                            child: Card(
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(18),
-                                              ),
-                                              color: Colors.amber[50],
-                                              elevation: 5,
-                                              child: ListTile(
-                                                  title: Text(
-                                                    '$_statusname',
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 13.5,
-                                                        color:
-                                                            Colors.green[400],
-                                                        decoration:
-                                                            TextDecoration
-                                                                .none),
-                                                  ),
-                                                  subtitle: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Text(
-                                                        " estado",
-                                                        textAlign:
-                                                            TextAlign.end,
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 13,
-                                                            color: Colors
-                                                                    .deepOrange[
-                                                                300],
-                                                            decoration:
-                                                                TextDecoration
-                                                                    .none),
-                                                      ),
-                                                      SizedBox(width: 10),
-                                                    ],
-                                                  )),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  children: <Widget>[
                                     Flexible(
                                       child: Column(
                                         children: <Widget>[
@@ -415,6 +417,65 @@ setState(() {
                                                           TextDecoration.none),
                                                 ),
                                               ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    Flexible(
+                                      child: Column(
+                                        children: <Widget>[
+                                          Padding(
+                                            padding: const EdgeInsets.all(0.2),
+                                            child: Card(
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(18),
+                                              ),
+                                              color: Colors.amber[50],
+                                              elevation: 5,
+                                              child: ListTile(
+                                                  title: Text(
+                                                    "Total Azucar:",
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 13.5,
+                                                        color: Colors
+                                                            .deepOrange[300],
+                                                        decoration:
+                                                            TextDecoration
+                                                                .none),
+                                                  ),
+                                                  subtitle: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Text(
+                                                        _sugar.toString() +
+                                                            " gr",
+                                                        textAlign:
+                                                            TextAlign.end,
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 13,
+                                                            color: Colors
+                                                                    .deepOrange[
+                                                                400],
+                                                            decoration:
+                                                                TextDecoration
+                                                                    .none),
+                                                      ),
+                                                      SizedBox(width: 10),
+                                                    ],
+                                                  )),
                                             ),
                                           ),
                                         ],
@@ -579,116 +640,6 @@ setState(() {
                                     ),
                                   ],
                                 ),
-                                Row(
-                                  children: <Widget>[
-                                    Flexible(
-                                      child: Column(
-                                        children: <Widget>[
-                                          Padding(
-                                            padding: const EdgeInsets.all(0.2),
-                                            child: Card(
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(18),
-                                              ),
-                                              color: Colors.amber[50],
-                                              elevation: 5,
-                                              child: ListTile(
-                                                  title: Text(
-                                                    "Total Azucar:",
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 13.5,
-                                                        color: Colors
-                                                            .deepOrange[400],
-                                                        decoration:
-                                                            TextDecoration
-                                                                .none),
-                                                  ),
-                                                  subtitle: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Text(
-                                                        _sugar.toString() +
-                                                            " gr",
-                                                        textAlign:
-                                                            TextAlign.end,
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 13,
-                                                            color: Colors
-                                                                    .deepOrange[
-                                                                300],
-                                                            decoration:
-                                                                TextDecoration
-                                                                    .none),
-                                                      ),
-                                                      SizedBox(width: 10),
-                                                    ],
-                                                  )),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Flexible(
-                                      child: Column(
-                                        children: <Widget>[
-                                          Padding(
-                                            padding: const EdgeInsets.all(1.0),
-                                            child: Card(
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(18),
-                                              ),
-                                              color: Colors.amber[50],
-                                              elevation: 5,
-                                              child: ListTile(
-                                                title: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Text(
-                                                      "-",
-                                                      textAlign: TextAlign.end,
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 13,
-                                                          color: Colors
-                                                              .deepOrange[300],
-                                                          decoration:
-                                                              TextDecoration
-                                                                  .none),
-                                                    ),
-                                                    SizedBox(width: 10),
-                                                  ],
-                                                ),
-                                                subtitle: Text(
-                                                  "-",
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 15,
-                                                      color: Colors
-                                                          .deepOrange[400],
-                                                      decoration:
-                                                          TextDecoration.none),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
                               ])),
                         ),
                       ])),
@@ -706,8 +657,10 @@ setState(() {
               SizedBox(
                 height: 10,
               ),
-              Expanded(
+              Container(
                   child: ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
                 itemCount: recipes.length,
                 itemBuilder: (context, index) {
                   final book = recipes[index];
@@ -769,7 +722,7 @@ setState(() {
           _sugar = recipes2[0].sugar!;
           _sodium = recipes2[0].sodium!;
           _initialcalories = recipes2[0].initial_calories!;
-          _diferencia = _initialcalories - _calories;
+          _diferencia = (_initialcalories - _calories).abs().round();
           _idstatus = recipes2[0].id_status!;
           _statusname = recipes2[0].name_status!;
         } else {

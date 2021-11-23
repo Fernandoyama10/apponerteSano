@@ -84,7 +84,8 @@ setState(() {
           _sugar = recipes2[0].sugar!;
           _sodium = recipes2[0].sodium!;
           _initialcalories = recipes2[0].initial_calories!;
-          _diferencia = _initialcalories - _calories;
+          _diferencia = ((_initialcalories - _calories).abs()).round();
+          _statusname = recipes2[0].name_status!;
         } else {
           _calories = 0;
           _protein = 0;
@@ -95,6 +96,7 @@ setState(() {
           _initialcalories = 0;
           _diferencia = 0;
           _idstatus = 0;
+          _statusname = "No haz registrado";
         }
       }
       if (this.mounted) {
@@ -119,8 +121,8 @@ setState(() {
         centerTitle: true,
       ),
 
-      body: Container(
-        margin: EdgeInsets.symmetric(horizontal: 15, vertical: 22),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 22),
         child: Form(
           key: _formKey1,
           child: Column(
@@ -265,8 +267,70 @@ setState(() {
                                                                   FontWeight
                                                                       .bold,
                                                             ),
-                                                            text:
-                                                                "Calorias Sumadas:"),
+                                                            text: "Estado"),
+                                                      ),
+                                                    ),
+                                                    SizedBox(width: 10),
+                                                  ],
+                                                ),
+                                                subtitle: Text(
+                                                  '$_statusname',
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 15,
+                                                      color: Colors
+                                                          .deepOrange[400],
+                                                      decoration:
+                                                          TextDecoration.none),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    Flexible(
+                                      child: Column(
+                                        children: <Widget>[
+                                          Padding(
+                                            padding: const EdgeInsets.all(1.0),
+                                            child: Card(
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(18),
+                                              ),
+                                              color: Colors.amber[50],
+                                              elevation: 5,
+                                              child: ListTile(
+                                                title: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Flexible(
+                                                      child: RichText(
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        strutStyle: StrutStyle(
+                                                            fontSize: 15.0),
+                                                        text: TextSpan(
+                                                            style:
+                                                                const TextStyle(
+                                                              color:
+                                                                  Colors.green,
+                                                              fontSize: 13,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
+                                                            text: "Consumido:"),
                                                       ),
                                                     ),
                                                     SizedBox(width: 10),
@@ -311,8 +375,7 @@ setState(() {
                                                         fontWeight:
                                                             FontWeight.bold,
                                                         fontSize: 13,
-                                                        color:
-                                                            Colors.green[700],
+                                                        color: Colors.green,
                                                         decoration:
                                                             TextDecoration
                                                                 .none),
@@ -370,14 +433,13 @@ setState(() {
                                                       MainAxisAlignment.center,
                                                   children: [
                                                     Text(
-                                                      "Diferencia:",
+                                                      "Pasadas:",
                                                       textAlign: TextAlign.end,
                                                       style: TextStyle(
                                                           fontWeight:
                                                               FontWeight.bold,
                                                           fontSize: 13,
-                                                          color:
-                                                              Colors.green[700],
+                                                          color: Colors.red,
                                                           decoration:
                                                               TextDecoration
                                                                   .none),
@@ -395,7 +457,7 @@ setState(() {
                                                           FontWeight.bold,
                                                       fontSize: 15,
                                                       color: Colors
-                                                          .deepOrange[400],
+                                                          .deepOrange[600],
                                                       decoration:
                                                           TextDecoration.none),
                                                 ),
@@ -426,7 +488,7 @@ setState(() {
                                                             FontWeight.bold,
                                                         fontSize: 13.5,
                                                         color: Colors
-                                                            .deepOrange[400],
+                                                            .deepOrange[300],
                                                         decoration:
                                                             TextDecoration
                                                                 .none),
@@ -447,7 +509,7 @@ setState(() {
                                                             fontSize: 13,
                                                             color: Colors
                                                                     .deepOrange[
-                                                                300],
+                                                                400],
                                                             decoration:
                                                                 TextDecoration
                                                                     .none),
@@ -691,8 +753,10 @@ setState(() {
               SizedBox(
                 height: 10,
               ),
-              Expanded(
+              Container(
                   child: ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
                 itemCount: recipes.length,
                 itemBuilder: (context, index) {
                   final book = recipes[index];
