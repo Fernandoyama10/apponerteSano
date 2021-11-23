@@ -412,7 +412,7 @@ class _InfoUserCaloriesRegState extends State<FBInfoUserCaloriesReg> {
       if (value == 400) {
         _showDialog(context, 'Usuario ya registrado anteriormente');
       } else {
-        Navigator.pushReplacementNamed(context, '/splashloadingFB');
+        Navigator.pushReplacementNamed(context, '/splashloading');
       }
     } else {
       throw Exception('No se Agrego, intenta nuevamente');
