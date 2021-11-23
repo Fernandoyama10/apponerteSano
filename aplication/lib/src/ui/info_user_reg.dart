@@ -93,7 +93,7 @@ class _InfoUserRegState extends State<InfoUserReg> {
                       return 'Ingresa tus apellidos';
                     }
                     if (value.length <= 5) {
-                      return 'Ingresa tu apellido mayor a 8 caracteres';
+                      return 'Ingresa tu apellido mayor a 5 caracteres';
                     }
                     return null;
                   },

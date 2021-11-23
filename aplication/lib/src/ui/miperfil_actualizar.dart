@@ -174,7 +174,7 @@ class _MiperfilactuState extends State<Miperfilactu> {
                             return 'Ingresa tus apellidos';
                           }
                           if (value.length <= 5) {
-                            return 'Ingresa tu apellido mayor a 8 caracteres';
+                            return 'Ingresa tu apellido mayor a 5 caracteres';
                           }
                           return null;
                         },
@@ -482,7 +482,7 @@ class _MiperfilactuState extends State<Miperfilactu> {
         msg: 'Se actualizarón correctamente tus datos   (tap para salir)',
         title: nombre + ', actualización exitoso',
         lottieBuilder: Lottie.asset(
-          'images/3152-star-success.json',
+          'images/62669-success-lottie-animation.json',
           height: 25,
           width: 25,
         ),
