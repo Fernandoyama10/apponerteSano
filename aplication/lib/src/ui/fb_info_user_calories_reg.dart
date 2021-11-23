@@ -310,16 +310,12 @@ class _InfoUserCaloriesRegState extends State<FBInfoUserCaloriesReg> {
 
                 SizedBox(height: 30),
                 //botón
-                Row(
-                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [  
-                   
-                RegistrarButton(context),
+                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  RegistrarButton(context),
                   SizedBox(width: 10),
-                 RegistrarButton2(context),]
+                  RegistrarButton2(context),
+                ]),
 
-                ),
-             
                 Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -354,13 +350,12 @@ class _InfoUserCaloriesRegState extends State<FBInfoUserCaloriesReg> {
     );
   }
 
-    Widget RegistrarButton2(BuildContext context) {
+  Widget RegistrarButton2(BuildContext context) {
     return MaterialButton(
       onPressed: () {
-         Provider.of<FacebookSignInController>(context,
-                                          listen: false)
-                                      .logOut();
-                                Navigator.of(context).pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
+        Provider.of<FacebookSignInController>(context, listen: false).logOut();
+        Navigator.of(context)
+            .pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
       },
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(28),
@@ -438,5 +433,4 @@ class _InfoUserCaloriesRegState extends State<FBInfoUserCaloriesReg> {
       },
     );
   }
-
 }
