@@ -46,6 +46,9 @@ class _DisenoState extends State<Diseno> {
   String _text_operation = "";
   dynamic _operation_calories_final = 0;
   List<RecordCalories> recipes2 = [];
+
+  Color _changecolor = Colors.grey;
+  Color _changecolor2 = Colors.yellow.shade400;
   @override
   void initState() {
     super.initState();
@@ -72,7 +75,6 @@ class _DisenoState extends State<Diseno> {
         _operation_calories_final = _operationcalories1.round();
         _text_operation = "Restantes";
       }
-   
     } else {
       _mtb = ((655 + (9.6 * weight)) + ((1.8 * height) - (4.7 * age)));
       _resultCalories = (_mtb * activity).round();
@@ -86,8 +88,6 @@ class _DisenoState extends State<Diseno> {
         _text_operation = "Restantes";
         //aquí niñoooo
       }
-
- 
     }
     return _resultCalories;
   }
@@ -107,6 +107,25 @@ class _DisenoState extends State<Diseno> {
           _sodium = recipes2[0].sodium!;
           _idstatus = recipes2[0].id_status!;
           _statusname = recipes2[0].name_status!;
+
+          switch (_statusname) {
+            case "No haz registrado":
+              _changecolor = Colors.grey;
+              _changecolor2 = Colors.yellow.shade400;
+              break;
+            case "Vas bien":
+              _changecolor = Colors.blue;
+              _changecolor2 = Colors.yellow.shade400;
+              break;
+            case "Equilibrado":
+              _changecolor = Colors.green;
+              _changecolor2 = Colors.yellow.shade400;
+              break;
+            case "Excedido":
+              _changecolor = Colors.red;
+              _changecolor2 = Colors.red;
+              break;
+          }
         } else {
           _calories = 0;
           _protein = 0;
@@ -117,6 +136,8 @@ class _DisenoState extends State<Diseno> {
           _idstatus = 0;
           _statusname = "No haz registrado";
           CaloriesdataSet(0, 0, 0, 0, 0, 0);
+          _changecolor = Colors.grey;
+          _changecolor2 = Colors.yellow.shade400;
         }
       }
       if (this.mounted) {
@@ -192,7 +213,7 @@ class _DisenoState extends State<Diseno> {
                         Text(
                           '$_calories',
                           style: TextStyle(
-                              color: Colors.yellow[400],
+                              color: _changecolor2,
                               fontSize: 28,
                               fontWeight: FontWeight.w700,
                               decoration: TextDecoration.none),
@@ -245,7 +266,9 @@ class _DisenoState extends State<Diseno> {
                                   Provider.of<FacebookSignInController>(context,
                                           listen: false)
                                       .logOut();
-                                Navigator.of(context).pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
+                                  Navigator.of(context).pushNamedAndRemoveUntil(
+                                      '/login',
+                                      (Route<dynamic> route) => false);
                                 },
                                 backgroundColor: Colors.white,
                                 icon: Icon(
@@ -379,7 +402,7 @@ class _DisenoState extends State<Diseno> {
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 13.5,
-                                            color: Colors.green[400],
+                                            color: _changecolor,
                                             decoration: TextDecoration.none),
                                       ),
                                       subtitle: Row(
